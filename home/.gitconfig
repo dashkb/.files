@@ -20,3 +20,5 @@
     log-fetched = log --oneline HEAD..origin/master
 [push]
     default = simple
+[include]
+    path = ~/.gitconfig.local
