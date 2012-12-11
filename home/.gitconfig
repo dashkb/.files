@@ -1,0 +1,27 @@
+[core]
+    excludesfile = ~/.gitignore
+    autocrlf = input
+[color]
+    ui = auto
+    interactive = auto
+[alias]
+    st = status
+    ci = commit
+    co = checkout
+    staged = "diff --cached"
+    oneline = "log --pretty=oneline"
+    llog = log --date=local
+    changes = diff --name-status -r
+    unadd = update-index --force-remove
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    log-graph = log --all --graph --decorate
+    log-refs = log --all --graph --decorate --oneline --simplify-by-decoration --no-merges
+    log-timeline = log --format='%h %an %ar - %s'
+    log-local = log --oneline origin..HEAD
+    log-fetched = log --oneline HEAD..origin/master
+    br = branch -a
+    pu = !git fetch upstream && git merge upstream/master
+    empty-branch = !sh -c 'git symbolic-ref HEAD refs/heads/$1 && rm .git/index && git clean -fdx' -
+    drb = !sh -c 'git push origin :$0'
+[push]
+    default = simple
