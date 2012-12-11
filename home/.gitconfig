@@ -25,3 +25,5 @@
     drb = !sh -c 'git push origin :$0'
 [push]
     default = simple
+[include]
+    path = ~/.gitconfig.local
