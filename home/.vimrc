@@ -55,6 +55,7 @@
     Bundle 'groenewege/vim-less'
     Bundle 'myusuf3/numbers.vim'
     Bundle 'chriskempson/base16-vim'
+    Bundle 'mileszs/ack.vim'
 
     filetype plugin indent on " load filetype plugins/indent settings
 " }
