@@ -28,3 +28,5 @@ alias bspec="be rspec"
 
 alias dotfiles="cd ~/.homesick/repos/.files/home"
 alias rc="source ~/.zshrc"
+
+export EDITOR=vim
