@@ -10,8 +10,6 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Set shell colors
-. ~/.base16-shell/base16-default.dark.sh
 
 # Stop annoying correcting all the time
 unsetopt correct_all
@@ -30,3 +28,10 @@ alias dotfiles="cd ~/.homesick/repos/.files/home"
 alias rc="source ~/.zshrc"
 
 export EDITOR=vim
+export TERM=xterm-256color
+
+. ~/.rvm/scripts/rvm
+
+# Unset stupid keybindings
+bindkey -r "jk"
+bindkey -r "kj"

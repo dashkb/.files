@@ -54,8 +54,8 @@
     Bundle 'kchmck/vim-coffee-script'
     Bundle 'groenewege/vim-less'
     Bundle 'myusuf3/numbers.vim'
-    Bundle 'chriskempson/base16-vim'
     Bundle 'mileszs/ack.vim'
+    Bundle 'altercation/vim-colors-solarized'
 
     filetype plugin indent on " load filetype plugins/indent settings
 " }
@@ -92,9 +92,8 @@
 " }
 
 " Vim UI {
-    let base16colorspace=256
-    colorscheme base16-default
     set background=dark
+    colorscheme solarized
     set cursorcolumn " highlight the current column
     set cursorline " highlight current line
     set incsearch " BUT do highlight as you type you
@@ -226,26 +225,3 @@
     map <C-K> <C-W>k<C-W>_
 " }
 
-" GUI Settings {
-if has("gui_running")
-    " Basics {
-        set transparency=20
-        set columns=180 " perfect size for me
-        set guifont=Consolas:h14 " My favorite font
-        set guioptions=ce
-        "              ||
-        "              |+-- use simple dialogs rather than pop-ups
-        "              +  use GUI tabs, not console style tabs
-        set lines=55 " perfect size for me
-        set mousehide " hide the mouse cursor when typing
-    " }
-
-    " Font Switching Binds {
-        map <F8> <ESC>:set guifont=Consolas:h8<CR>
-        map <F9> <ESC>:set guifont=Consolas:h10<CR>
-        map <F10> <ESC>:set guifont=Consolas:h12<CR>
-        map <F11> <ESC>:set guifont=Consolas:h16<CR>
-        map <F12> <ESC>:set guifont=Consolas:h20<CR>
-    " }
-endif
-" }
