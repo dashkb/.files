@@ -46,7 +46,6 @@
     Bundle 'ap/vim-css-color'
     Bundle 'nathanaelkane/vim-indent-guides'
     Bundle 'pangloss/vim-javascript'
-    Bundle 'tpope/vim-rails'
     Bundle 'tpope/vim-markdown'
     Bundle 'robbevan/Vagrantfile.vim'
     Bundle 'Lokaltog/vim-powerline'
@@ -56,8 +55,10 @@
     Bundle 'myusuf3/numbers.vim'
     Bundle 'chriskempson/base16-vim'
     Bundle 'mileszs/ack.vim'
+    Bundle 'jeetsukumaran/vim-buffergator'
 
     filetype plugin indent on " load filetype plugins/indent settings
+    let g:ctrlp_show_hidden = 1
 " }
 
 " General {
@@ -121,21 +122,6 @@
     set showcmd " show the command being typed
     set showmatch " show matching brackets
     set sidescrolloff=10 " Keep 5 lines at the size
-    set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
-    "              | | | | |  |   |      |  |     |    |
-    "              | | | | |  |   |      |  |     |    + current
-    "              | | | | |  |   |      |  |     |       column
-    "              | | | | |  |   |      |  |     +-- current line
-    "              | | | | |  |   |      |  +-- current % into file
-    "              | | | | |  |   |      +-- current syntax in
-    "              | | | | |  |   |          square brackets
-    "              | | | | |  |   +-- current fileformat
-    "              | | | | |  +-- number of lines
-    "              | | | | +-- preview flag in square brackets
-    "              | | | +-- help flag in square brackets
-    "              | | +-- readonly flag in square brackets
-    "              | +-- rodified flag in square brackets
-    "              +-- full path to file in the buffer
     set wmh=0 " Set the minimum window height to 0 (hides split panes)
 " }
 
@@ -157,17 +143,6 @@
                    " set list on
 " }
 
-" Folding {
-    set foldenable " Turn on folding
-    set foldmethod=syntax " Fold based on syntax
-    set foldopen=block,hor,mark,percent,quickfix,tag " what movements
-                                                      " open folds
-    function SimpleFoldText() " {
-        return getline(v:foldstart).' '
-    endfunction " }
-    set foldtext=SimpleFoldText() " Custom fold text function
-                                   " (cleaner than default)
-" }
 
 " Plugin Settings {
     let b:match_ignorecase = 1 " case is stupid
@@ -229,14 +204,11 @@
 " GUI Settings {
 if has("gui_running")
     " Basics {
-        set transparency=20
-        set columns=180 " perfect size for me
-        set guifont=Consolas:h14 " My favorite font
+        set transparency=0
         set guioptions=ce
         "              ||
         "              |+-- use simple dialogs rather than pop-ups
         "              +  use GUI tabs, not console style tabs
-        set lines=55 " perfect size for me
         set mousehide " hide the mouse cursor when typing
     " }
 
