@@ -22,6 +22,8 @@ __git_files () {
 }
 
 # aliases -kb
+alias vim="mvim -v"
+
 alias be="bundle exec"
 alias brake="be rake"
 alias bspec="be rspec"
@@ -30,3 +32,5 @@ alias dotfiles="cd ~/.homesick/repos/.files/home"
 alias rc="source ~/.zshrc"
 
 export EDITOR=vim
+
+export PATH="$PATH:/usr/local/share/python"
