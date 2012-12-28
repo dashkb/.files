@@ -39,19 +39,9 @@
 
     Bundle 'kien/ctrlp.vim'
     Bundle 'Raimondi/delimitMate'
-    Bundle 'docunext/closetag.vim'
     Bundle 'scrooloose/nerdcommenter'
     Bundle 'majutsushi/tagbar'
-    Bundle 'vim-scripts/Better-CSS-Syntax-for-Vim'
-    Bundle 'ap/vim-css-color'
-    Bundle 'nathanaelkane/vim-indent-guides'
-    Bundle 'pangloss/vim-javascript'
-    Bundle 'tpope/vim-markdown'
-    Bundle 'robbevan/Vagrantfile.vim'
     Bundle 'Lokaltog/vim-powerline'
-    Bundle 'bbommarito/vim-slim'
-    Bundle 'kchmck/vim-coffee-script'
-    Bundle 'groenewege/vim-less'
     Bundle 'myusuf3/numbers.vim'
     Bundle 'chriskempson/base16-vim'
     Bundle 'mileszs/ack.vim'
@@ -210,6 +200,7 @@ if has("gui_running")
         "              |+-- use simple dialogs rather than pop-ups
         "              +  use GUI tabs, not console style tabs
         set mousehide " hide the mouse cursor when typing
+        set guifont=Monaco\ for\ Powerline:h14
     " }
 
     " Font Switching Binds {
