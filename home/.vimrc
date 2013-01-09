@@ -136,37 +136,10 @@
 
 " Plugin Settings {
     let b:match_ignorecase = 1 " case is stupid
-    let perl_extended_vars=1 " highlight advanced perl vars
-                              " inside strings
 
-    " Closetag Settings {
-      let b:unaryTagsStack="area base br dd dt hr img input link meta param"
-    " }
+    " Tagbar Settings
+    nmap <Leader>c :TagbarOpenAutoClose<CR>
 
-    " TagList Settings {
-        let Tlist_Auto_Open=0 " let the tag list open automagically
-        let Tlist_Compact_Format = 1 " show small menu
-        let Tlist_Ctags_Cmd = 'ctags' " location of ctags
-        let Tlist_Enable_Fold_Column = 0 " do show folding tree
-        let Tlist_Exist_OnlyWindow = 1 " if you are the last, kill
-                                        " yourself
-        let Tlist_File_Fold_Auto_Close = 0 " fold closed other trees
-        let Tlist_Sort_Type = "name" " order by
-        let Tlist_Use_Right_Window = 1 " split to the right side
-                                        " of the screen
-        let Tlist_WinWidth = 40 " 40 cols wide, so i can (almost always)
-                                 " read my functions
-        " Language Specifics {
-            " just functions and classes please
-            let tlist_aspjscript_settings = 'asp;f:function;c:class' 
-            " just functions and subs please
-            let tlist_aspvbs_settings = 'asp;f:function;s:sub' 
-            " don't show variables in freaking php
-            let tlist_php_settings = 'php;c:class;d:constant;f:function' 
-            " just functions and classes please
-            let tlist_vb_settings = 'asp;f:function;c:class' 
-        " }
-    " }
 
     " PowerLine Settings {
       let g:Powerline_symbols = 'unicode'
