@@ -46,6 +46,7 @@
     Bundle 'chriskempson/base16-vim'
     Bundle 'mileszs/ack.vim'
     Bundle 'jeetsukumaran/vim-buffergator'
+    Bundle 'vim-scripts/vimwiki'
 
     filetype plugin indent on " load filetype plugins/indent settings
     let g:ctrlp_show_hidden = 1
