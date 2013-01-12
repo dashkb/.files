@@ -47,6 +47,7 @@
     Bundle 'mileszs/ack.vim'
     Bundle 'jeetsukumaran/vim-buffergator'
     Bundle 'vim-scripts/vimwiki'
+    Bundle 'kchmck/vim-coffee-script'
 
     filetype plugin indent on " load filetype plugins/indent settings
     let g:ctrlp_show_hidden = 1
