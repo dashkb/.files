@@ -187,3 +187,33 @@ if has("gui_running")
     " }
 endif
 " }
+
+
+" Coffeescript tags {
+let g:tagbar_type_coffee = {
+    \ 'ctagstype' : 'coffee',
+    \ 'kinds'     : [
+        \ 'c:classes',
+        \ 'm:methods',
+        \ 'f:functions',
+        \ 'v:variables',
+        \ 'u:suite',
+        \ 's:specs'
+    \ ]
+\ }
+
+" Posix regular expressions for matching interesting items. Since this will 
+" be passed as an environment variable, no whitespace can exist in the options
+" so [:space:] is used instead of normal whitespaces.
+" Adapted from: https://gist.github.com/2901844
+let s:ctags_opts = '
+  \ --langdef=coffee
+  \ --langmap=coffee:.coffee
+  \ --regex-coffee=/(^|=[[:space:]])*class[[:space:]]([A-Za-z]+\.)*([A-Za-z]+)([[:space:]]extends[[:space:]][A-Za-z.]+)?$/\3/c,class/
+  \ --regex-coffee=/^[[:space:]]*(module\.)?(exports\.)?@?([A-Za-z.]+):.*[-=]>.*$/\3/m,method/
+  \ --regex-coffee=/^[[:space:]]*(module\.)?(exports\.)?([A-Za-z.]+)[[:space:]]+=.*[-=]>.*$/\3/f,function/
+  \ --regex-coffee=/^[[:space:]]*([A-Za-z.]+)[[:space:]]+=[^->\n]*$/\1/v,variable/,
+  \ --regex-coffee=/^[[:space:]]*it[[:space:][:punct:]]+([^[:punct:]]+).+$/\1/s,spec/'
+
+let $CTAGS = substitute(s:ctags_opts, '\v\([nst]\)', '\\', 'g')
+" }
