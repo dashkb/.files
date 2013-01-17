@@ -1,0 +1,40 @@
+# Configs
+config defaultToCurrentScreen true
+config nudgePercentOf screenSize
+config resizePercentOf screenSize
+config secondsBetweenRepeat 0.1
+config checkDefaultsOnLoad true
+config focusCheckWidthMax 3000
+config windowHintsShowIcons true
+config windowHintsIgnoreHiddenWindows false
+#config windowHintsDuration 5
+config windowHintsSpread true
+#config windowHintsOrder persist
+
+alias modal-key ctrl,s
+alias modal-key-ext ctrl,m
+
+# Monitor Aliases
+alias mon-laptop      0
+alias mon-ext    1
+
+# Abstract positions
+alias full          move screenOriginX;screenOriginY                  screenSizeX;screenSizeY
+alias lefthalf      move screenOriginX;screenOriginY                  screenSizeX/2;screenSizeY
+alias righthalf     move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY
+alias rightmost     move screenOriginX+screenSizeX*0.4;screenOriginY  screenSizeX*0.6;screenSizeY
+alias rightless     move screenOriginX+screenSizeX*0.6;screenOriginY  screenSizeX*0.4;screenSizeY
+alias leftmost      move screenOriginX;screenOriginY                  screenSizeX*0.6;screenSizeY
+alias leftless      move screenOriginX;screenOriginY                  screenSizeX*0.4;screenSizeY
+
+# Keys!
+bind f:${modal-key} ${full} ${mon-laptop}
+bind f:${modal-key-ext} ${full} ${mon-ext}
+bind a:${modal-key} ${leftmost} ${mon-laptop}
+bind a:${modal-key-ext} ${leftmost} ${mon-ext}
+bind s:${modal-key} ${rightless} ${mon-laptop}
+bind s:${modal-key-ext} ${rightless} ${mon-ext}
+
+bind r:${modal-key} relaunch
+
+bind f:ctrl hint asdfghjklqwertyuiop
