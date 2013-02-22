@@ -48,6 +48,9 @@
     Bundle 'jeetsukumaran/vim-buffergator'
     Bundle 'vim-scripts/vimwiki'
     Bundle 'kchmck/vim-coffee-script'
+    Bundle 'mattn/webapi-vim'
+    Bundle 'mattn/gist-vim'
+    Bundle 'tpope/vim-fugitive'
 
     filetype plugin indent on " load filetype plugins/indent settings
     let g:ctrlp_show_hidden = 1
@@ -146,6 +149,10 @@
     " PowerLine Settings {
       let g:Powerline_symbols = 'unicode'
     " }
+
+    let g:gist_clip_command = 'pbcopy'
+    let g:gist_post_private = 1
+
 " }
 
 " Mappings {
@@ -158,12 +165,9 @@
     noremap <C-u> :GundoToggle<CR>
 
     " Split pane movement and management
-    nmap <silent> <A-Up> :wincmd k<CR>
-    nmap <silent> <A-Down> :wincmd j<CR>
-    nmap <silent> <A-Left> :wincmd h<CR>
-    nmap <silent> <A-Right> :wincmd l<CR>
-    map <C-J> <C-W>j<C-W>_
-    map <C-K> <C-W>k<C-W>_
+    nmap <Leader>o :only<CR>
+    nmap <Leader>s :split<CR>
+    nmap <Leader>v :vsplit<CR>
 " }
 
 " GUI Settings {
