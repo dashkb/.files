@@ -33,4 +33,4 @@ alias rc="source ~/.zshrc"
 
 export EDITOR=vim
 
-export PATH="$PATH:/usr/local/share/python:./node_modules/.bin:/usr/local/share/npm/lib/node_modules"
+export PATH="$PATH:/usr/local/share/python:./node_modules/.bin:/usr/local/share/npm/lib/node_modules:/usr/local/share/npm/bin"
