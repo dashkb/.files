@@ -44,7 +44,7 @@
     Bundle 'Lokaltog/vim-powerline'
     Bundle 'myusuf3/numbers.vim'
     Bundle 'chriskempson/base16-vim'
-    Bundle 'mileszs/ack.vim'
+    Bundle 'rking/ag.vim'
     Bundle 'jeetsukumaran/vim-buffergator'
     Bundle 'vim-scripts/vimwiki'
     Bundle 'kchmck/vim-coffee-script'
@@ -152,7 +152,6 @@
 
     let g:gist_clip_command = 'pbcopy'
     let g:gist_post_private = 1
-
 " }
 
 " Mappings {
@@ -168,6 +167,9 @@
     nmap <Leader>o :only<CR>
     nmap <Leader>s :split<CR>
     nmap <Leader>v :vsplit<CR>
+
+    " Refresh ctrlp
+    nmap <Leader>cp :CtrlPClearAllCaches<CR>
 " }
 
 " GUI Settings {
