@@ -13,6 +13,9 @@ fi
 # Set shell colors
 . ~/.base16-shell/base16-default.dark.sh
 
+zstyle ':prezto:module:terminal' auto-title 'no'
+set-screen-window-title 'shell'
+
 # Stop annoying correcting all the time
 unsetopt correct_all
 
@@ -30,7 +33,8 @@ alias bspec="be rspec"
 
 alias dotfiles="cd ~/.homesick/repos/.files/home"
 alias rc="source ~/.zshrc"
+alias tr="tmux rename-window"
 
+# environment
 export EDITOR=vim
-
-export PATH="$PATH:/usr/local/share/python:./node_modules/.bin:/usr/local/share/npm/lib/node_modules:/usr/local/share/npm/bin"
+export PATH="/usr/local/share/python:./node_modules/.bin:/usr/local/share/npm/lib/node_modules:/usr/local/share/npm/bin:$PATH"
