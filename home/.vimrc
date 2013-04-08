@@ -38,7 +38,6 @@
     call vundle#rc()
 
     Bundle 'kien/ctrlp.vim'
-    Bundle 'Raimondi/delimitMate'
     Bundle 'scrooloose/nerdcommenter'
     Bundle 'majutsushi/tagbar'
     Bundle 'Lokaltog/vim-powerline'
@@ -51,6 +50,10 @@
     Bundle 'mattn/webapi-vim'
     Bundle 'mattn/gist-vim'
     Bundle 'tpope/vim-fugitive'
+    Bundle 'joefiorini/vim-sibilant'
+    Bundle 'Raimondi/delimitMate'
+    Bundle 'vim-scripts/Align'
+    Bundle 'nono/vim-handlebars'
 
     filetype plugin indent on " load filetype plugins/indent settings
     let g:ctrlp_show_hidden = 1
@@ -61,7 +64,7 @@
     set backspace=indent,eol,start " make backspace a more flexible
     set nobackup " make backup files
     "set backupdir=~/.vim/backup " where to put backup files
-    "set clipboard+=unnamed " share windows clipboard
+    set clipboard+=unnamed " share windows clipboard
     set directory=~/.vim/swap " directory to place swap files in
     set fileformats=unix,dos,mac " support all three, in this order
     set hidden " you can change buffers without saving
@@ -85,6 +88,7 @@
     set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,
                     \*.jpg,*.gif,*.png
     set wildmode=list:longest " turn on wild mode huge list
+    set autoindent
 " }
 
 " Vim UI {
@@ -194,6 +198,9 @@ if has("gui_running")
 endif
 " }
 
+" Lisp {
+au FileType lisp,sibilant let b:delimitMate_quotes = "\""
+" }
 
 " Coffeescript tags {
 let g:tagbar_type_coffee = {
