@@ -5,6 +5,14 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
+if [[ $TMUX != "" ]]; then
+  # Snag current tmux window title if any
+  WINDOW_TITLE=$(tmux list-window -F "#{window_name}#{window_active}" | sed '/0$/d' | sed 's/.$//')
+  if [[ $WINDOW_TITLE == 'reattach-to-user-namespace' ]]; then
+    WINDOW_TITLE=$(pwd)
+  fi
+fi
+
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
@@ -14,7 +22,6 @@ fi
 . ~/.base16-shell/base16-default.dark.sh
 
 zstyle ':prezto:module:terminal' auto-title 'no'
-set-screen-window-title 'shell'
 
 # Stop annoying correcting all the time
 unsetopt correct_all
@@ -38,3 +45,7 @@ alias tr="tmux rename-window"
 # environment
 export EDITOR=vim
 export PATH="/usr/local/share/python:./node_modules/.bin:/usr/local/share/npm/lib/node_modules:/usr/local/share/npm/bin:$PATH"
+
+if [[ $TMUX != "" && $WINDOW_TITLE != "" ]]; then
+  tr $WINDOW_TITLE
+fi
