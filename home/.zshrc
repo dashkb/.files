@@ -44,7 +44,7 @@ alias tr="tmux rename-window"
 
 # environment
 export EDITOR=vim
-export PATH="/usr/local/share/python:./node_modules/.bin:/usr/local/share/npm/lib/node_modules:/usr/local/share/npm/bin:$PATH"
+export PATH="/usr/local/bin:/usr/local/share/python:./node_modules/.bin:/usr/local/share/npm/lib/node_modules:/usr/local/share/npm/bin:$PATH"
 
 if [[ $TMUX != "" && $WINDOW_TITLE != "" ]]; then
   tr $WINDOW_TITLE
