@@ -30,6 +30,7 @@
     "             |+-- :write updates alternative file name
     "             +-- :read updates alternative file name
     syntax on " syntax highlighting on
+    let mapleader = ","
 " }
 
 " Vundle {
@@ -54,6 +55,7 @@
     Bundle 'Raimondi/delimitMate'
     Bundle 'vim-scripts/Align'
     Bundle 'nono/vim-handlebars'
+    Bundle 'digitaltoad/vim-jade'
 
     filetype plugin indent on " load filetype plugins/indent settings
     let g:ctrlp_show_hidden = 1
@@ -230,3 +232,4 @@ let s:ctags_opts = '
 
 let $CTAGS = substitute(s:ctags_opts, '\v\([nst]\)', '\\', 'g')
 " }
+
