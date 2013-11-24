@@ -40,8 +40,7 @@
 
     Bundle 'kien/ctrlp.vim'
     Bundle 'scrooloose/nerdcommenter'
-    Bundle 'majutsushi/tagbar'
-    Bundle 'Lokaltog/vim-powerline'
+    Bundle 'bling/vim-airline'
     Bundle 'myusuf3/numbers.vim'
     Bundle 'chriskempson/base16-vim'
     Bundle 'rking/ag.vim'
@@ -56,9 +55,17 @@
     Bundle 'vim-scripts/Align'
     Bundle 'nono/vim-handlebars'
     Bundle 'digitaltoad/vim-jade'
+    Bundle 'tpope/vim-haml'
+    Bundle 'itspriddle/vim-marked'
+    Bundle 'tpope/vim-markdown'
+    Bundle 'jtratner/vim-flavored-markdown'
+    Bundle 'jnwhiteh/vim-golang'
+    Bundle 'jayferd/eco.vim'
 
     filetype plugin indent on " load filetype plugins/indent settings
     let g:ctrlp_show_hidden = 1
+    let g:airline_powerline_fonts = 1
+    au BufNewFile,BufRead *.hamlc set ft=haml
 " }
 
 " General {
@@ -95,7 +102,7 @@
 
 " Vim UI {
     let base16colorspace=256
-    colorscheme base16-default
+    colorscheme base16-railscasts
     set background=dark
     set cursorcolumn " highlight the current column
     set cursorline " highlight current line
@@ -200,10 +207,6 @@ if has("gui_running")
 endif
 " }
 
-" Lisp {
-au FileType lisp,sibilant let b:delimitMate_quotes = "\""
-" }
-
 " Coffeescript tags {
 let g:tagbar_type_coffee = {
     \ 'ctagstype' : 'coffee',
@@ -217,7 +220,7 @@ let g:tagbar_type_coffee = {
     \ ]
 \ }
 
-" Posix regular expressions for matching interesting items. Since this will 
+" Posix regular expressions for matching interesting items. Since this will
 " be passed as an environment variable, no whitespace can exist in the options
 " so [:space:] is used instead of normal whitespaces.
 " Adapted from: https://gist.github.com/2901844
