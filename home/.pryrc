@@ -1,5 +1,4 @@
 require 'rubygems'
-require 'pry-stack_explorer'
 require 'pry-coolline'
 require 'awesome_print'
 
