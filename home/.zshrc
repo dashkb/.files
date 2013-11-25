@@ -23,8 +23,6 @@ fi
 
 zstyle ':prezto:module:terminal' auto-title 'no'
 
-# Stop annoying correcting all the time
-unsetopt correct_all
 
 # Git fastness
 __git_files () {
@@ -57,3 +55,10 @@ export AWS_CONFIG_FILE=~/.aws
 source ~/.awsrc
 
 export GOPATH=~/code/go
+
+# I can type, bro
+unsetopt CORRECT
+setopt NOCORRECT
+
+# No seriously, I know what I am doing
+unalias rm
