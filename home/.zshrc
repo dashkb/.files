@@ -44,7 +44,9 @@ alias tr="tmux rename-window"
 
 # environment
 export EDITOR=vim
-export PATH="${HOME}/bin:/usr/local/bin:/usr/local/share/python:./node_modules/.bin:$PATH"
+export PATH="${PATH}:${HOME}/.rvm/bin:./node_modules/.bin"
+
+export ANDROID_HOME=/usr/local/opt/android-sdk
 
 if [[ $TMUX != "" && $WINDOW_TITLE != "" ]]; then
   tr $WINDOW_TITLE
@@ -52,4 +54,6 @@ fi
 
 export AWS_CONFIG_FILE=~/.aws
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+source ~/.awsrc
+
+export GOPATH=~/code/go
