@@ -174,7 +174,6 @@
     " space / shift-space scroll in normal mode
     noremap <S-space> <C-b>
     noremap <space> <C-f>
-    noremap <C-u> :GundoToggle<CR>
 
     " Split pane movement and management
     nmap <Leader>o :only<CR>
