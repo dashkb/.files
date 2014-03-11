@@ -50,9 +50,9 @@ if [[ $TMUX != "" && $WINDOW_TITLE != "" ]]; then
   tr $WINDOW_TITLE
 fi
 
-export AWS_CONFIG_FILE=~/.aws
+[[ -s ~/.aws ]] && export AWS_CONFIG_FILE=~/.aws
 
-source ~/.awsrc
+[[ -s ~/.awsrc ]] && source ~/.awsrc
 
 export GOPATH=~/code/go
 
