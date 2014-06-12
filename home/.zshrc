@@ -40,6 +40,10 @@ alias dotfiles="cd ~/.homesick/repos/.files/home"
 alias rc="source ~/.zshrc"
 alias tr="tmux rename-window"
 
+alias z="zeus"
+
+alias git=hub
+
 # environment
 export EDITOR=vim
 export PATH="${PATH}:${HOME}/.rvm/bin:./node_modules/.bin"
@@ -50,11 +54,9 @@ if [[ $TMUX != "" && $WINDOW_TITLE != "" ]]; then
   tr $WINDOW_TITLE
 fi
 
-[[ -s ~/.aws ]] && export AWS_CONFIG_FILE=~/.aws
-
 [[ -s ~/.awsrc ]] && source ~/.awsrc
 
-export GOPATH=~/code/go
+set -o vi
 
 # I can type, bro
 unsetopt CORRECT
@@ -62,3 +64,5 @@ setopt NOCORRECT
 
 # No seriously, I know what I am doing
 unalias rm
+
+setopt autocd

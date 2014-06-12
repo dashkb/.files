@@ -50,7 +50,6 @@
     Bundle 'mattn/webapi-vim'
     Bundle 'mattn/gist-vim'
     Bundle 'tpope/vim-fugitive'
-    Bundle 'joefiorini/vim-sibilant'
     Bundle 'Raimondi/delimitMate'
     Bundle 'vim-scripts/Align'
     Bundle 'nono/vim-handlebars'
@@ -61,6 +60,14 @@
     Bundle 'jtratner/vim-flavored-markdown'
     Bundle 'jnwhiteh/vim-golang'
     Bundle 'jayferd/eco.vim'
+    Bundle 'vim-ruby/vim-ruby'
+    Bundle 'tpope/gem-browse'
+    Bundle 'tpope/vim-bundler'
+    Bundle 'tpope/vim-rake'
+    Bundle 'majutsushi/tagbar'
+    Bundle 'vim-scripts/SyntaxRange'
+    Bundle 'slim-template/vim-slim'
+    Bundle 'groenewege/vim-less'
 
     filetype plugin indent on " load filetype plugins/indent settings
     let g:ctrlp_show_hidden = 1
@@ -98,6 +105,11 @@
                     \*.jpg,*.gif,*.png
     set wildmode=list:longest " turn on wild mode huge list
     set autoindent
+
+    " Split pane movement and management
+    nmap <Leader>o :only<CR>
+    nmap <Leader>s :split<CR>
+    nmap <Leader>v :vsplit<CR>
 " }
 
 " Vim UI {
@@ -165,73 +177,37 @@
 
     let g:gist_clip_command = 'pbcopy'
     let g:gist_post_private = 1
-" }
-
-" Mappings {
-    " ROT13 - fun
-    map <F12> ggVGg?
-
-    " space / shift-space scroll in normal mode
-    noremap <S-space> <C-b>
-    noremap <space> <C-f>
-
-    " Split pane movement and management
-    nmap <Leader>o :only<CR>
-    nmap <Leader>s :split<CR>
-    nmap <Leader>v :vsplit<CR>
 
     " Refresh ctrlp
     nmap <Leader>cp :CtrlPClearAllCaches<CR>
 " }
 
-" GUI Settings {
-if has("gui_running")
-    " Basics {
-        set transparency=0
-        set guioptions=ce
-        "              ||
-        "              |+-- use simple dialogs rather than pop-ups
-        "              +  use GUI tabs, not console style tabs
-        set mousehide " hide the mouse cursor when typing
-        set guifont=Monaco\ for\ Powerline:h14
-    " }
-
-    " Font Switching Binds {
-        map <F8> <ESC>:set guifont=Consolas:h8<CR>
-        map <F9> <ESC>:set guifont=Consolas:h10<CR>
-        map <F10> <ESC>:set guifont=Consolas:h12<CR>
-        map <F11> <ESC>:set guifont=Consolas:h16<CR>
-        map <F12> <ESC>:set guifont=Consolas:h20<CR>
-    " }
-endif
-" }
-
 " Coffeescript tags {
-let g:tagbar_type_coffee = {
-    \ 'ctagstype' : 'coffee',
-    \ 'kinds'     : [
-        \ 'c:classes',
-        \ 'm:methods',
-        \ 'f:functions',
-        \ 'v:variables',
-        \ 'u:suite',
-        \ 's:specs'
-    \ ]
-\ }
+  let g:tagbar_type_coffee = {
+      \ 'ctagstype' : 'coffee',
+      \ 'kinds'     : [
+          \ 'c:classes',
+          \ 'm:methods',
+          \ 'f:functions',
+          \ 'v:variables',
+          \ 'u:suite',
+          \ 's:specs'
+      \ ]
+  \ }
 
-" Posix regular expressions for matching interesting items. Since this will
-" be passed as an environment variable, no whitespace can exist in the options
-" so [:space:] is used instead of normal whitespaces.
-" Adapted from: https://gist.github.com/2901844
-let s:ctags_opts = '
-  \ --langdef=coffee
-  \ --langmap=coffee:.coffee
-  \ --regex-coffee=/(^|=[[:space:]])*class[[:space:]]([A-Za-z]+\.)*([A-Za-z]+)([[:space:]]extends[[:space:]][A-Za-z.]+)?$/\3/c,class/
-  \ --regex-coffee=/^[[:space:]]*(module\.)?(exports\.)?@?([A-Za-z.]+):.*[-=]>.*$/\3/m,method/
-  \ --regex-coffee=/^[[:space:]]*(module\.)?(exports\.)?([A-Za-z.]+)[[:space:]]+=.*[-=]>.*$/\3/f,function/
-  \ --regex-coffee=/^[[:space:]]*([A-Za-z.]+)[[:space:]]+=[^->\n]*$/\1/v,variable/,
-  \ --regex-coffee=/^[[:space:]]*it[[:space:][:punct:]]+([^[:punct:]]+).+$/\1/s,spec/'
+  " Posix regular expressions for matching interesting items. Since this will
+  " be passed as an environment variable, no whitespace can exist in the options
+  " so [:space:] is used instead of normal whitespaces.
+  " Adapted from: https://gist.github.com/2901844
+  let s:ctags_opts = '
+    \ --langdef=coffee
+    \ --langmap=coffee:.coffee
+    \ --regex-coffee=/(^|=[[:space:]])*class[[:space:]]([A-Za-z]+\.)*([A-Za-z]+)([[:space:]]extends[[:space:]][A-Za-z.]+)?$/\3/c,class/
+    \ --regex-coffee=/^[[:space:]]*(module\.)?(exports\.)?@?([A-Za-z.]+):.*[-=]>.*$/\3/m,method/
+    \ --regex-coffee=/^[[:space:]]*(module\.)?(exports\.)?([A-Za-z.]+)[[:space:]]+=.*[-=]>.*$/\3/f,function/
+    \ --regex-coffee=/^[[:space:]]*([A-Za-z.]+)[[:space:]]+=[^->\n]*$/\1/v,variable/,
+    \ --regex-coffee=/^[[:space:]]*it[[:space:][:punct:]]+([^[:punct:]]+).+$/\1/s,spec/'
 
-let $CTAGS = substitute(s:ctags_opts, '\v\([nst]\)', '\\', 'g')
+  let $CTAGS = substitute(s:ctags_opts, '\v\([nst]\)', '\\', 'g')
 " }
 
