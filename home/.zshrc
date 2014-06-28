@@ -46,7 +46,7 @@ alias git=hub
 
 # environment
 export EDITOR=vim
-export PATH="${PATH}:${HOME}/.rvm/bin:./node_modules/.bin"
+export PATH="${PATH}:${HOME}/.rvm/bin:./node_modules/.bin:./bin"
 
 export ANDROID_HOME=/usr/local/opt/android-sdk
 
