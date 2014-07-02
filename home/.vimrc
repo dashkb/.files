@@ -70,7 +70,6 @@
     Bundle 'groenewege/vim-less'
 
     filetype plugin indent on " load filetype plugins/indent settings
-    let g:ctrlp_show_hidden = 1
     let g:airline_powerline_fonts = 1
     au BufNewFile,BufRead *.hamlc set ft=haml
 " }
@@ -180,9 +179,17 @@
 
     " Refresh ctrlp
     nmap <Leader>cp :CtrlPClearAllCaches<CR>
+    let g:ctrlp_cmd = 'CtrlPMixed'
+    let g:ctrlp_show_hidden = 1
     let g:ctrlp_custom_ignore = {
           \  'dir': '\v[\/]node_modules$'
           \  }
+    let g:ctrlp_user_command = {
+          \ 'types': {
+            \ 1: ['.git', 'cd %s && git ls-files'],
+            \ },
+            \ 'fallback': 'find %s -type f'
+          \ }
 " }
 
 " Coffeescript tags {
