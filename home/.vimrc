@@ -68,6 +68,8 @@
     Bundle 'vim-scripts/SyntaxRange'
     Bundle 'slim-template/vim-slim'
     Bundle 'groenewege/vim-less'
+    Bundle 'msanders/snipmate.vim'
+    Bundle 'ekalinin/Dockerfile.vim'
 
     filetype plugin indent on " load filetype plugins/indent settings
     let g:airline_powerline_fonts = 1
