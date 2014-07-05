@@ -30,8 +30,6 @@ __git_files () {
 }
 
 # aliases -kb
-alias vim="mvim -v"
-
 alias be="bundle exec"
 alias brake="be rake"
 alias bspec="be rspec"
