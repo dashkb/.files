@@ -40,8 +40,6 @@ alias tr="tmux rename-window"
 
 alias z="zeus"
 
-alias git=hub
-
 # environment
 export EDITOR=vim
 export PATH="${PATH}:${HOME}/.rvm/bin:./node_modules/.bin:./bin"
