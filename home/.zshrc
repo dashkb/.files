@@ -62,3 +62,5 @@ setopt NOCORRECT
 unalias rm
 
 setopt autocd
+
+. ~/.zprompt
