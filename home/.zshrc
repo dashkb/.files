@@ -43,6 +43,11 @@ alias git=hub
 
 # environment
 export PATH="${PATH}:${HOME}/.rvm/bin:./node_modules/.bin:./bin:${HOME}/bin"
+eval "$(shy init)"
+
+for plugin in ~/.zplugin/*; do
+  shy load $plugin
+done
 
 export ANDROID_HOME=/usr/local/opt/android-sdk
 
@@ -63,6 +68,6 @@ setopt NO_HIST_VERIFY
 
 setopt autocd
 
-bindkey '\C-j' down-line-or-history
-bindkey '\C-k' up-line-or-history
+bindkey '^j' down-line-or-history
+bindkey '^k' up-line-or-history
 bindkey -M 'viins' 'jk' vi-cmd-mode
