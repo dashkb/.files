@@ -31,6 +31,9 @@ __git_files () {
 
 # aliases -kb
 alias vim="mvim -v"
+export EDITOR="mvim -v"
+export VISUAL=${EDITOR}
+export GIT_EDITOR=${EDITOR}
 
 alias be="bundle exec"
 alias brake="be rake"
@@ -39,14 +42,15 @@ alias bspec="be rspec"
 alias dotfiles="cd ~/.homesick/repos/.files/home"
 alias rc="source ~/.zshrc"
 alias tr="tmux rename-window"
+alias t=todo.sh
 
 alias z="zeus"
+alias ccat="pygmentize -g"
 
 alias git=hub
 
 # environment
-export EDITOR=vim
-export PATH="${PATH}:${HOME}/.rvm/bin:./node_modules/.bin:./bin"
+export PATH="${PATH}:${HOME}/.rvm/bin:./node_modules/.bin:./bin:${HOME}/bin"
 
 export ANDROID_HOME=/usr/local/opt/android-sdk
 
@@ -62,7 +66,14 @@ set -o vi
 unsetopt CORRECT
 setopt NOCORRECT
 
+# So I can send !! from vim
+setopt NO_HIST_VERIFY
+
 # No seriously, I know what I am doing
 unalias rm
 
 setopt autocd
+
+bindkey '\C-j' down-line-or-history
+bindkey '\C-k' up-line-or-history
+bindkey -M 'viins' 'jk' vi-cmd-mode

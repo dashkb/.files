@@ -1,7 +1,6 @@
 [core]
     excludesfile = ~/.gitignore
     autocrlf = input
-    editor = vim
 [color]
     ui = auto
     interactive = auto
@@ -9,6 +8,8 @@
     st = status
     ci = commit
     co = checkout
+    p  = push
+    rb = rebase
     staged = "diff --cached"
     oneline = "log --pretty=oneline"
     llog = log --date=local
