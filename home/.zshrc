@@ -13,16 +13,8 @@ if [[ $TMUX != "" ]]; then
   fi
 fi
 
-# Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
-
 # Set shell colors
 . ~/.base16-shell/base16-default.dark.sh
-
-zstyle ':prezto:module:terminal' auto-title 'no'
-
 
 # Git fastness
 __git_files () {
@@ -68,9 +60,6 @@ setopt NOCORRECT
 
 # So I can send !! from vim
 setopt NO_HIST_VERIFY
-
-# No seriously, I know what I am doing
-unalias rm
 
 setopt autocd
 
