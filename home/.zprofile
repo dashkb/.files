@@ -1,9 +1,4 @@
-#
 # Executes commands at login pre-zshrc.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
 
 [[ -s /Users/kyle/.nvm/nvm.sh ]] && . /Users/kyle/.nvm/nvm.sh # This loads NVM
 

@@ -49,6 +49,7 @@ for plugin in ~/.zplugin/*; do
   shy load $plugin
 done
 
+export CLICOLOR=1
 export ANDROID_HOME=/usr/local/opt/android-sdk
 
 if [[ $TMUX != "" && $WINDOW_TITLE != "" ]]; then
