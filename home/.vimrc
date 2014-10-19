@@ -74,6 +74,7 @@
     Bundle 'wlangstroth/vim-racket'
     Bundle 'jpalardy/vim-slime'
     Bundle 'vim-scripts/paredit.vim'
+    Bundle 'edkolev/tmuxline.vim'
 
     filetype plugin indent on " load filetype plugins/indent settings
     let g:airline_powerline_fonts = 1
@@ -199,12 +200,6 @@
   let g:ctrlp_custom_ignore = {
         \  'dir': '\v[\/]node_modules$'
         \  }
-  let g:ctrlp_user_command = {
-        \ 'types': {
-          \ 1: ['.git', 'cd %s && git ls-files'],
-          \ },
-          \ 'fallback': 'find %s -type f'
-        \ }
 
   let g:slime_target = 'tmux'
   nmap <Leader>spec :execute ':SlimeSend1 z spec ' . @% . ':' . line(".")<CR>
