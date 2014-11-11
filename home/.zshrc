@@ -16,32 +16,11 @@ fi
 # Set shell colors
 . ~/.base16-shell/base16-default.dark.sh
 
-# Git fastness
-__git_files () {
-  _wanted files expl 'local files' _files
-}
-
-# aliases -kb
-alias vim="mvim -v"
+# environment
 export EDITOR="mvim -v"
 export VISUAL=${EDITOR}
 export GIT_EDITOR=${EDITOR}
 
-alias be="bundle exec"
-alias brake="be rake"
-alias bspec="be rspec"
-
-alias dotfiles="cd ~/.homesick/repos/.files/home"
-alias rc="source ~/.zshrc"
-alias tr="tmux rename-window"
-alias t=todo.sh
-
-alias z="zeus"
-alias ccat="pygmentize -g"
-
-alias git=hub
-
-# environment
 export PATH="${PATH}:${HOME}/.rvm/bin:./node_modules/.bin:./bin:${HOME}/bin"
 eval "$(shy init)"
 
@@ -65,10 +44,14 @@ unsetopt CORRECT
 setopt NOCORRECT
 
 # So I can send !! from vim
+export HISTFILE=~/.zhistory
+export SAVEHIST=10000
 setopt NO_HIST_VERIFY
+setopt SHARE_HISTORY
 
 setopt autocd
 
 bindkey '^j' down-line-or-history
 bindkey '^k' up-line-or-history
 bindkey -M 'viins' 'jk' vi-cmd-mode
+
