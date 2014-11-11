@@ -10,11 +10,14 @@
     co = checkout
     p  = push
     rb = rebase
+    rbm =  rebase -i origin/master
+    rbc = rebase --continue
     staged = "diff --cached"
     oneline = "log --pretty=oneline"
     llog = log --date=local
     changes = diff --name-status -r
-    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    lg = log --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    lgt = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     log-graph = log --all --graph --decorate
     log-refs = log --all --graph --decorate --oneline --simplify-by-decoration --no-merges
     log-timeline = log --format='%h %an %ar - %s'
