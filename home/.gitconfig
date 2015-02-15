@@ -5,13 +5,14 @@
     ui = auto
     interactive = auto
 [alias]
-    st = status
+    st = status -sb
     ci = commit
     co = checkout
     p  = push
     rb = rebase
     rbm =  rebase -i origin/master
     rbc = rebase --continue
+    dst = diff --stat
     staged = "diff --cached"
     oneline = "log --pretty=oneline"
     llog = log --date=local
