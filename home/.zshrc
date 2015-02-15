@@ -21,7 +21,7 @@ export EDITOR="vim"
 export VISUAL=${EDITOR}
 export GIT_EDITOR=${EDITOR}
 
-export PATH="${PATH}:${HOME}/.rvm/bin:./node_modules/.bin:./bin:${HOME}/bin"
+export PATH="${HOME}/.rvm/bin:./node_modules/.bin:./bin:${HOME}/bin:${PATH}"
 eval "$(shy init)"
 
 for plugin in ~/.zplugin/*; do
@@ -46,12 +46,13 @@ setopt NOCORRECT
 # So I can send !! from vim
 export HISTFILE=~/.zhistory
 export SAVEHIST=10000
+export HISTSIZE=10000
 setopt NO_HIST_VERIFY
 setopt SHARE_HISTORY
 
 setopt autocd
 
-bindkey '^j' down-line-or-history
-bindkey '^k' up-line-or-history
+bindkey '^v' down-line-or-history
+bindkey '^b' up-line-or-history
 bindkey -M 'viins' 'jk' vi-cmd-mode
 
