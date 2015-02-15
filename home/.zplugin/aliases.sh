@@ -16,3 +16,5 @@ alias git=hub
 alias g=git
 
 alias "delete-merged-git-branches"='git branch --merged master | grep -v "master" | xargs -n 1 git branch -d'
+
+alias sk="z r script/sidekiq.rb -q default,1 -q mailer,1 -c 1"
