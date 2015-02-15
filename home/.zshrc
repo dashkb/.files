@@ -17,7 +17,7 @@ fi
 . ~/.base16-shell/base16-default.dark.sh
 
 # environment
-export EDITOR="mvim -v"
+export EDITOR="vim"
 export VISUAL=${EDITOR}
 export GIT_EDITOR=${EDITOR}
 
