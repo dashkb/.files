@@ -71,6 +71,7 @@
   Bundle 'christoomey/vim-tmux-navigator'
   Bundle 'kien/ctrlp.vim'
   Bundle 'tpope/vim-dispatch'
+  Bundle 'junegunn/fzf'
 
   filetype plugin indent on " load filetype plugins/indent settings
 
@@ -101,6 +102,9 @@
   nmap <Leader>cp :CtrlPClearAllCaches<CR>
   nmap <Leader>ct :CtrlPTag<CR>
   nmap <Leader>ut :Dispatch ctags -R . >/dev/null 2>&1<CR>
+
+  let g:ctrlp_map = ''
+  nmap <C-p> :FZF<CR>
 " }
 
 " General {
