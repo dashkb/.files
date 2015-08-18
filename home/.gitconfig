@@ -13,6 +13,7 @@
     rbm =  rebase -i origin/master
     rbc = rebase --continue
     dst = diff --stat
+    pf = push -f
     staged = "diff --cached"
     oneline = "log --pretty=oneline"
     llog = log --date=local

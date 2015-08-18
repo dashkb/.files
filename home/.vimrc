@@ -30,59 +30,77 @@
   "             |+-- :write updates alternative file name
   "             +-- :read updates alternative file name
   syntax on " syntax highlighting on
-  let mapleader = ","
+  let mapleader = " "
 " }
 
 " Vundle {
   filetype off
-  set rtp+=~/.vim/vundle/
-  call vundle#rc()
+  set rtp+=~/.vim/bundle/Vundle.vim
+  set rtp+=~/.fzf
+  call vundle#begin()
 
-  Bundle 'tpope/vim-commentary'
-  Bundle 'bling/vim-airline'
-  Bundle 'myusuf3/numbers.vim'
-  Bundle 'chriskempson/base16-vim'
-  Bundle 'rking/ag.vim'
-  Bundle 'jeetsukumaran/vim-buffergator'
-  Bundle 'vim-scripts/vimwiki'
-  Bundle 'kchmck/vim-coffee-script'
-  Bundle 'mattn/webapi-vim'
-  Bundle 'mattn/gist-vim'
-  Bundle 'tpope/vim-fugitive'
-  Bundle 'vim-scripts/Align'
-  Bundle 'tpope/vim-haml'
-  Bundle 'itspriddle/vim-marked'
-  Bundle 'tpope/vim-markdown'
-  Bundle 'jtratner/vim-flavored-markdown'
-  Bundle 'vim-ruby/vim-ruby'
-  Bundle 'tpope/gem-browse'
-  Bundle 'tpope/vim-bundler'
-  Bundle 'tpope/vim-rake'
-  Bundle 'majutsushi/tagbar'
-  Bundle 'vim-scripts/SyntaxRange'
-  Bundle 'ekalinin/Dockerfile.vim'
-  Bundle "Matt-Deacalion/vim-systemd-syntax"
-  Bundle 'SirVer/ultisnips'
-  Bundle 'honza/vim-snippets'
-  Bundle 'wlangstroth/vim-racket'
-  Bundle 'jpalardy/vim-slime'
-  Bundle 'vim-scripts/paredit.vim'
-  Bundle 'edkolev/tmuxline.vim'
-  Bundle 'christoomey/vim-tmux-navigator'
-  Bundle 'kien/ctrlp.vim'
-  Bundle 'tpope/vim-dispatch'
-  Bundle 'junegunn/fzf'
+  let g:slime_default_config = {"socket_name": "default", "target_pane": "1"}
+  Plugin 'gmarik/Vundle.vim'
+
+  Plugin 'bling/vim-airline'
+  Plugin 'tpope/vim-commentary'
+  Plugin 'myusuf3/numbers.vim'
+  Plugin 'chriskempson/base16-vim'
+  Plugin 'rking/ag.vim'
+  Plugin 'jeetsukumaran/vim-buffergator'
+  Plugin 'kchmck/vim-coffee-script'
+  Plugin 'mattn/webapi-vim'
+  Plugin 'mattn/gist-vim'
+  Plugin 'tpope/vim-fugitive'
+  Plugin 'vim-scripts/Align'
+  Plugin 'tpope/vim-haml'
+  Plugin 'itspriddle/vim-marked'
+  Plugin 'tpope/vim-markdown'
+  Plugin 'jtratner/vim-flavored-markdown'
+  Plugin 'vim-ruby/vim-ruby'
+  Plugin 'tpope/gem-browse'
+  Plugin 'tpope/vim-bundler'
+  Plugin 'tpope/vim-rake'
+  Plugin 'tpope/vim-rails'
+  Plugin 'majutsushi/tagbar'
+  Plugin 'vim-scripts/SyntaxRange'
+  Plugin 'ekalinin/Dockerfile.vim'
+  Plugin 'Matt-Deacalion/vim-systemd-syntax'
+  Plugin 'SirVer/ultisnips'
+  Plugin 'honza/vim-snippets'
+  Plugin 'wlangstroth/vim-racket'
+  Plugin 'jpalardy/vim-slime'
+  Plugin 'edkolev/tmuxline.vim'
+  Plugin 'christoomey/vim-tmux-navigator'
+  Plugin 'tpope/vim-dispatch'
+  Plugin 'tpope/vim-vinegar'
+  Plugin 'groenewege/vim-less'
+  Plugin 'lmeijvogel/vim-yaml-helper'
+  Plugin 'vimwiki/vimwiki'
+  Plugin 'schickling/vim-bufonly'
+  Plugin 'vim-scripts/paredit.vim'
+  Plugin 'vim-scripts/vim-misc'
+  Plugin 'xolox/vim-lua-ftplugin'
+  Plugin 'vim-scripts/lua.vim'
+  Plugin 'vim-scripts/terra.vim'
+  Plugin 'luochen1990/rainbow'
+  Plugin 'kien/ctrlp.vim'
+  Plugin 'slim-template/vim-slim'
+
+  call vundle#end()
 
   filetype plugin indent on " load filetype plugins/indent settings
 
   let g:airline_powerline_fonts = 1
   let g:airline_section_b = ''
 
-  let g:slime_default_config = {"socket_name": "default", "target_pane": ":.1"}
-  nmap <leader>ss <Plug>SlimeMotionSend
+  nmap <leader>sm <Plug>SlimeMotionSend
+  nmap <leader>sl <Plug>SlimeLineSend
 
   au BufNewFile,BufRead *.hamlc set ft=haml
   au BufRead,BufNewFile *.service set filetype=systemd
+  au BufRead,BufNewFile *.slum set ft=lisp
+  au Bufread,BufNewFile *.t set ft=terra
 
   au FileType racket setl isk-=^
   au FileType racket setl isk+=/
@@ -90,7 +108,7 @@
 
   set lispwords+=get,put,post,patch,delete,class,class*
   set lispwords+=define-for-syntax,define-syntax-rule
-  set lispwords+=for/syntax
+  set lispwords+=for/syntax,thunk,for/list
 
   if executable('ag')
     " Use Ag over Grep
@@ -99,12 +117,14 @@
     " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
     let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
   endif
+
   nmap <Leader>cp :CtrlPClearAllCaches<CR>
   nmap <Leader>ct :CtrlPTag<CR>
   nmap <Leader>ut :Dispatch ctags -R . >/dev/null 2>&1<CR>
 
   let g:ctrlp_map = ''
-  nmap <C-p> :FZF<CR>
+  nmap <Leader>ut :Dispatch ctags --exclude=.git --exclude=node_modules -R . >/dev/null 2>&1<CR>
+  nmap <C-p> :FZF!<CR>
 " }
 
 " General {
@@ -165,7 +185,7 @@
   set nostartofline " leave my cursor where it was
   set novisualbell " don't blink
   set number " turn on line numbers
-  set numberwidth=5 " We are good up to 99999 lines
+  set numberwidth=1 " We are good up to 99999 lines
   set report=0 " tell us when anything is changed via :...
   set ruler " Always show current positions along the bottom
   set scrolloff=20 " Keep 10 lines (top/bottom) for scope
@@ -195,12 +215,12 @@
   set tabstop=8 " real tabs should be 8, and they will show with
                   " set list on
 
-  fun! OmgFold(lnum)
-    return empty(getline(a:lnum))?'-1':indent(a:lnum)/2
-  endfun
+  " fun! OmgFold(lnum)
+  "   return empty(getline(a:lnum))?'-1':indent(a:lnum)/2
+  " endfun
 
-  set foldexpr=OmgFold(v:lnum)
-  set fdm=expr
+  " set foldexpr=OmgFold(v:lnum)
+  set fdm=indent
   set foldlevelstart=2
 " }
 
@@ -208,7 +228,7 @@
   let b:match_ignorecase = 1 " case is stupid
 
   " Tagbar Settings
-  nmap <Leader>c :TagbarOpenAutoClose<CR>
+  nmap <Leader>tb :TagbarOpenAutoClose<CR>
 
   " PowerLine Settings {
     let g:Powerline_symbols = 'unicode'
@@ -218,10 +238,21 @@
   let g:gist_post_private = 1
 
   let g:slime_target = 'tmux'
-  nmap <Leader>spec :execute ':SlimeSend1 z spec ' . @% . ':' . line(".")<CR>
+  nmap <Leader>zspec :execute ':SlimeSend1 z spec ' . @% . ':' . line(".")<CR>
+  nmap <Leader>rspec :execute ':SlimeSend1 rspec ' . @% . ':' . line(".")<CR>
   nmap <Leader>!! :execute ':SlimeSend1 !!'<CR>
   nmap <Leader>par :call PareditToggle()<CR>
-" }
+
+  let g:paredit_leader = "<space>"
+
+  function! ColorOf(thing)
+    let color = synIDattr(synIDtrans(hlID(a:thing)), 'fg')
+    let val = [color, color]
+    return val
+  endfunction
+
+  let g:rainbow_active = 1
+
 
 " Coffeescript tags {
   let g:tagbar_type_coffee = {
