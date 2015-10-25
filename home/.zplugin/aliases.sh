@@ -25,6 +25,7 @@ alias clear-sidekiq="redis-cli KEYS 'resque:*' | xargs redis-cli DEL"
 alias sk="z r script/sidekiq.rb -q default,1 -q mailer,1 -c 1"
 
 alias fixtures="rake spec:fixture_builder:clean"
+alias prepare-tests="RAILS_ENV=test rake db:schema:load && fixtures"
 
 alias rs="spring rails server -b 0.0.0.0"
 alias rs5="rs -p 5000"

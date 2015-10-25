@@ -21,7 +21,7 @@ export EDITOR="vim"
 export VISUAL=${EDITOR}
 export GIT_EDITOR=${EDITOR}
 
-export PATH="${HOME}/.rvm/bin:./node_modules/.bin:./bin:${HOME}/bin:${PATH}"
+export PATH="${HOME}/.rvm/bin:./node_modules/.bin:./bin:${HOME}/bin:/Applications/Racket v6.2.1/bin:${PATH}"
 eval "$(shy init)"
 
 for plugin in ~/.zplugin/*; do

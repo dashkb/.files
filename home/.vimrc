@@ -86,7 +86,10 @@
   Plugin 'luochen1990/rainbow'
   Plugin 'kien/ctrlp.vim'
   Plugin 'slim-template/vim-slim'
-
+  Plugin 'nelstrom/vim-qargs'
+  Plugin 'LucHermitte/lh-vim-lib'
+  Plugin 'LucHermitte/local_vimrc'
+  Plugin 'Valloric/YouCompleteMe'
   call vundle#end()
 
   filetype plugin indent on " load filetype plugins/indent settings
@@ -108,7 +111,7 @@
 
   set lispwords+=get,put,post,patch,delete,class,class*
   set lispwords+=define-for-syntax,define-syntax-rule
-  set lispwords+=for/syntax,thunk,for/list
+  set lispwords+=for/syntax,thunk,place,define-syntax-parameter,syntax-parse
 
   if executable('ag')
     " Use Ag over Grep
@@ -125,18 +128,17 @@
   let g:ctrlp_map = ''
   nmap <Leader>ut :Dispatch ctags --exclude=.git --exclude=node_modules -R . >/dev/null 2>&1<CR>
   nmap <C-p> :FZF!<CR>
+
+  let g:UltiSnipsExpandTrigger = '<c-s>'
 " }
 
 " General {
-  "set noautochdir " always switch to the current file directory
+  set noswapfile
   set backspace=indent,eol,start " make backspace a more flexible
   set nobackup " make backup files
-  "set backupdir=~/.vim/backup " where to put backup files
   set clipboard+=unnamed " share windows clipboard
-  set directory=~/.vim/swap " directory to place swap files in
   set fileformats=unix,dos,mac " support all three, in this order
   set hidden " you can change buffers without saving
-  "set mouse=a " use mouse everywhere
   set noerrorbells " don't make noise
   set whichwrap=b,s,h,l,<,>,~,[,] " everything wraps
   "             | | | | | | | | |
@@ -198,7 +200,6 @@
 " }
 
 " Text Formatting/Layout {
-  set completeopt= " don't use a pop up menu for completions
   set expandtab " no real tabs please!
   set formatoptions=rq " Automatically insert comment leader on return,
                         " and let gq format comments
@@ -282,4 +283,3 @@
 
   let $CTAGS = substitute(s:ctags_opts, '\v\([nst]\)', '\\', 'g')
 " }
-
