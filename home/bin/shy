@@ -1,0 +1,420 @@
+#!/usr/bin/env bash
+#
+# Installation: Make this file is executable and add it to your PATH somewhere.
+# Then place the following in your shell rc file.
+#
+#   eval "$(shy init)"
+#
+#
+# Usage: shy <command> [<args>]
+#
+# Shy enables minimal shell plugin management
+#
+# Most useful commands:
+#   load     Load a plugin file
+#   list     List the plugins that have been loaded
+#   show     Show the contents of a plugin
+#   edit     Open a plugin file with your editor
+#   which    Show which plugin a function, alias, or variable belongs to
+#
+# Use `shy help <command>' for information on a specific command.
+# Full documentation: https://github.com/aaronroyer/shy#readme
+set -e
+
+if [ -t 1 ] && [ -z "$SHY_NO_COLOR" ]; then
+  c_reset=$(tput sgr0)
+  c_bold=$(tput bold)
+  c_blue=$(tput setaf 4)
+  c_white=$(tput setaf 7)
+fi
+
+### Utilities
+
+warn() {
+  echo "shy: $@" 1>&2;
+}
+
+die() {
+  warn "$@"
+  exit 1
+}
+
+debug() {
+  [ -n "$SHY_DEBUG" ] && warn "$@"
+  return 0
+}
+
+# Get data for a plugin with the given name
+get_plugin_data() {
+  local name=$1
+  echo $SHY_PLUGIN_DATA | tr '|' '\n' | grep "^${name};"
+}
+
+plugin_field() {
+  echo $1 | cut -d ';' -f $2
+}
+
+plugin_name() { plugin_field "$1" 1; }
+plugin_file() { plugin_field "$1" 2; }
+plugin_aliases() { plugin_field "$1" 3 | tr ':' '\n'; }
+plugin_functions() { plugin_field "$1" 4 | tr ':' '\n'; }
+plugin_variables() { plugin_field "$1" 5 | tr ':' '\n'; }
+
+realpath() {
+  local native=$(type -p grealpath realpath | head -1)
+  if [ -n "$native" ]; then
+    $native "$1"
+  else
+    [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
+  fi
+}
+
+# Returns 0 if an exact match is included in a list, non-zero otherwise.
+includes() {
+  echo "$1" | grep -q "^$2$"
+}
+
+# Takes a semicolon-delimited list and prints it with a nice title. Prints
+# nothing if the list is empty.
+fancy_list() {
+  local items="$1" title="$2"
+  [ -z "$items" ] && return
+  echo -e "\n${c_bold}${c_blue}== ${c_white}$title${c_blue} ==${c_reset}"
+  echo "$items"
+}
+
+singularize_type() {
+  case "$1" in
+    aliases) echo alias ;;
+    functions) echo function ;;
+    variables) echo variable ;;
+  esac
+}
+
+# Takes the name of an item (function, alias, or variable) and echos the names
+# of any plugins it is included in, if any, followed by the type of item. The
+# plugin name and type of item are separated by a colon.
+#
+# Example
+#   find_item my_func
+#   => my_plugin:function
+find_item() {
+  local item_name="$1"
+  for plugin_name in $(list_plugins); do
+    local plugin=$(get_plugin_data $plugin_name)
+    for item_type in aliases functions variables; do
+      if includes "$(plugin_${item_type} "$plugin")" $item_name; then
+        echo "$plugin_name:$(singularize_type $item_type)"
+        return
+      fi
+    done
+  done
+  return 1
+}
+
+plugin_cache_dir() {
+  if [ -n "$SHY_CACHE_DIR" ]; then
+    echo "$SHY_CACHE_DIR"
+    return
+  fi
+
+  echo "$HOME/.shy_plugin_cache"
+}
+
+initialize_cache() {
+  local cache_dir=$(plugin_cache_dir)
+  if [ ! -d "$cache_dir" ]; then
+    mkdir "$cache_dir" || { warn "Could not create cache directory: $cache_dir"; return 1; }
+  fi
+}
+
+plugin_name_for_path() {
+  basename "${1%.*}"
+}
+
+cache_file_path() {
+  local plugin_name="$(plugin_name_for_path "$1")"
+  echo "$(plugin_cache_dir)/$plugin_name"
+}
+
+write_cache() {
+  local plugin_path="$1" plugin_content="$2"
+  initialize_cache || return 1
+  local plugin_cache_file=$(cache_file_path "$plugin_path")
+  echo "$plugin_content" > "$plugin_cache_file"
+}
+
+read_cache() {
+  local plugin_path="$1"
+  [ -d "$(plugin_cache_dir)" ] || return 1
+  local plugin_cache_file=$(cache_file_path "$plugin_path")
+  [ -f "$plugin_cache_file" ] || return 1
+  [ "$plugin_path" -nt "$plugin_cache_file" ] && return 1
+  cat "$plugin_cache_file"
+}
+
+# Prints comments from this file starting at the given line number and stopping
+# when the next line does not start with a comment.
+print_comments_starting_at_line() {
+  cat "$BASH_SOURCE" | tail -n "+$1" | awk '{if (/^#/) print; else exit}' | cut -c3-
+  echo ''
+}
+
+### Top-level functions
+
+# Usage: shy list
+#
+# Lists the names of plugins that have been previously loaded with
+# `shy load <plugin_file>'. The name of a plugin is the file name with
+# any extension removed.
+list_plugins() {
+  echo $SHY_PLUGIN_DATA | tr '|' '\n' | cut -d ';' -f 1
+}
+
+# Usage: shy show <plugin_name>
+#
+# Prints information about the plugin with the given name, including the
+# name and file path, as well as the functions, aliases, and variables
+# defined in the plugin.
+show_plugin() {
+  local plugin_data=$(get_plugin_data $1)
+  [ -z "$plugin_data" ] && die "Unknown plugin name: $1"
+  local name source_file aliases funcs vars
+  name=$(plugin_name "$plugin_data")
+  source_file=$(plugin_file "$plugin_data")
+  aliases=$(plugin_aliases "$plugin_data")
+  funcs=$(plugin_functions "$plugin_data")
+  vars=$(plugin_variables "$plugin_data")
+
+  echo "${c_bold}Plugin name:${c_reset} $name"
+  echo "${c_bold}Source file:${c_reset} $source_file"
+  fancy_list "$aliases" 'Aliases'
+  fancy_list "$funcs" 'Functions'
+  fancy_list "$vars" 'Variables'
+  echo ''
+}
+
+# Usage: shy edit <plugin_or_item_name>
+#
+# Opens a plugin file in your editor.
+#
+# If the name of a plugin is given, the file for the plugin with with that
+# name is opened.
+#
+# If the names of a function, alias, or variable defined in a function is
+# given, then the plugin file containing the item is opened.
+#
+# The editor used will be chosen from the SHY_EDITOR environment variable
+# or the EDITOR environment variable, in that order. If neither is set then
+# vi is used.
+edit_plugin() {
+  local item_name="$1"
+  local plugin_data=$(get_plugin_data $item_name)
+  if [ -z "$plugin_data" ]; then
+    local plugin_name_and_item_type=$(find_item $item_name)
+    if [ -n "$plugin_name_and_item_type" ]; then
+      plugin_data=$(get_plugin_data ${plugin_name_and_item_type%:*})
+    fi
+  fi
+  [ -z "$plugin_data" ] && die "Unknown plugin, function, alias, or variable: $1"
+
+  local editor=$SHY_EDITOR
+  [ -z "$editor" ] && editor=$EDITOR
+  [ -z "$editor" ] && editor=vi
+
+  $editor $(plugin_file "$plugin_data")
+}
+
+# Usage: shy which <item_name>
+#
+# Finds which plugin a given function, alias, or variable is defined in.
+which_plugin() {
+  local item_name="$1"
+  local plugin_name_and_item_type=$(find_item $item_name)
+  if [ -n "$plugin_name_and_item_type" ]; then
+    local plugin_name=${plugin_name_and_item_type%:*}
+    local item_type=${plugin_name_and_item_type##*:}
+    local article=a
+    [ "$item_type" = "alias" ] && article=an
+    echo "$item_name is $article $item_type in the plugin $plugin_name"
+  else
+    echo "($item_name not found in any plugin)" >&2
+    return 1
+  fi
+}
+
+# Usage: shy help [<command_name>]
+#
+# Prints help information.
+#
+# With no command name given, basic commands and usage are printed.
+#
+# If a command name is given, then usage for that command is printed.
+print_help() {
+  local cmd="$1"
+  if [ -n "$cmd" ]; then
+    local doc_first_line=$(grep -n "^# Usage: shy $cmd" "$BASH_SOURCE")
+    if [ -n "$doc_first_line" ]; then
+      local doc_first_line_number=$(echo "$doc_first_line" | cut -d ':' -f 1)
+      print_comments_starting_at_line $doc_first_line_number
+    else
+      die "No such command '$cmd'"
+    fi
+  else
+    print_comments_starting_at_line 9
+  fi
+}
+
+# (Documentation comments for load command included here, even though it is defined
+# in the init section, so that it is parseable with the rest of the top-level commands)
+
+# Usage: shy load <plugin_file>
+#
+# Loads a plugin from the given file.
+#
+# A plugin is merely a file with normal shell code. When loaded, Shy sources the
+# file and records the names of the functions, aliases, and environment variables
+# defined (for the first time) while sourcing the file.
+
+# Usage: shy init
+#
+# Prints Shy code that must be sourced in the interactive shell environment.
+#
+# This should generally only be used in the following initial configuration of
+# Shy, which should be placed in your shell's rc file, after the main shy
+# executable is placed on the PATH.
+#
+#   eval "$(shy init)"
+print_initialization() {
+  cat <<EOS
+shy() {
+  case "\$1" in
+
+    ### Porcelain
+
+    # Load a plugin from a file
+    load)
+      local plugin_file="\$2" plugin_name new_plugin_data
+      if [ -z "\$plugin_file" ]; then
+        shy _err "Usage: shy load PLUGIN_NAME"
+      elif [ ! -f "\$plugin_file" ]; then
+        shy _err "shy: file does not exist: \$plugin_file"
+      else
+        plugin_file=\$(shy _realpath \$plugin_file)
+        plugin_name="\$(basename \${plugin_file%.*})"
+
+        if new_plugin_data=\$(shy _read_cache "\$plugin_file"); then
+          shy _debug "Plugin data retrieved from cache: \${plugin_file}"
+          source "\$plugin_file"
+          new_plugin_data="\$plugin_name;\$plugin_file;\$new_plugin_data"
+        else
+          shy _debug "Loading plugin (not from cache): \${plugin_file}..."
+          shy _detect-env-additions source "\$plugin_file"
+          new_plugin_data="\$plugin_name;\$plugin_file;\$SHY_TMP_DATA"
+          shy _write_cache "\$plugin_file" "\$SHY_TMP_DATA"
+          unset SHY_TMP_DATA
+        fi
+
+        [ -n "\$SHY_PLUGIN_DATA" ] && SHY_PLUGIN_DATA="\$SHY_PLUGIN_DATA|"
+        export SHY_PLUGIN_DATA="\$SHY_PLUGIN_DATA\$new_plugin_data"
+      fi
+      ;;
+
+    list|plugins)
+      command shy list
+      ;;
+
+    show)
+      command shy "\$@"
+      ;;
+
+    ### Plumbing
+
+    _debug)
+      if [ -n "\$SHY_DEBUG" ] && [ -n "\$2" ]; then
+        echo "shy: \$2" >&2
+      fi
+      ;;
+
+    _err)
+      shift
+      [ -n "\$@" ] && { echo "\$@" >&2; }
+      return 1
+      ;;
+
+    _pathify)
+      echo \$2 | tr "\$IFS" ':' | sed 's/:\$//'
+      ;;
+
+    _aliases)
+      local raw_aliases
+      if [ -n "\$ZSH_VERSION" ]; then
+        raw_aliases="\$(alias)"
+      else
+        raw_aliases="\$(alias | cut -d ' ' -f 2-)"
+       fi
+      shy _pathify "\$(echo "\$raw_aliases" | cut -d '=' -f 1 | sort)"
+      ;;
+
+    _functions)
+      local funcs
+      if [ -n "\$ZSH_VERSION" ]; then
+       funcs="\$(print -l \${(ok)functions})"
+      else
+        funcs="\$(typeset -F | cut -d ' ' -f 3)"
+      fi
+      shy _pathify "\$funcs"
+      ;;
+
+    _variables)
+      shy _pathify "\$(env | cut -d '=' -f 1 | sort)"
+      ;;
+
+    # Capture names of aliases, functions, and variables in the current environment
+    _capture-env)
+      echo "\$(shy _aliases);\$(shy _functions);\$(shy _variables)"
+      ;;
+
+    # Run the given command command and detect additions to the environment that occurred
+    _detect-env-additions)
+      local before after additions additions_for_type
+      before=\$(shy _capture-env)
+      shift
+      "\$@"
+      after=\$(shy _capture-env)
+      # TODO clean this up
+      for n in 1 2 3; do
+        additions_for_type=\$(comm -13 <(echo \$before | cut -d ';' -f "\$n" | tr ':' '\n') <(echo \$after | cut -d ';' -f "\$n" | tr ':' '\n'))
+        additions="\${additions}\$(shy _pathify "\$additions_for_type")"
+        [ "\$n" -lt "3" ] && additions="\$additions;"
+      done
+      # Ugh, figure out a way to not use this?
+      SHY_TMP_DATA="\$additions"
+      ;;
+
+    *)
+      command shy "\$@"
+      ;;
+
+  esac
+}
+EOS
+}
+
+if [ -z "$1" ]; then
+  print_help
+else
+  case "$1" in
+    init) print_initialization ;;
+
+    list) list_plugins ;;
+    show|edit|which) ${1}_plugin "$2" ;;
+    help) shift; print_help "$@" ;;
+
+    _realpath|_read_cache|_write_cache)
+      cmd=${1:1}
+      shift
+      $cmd "$@" ;;
+
+  esac
+fi
