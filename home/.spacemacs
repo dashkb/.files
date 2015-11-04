@@ -30,6 +30,8 @@ values."
    org
    ruby-on-rails
    javascript
+   yaml
+   dockerfile
    (shell :variables
           shell-default-height 30
           shell-default-position 'bottom
@@ -48,6 +50,8 @@ values."
                                       ctags-update
                                       evil-surround
                                       ac-etags
+                                      emamux
+                                      helm-pt
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -209,9 +213,25 @@ user code."
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
   (setq-default evil-escape-key-sequence "jk")
-  (evil-leader/set-key "o[" 'org-agenda-file-to-front)
-  (evil-leader/set-key "o]" 'org-remove-file)
+  (evil-leader/set-key "oo[" 'org-agenda-file-to-front)
+  (evil-leader/set-key "oo]" 'org-remove-file)
+  (evil-leader/set-key "ooa" 'org-agenda)
+  (evil-leader/set-key "ooca" 'org-capture)
+  (evil-leader/set-key "oocf" 'org-capture-finalize)
+  (evil-leader/set-key "oocr" 'org-capture-refile)
+  (evil-leader/set-key "oock" 'org-capture-kill)
+  (evil-leader/set-key "oor" 'org-refile)
+  (evil-leader/set-key "wo" 'delete-other-windows)
+  (evil-leader/set-key "oag" 'helm-projectile-pt)
 
+  (require 'org-install)
+  (require 'org-mobile)
+  (setq org-todo-keywords
+        '((sequence "TODO" "STARTED" "|" "DONE")))
+
+  (setq org-directory "~/org")
+  (setq org-mobile-directory "~/Dropbox/MobileOrg")
+  (setq org-default-notes-file (concat org-directory "/notes.org"))
   (defun copy-from-osx ()
     (shell-command-to-string "pbpaste"))
 
@@ -231,7 +251,7 @@ layers configuration. You are free to put any user code."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("~/org/things.org"))))
+ '(org-agenda-files (quote ("~/org/notes.org" "~/org/things.org"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
