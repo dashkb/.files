@@ -17,11 +17,11 @@ fi
 . ~/.base16-shell/base16-default.dark.sh
 
 # environment
-export EDITOR="vim"
+export EDITOR="emacsclient -c"
 export VISUAL=${EDITOR}
 export GIT_EDITOR=${EDITOR}
 
-export PATH="${HOME}/.rvm/bin:./node_modules/.bin:./bin:${HOME}/bin:/Applications/Racket v6.2.1/bin:${PATH}"
+export PATH="./bin:${HOME}/.rvm/bin:./node_modules/.bin:${HOME}/bin:/Applications/Racket v6.2.1/bin:${PATH}"
 eval "$(shy init)"
 
 for plugin in ~/.zplugin/*; do
@@ -56,3 +56,9 @@ bindkey '^v' down-line-or-history
 bindkey '^b' up-line-or-history
 bindkey -M 'viins' 'jk' vi-cmd-mode
 
+if [[ -n ${EMACS} ]]; then
+  zstyle ':prezto:module:terminal' auto-title 'no'
+fi
+
+export NVM_DIR="/Users/kyle/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

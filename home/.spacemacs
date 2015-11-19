@@ -13,35 +13,26 @@ values."
    dotspacemacs-distribution 'spacemacs
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
-   dotspacemacs-configuration-layer-path '()
+   dotspacemacs-configuration-layer-path '("~/.macs.d/")
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers '(
-   ;; ----------------------------------------------------------------
-   ;; Example of useful layers you may want to use right away.
-   ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-   ;; <M-m f e R> (Emacs style) to install them.
-   ;; ----------------------------------------------------------------
-   auto-completion
-   better-defaults
-   emacs-lisp
-   git
-   markdown
-   org
-   ruby-on-rails
-   javascript
-   yaml
-   dockerfile
-   (shell :variables
-          shell-default-height 30
-          shell-default-position 'bottom
-          shell-default-term-shell "/usr/local/bin/zsh")
-   ;; spell-checking
-   syntax-checking
-   version-control
-   racket
-   tmux
-   html)
+                                       auto-completion
+                                       better-defaults
+                                       emacs-lisp
+                                       markdown
+                                       org
+                                       javascript
+                                       (ruby :variables :variables ruby-enable-enh-ruby-mode t)
+                                       yaml
+                                       dockerfile
+                                       git
+                                       syntax-checking
+                                       racket
+                                       tmux
+                                       html
+                                       mux
+                                       )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
@@ -50,8 +41,9 @@ values."
                                       ctags-update
                                       evil-surround
                                       ac-etags
-                                      emamux
                                       helm-pt
+                                      exec-path-from-shell
+                                      crosshairs
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -212,7 +204,6 @@ user code."
   "Configuration function for user code.
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
-  (setq-default evil-escape-key-sequence "jk")
   (evil-leader/set-key "oo[" 'org-agenda-file-to-front)
   (evil-leader/set-key "oo]" 'org-remove-file)
   (evil-leader/set-key "ooa" 'org-agenda)
@@ -223,6 +214,7 @@ layers configuration. You are free to put any user code."
   (evil-leader/set-key "oor" 'org-refile)
   (evil-leader/set-key "wo" 'delete-other-windows)
   (evil-leader/set-key "oag" 'helm-projectile-pt)
+  (evil-leader/set-key "ocro" 'crosshairs-mode)
 
   (require 'org-install)
   (require 'org-mobile)
@@ -230,8 +222,7 @@ layers configuration. You are free to put any user code."
         '((sequence "TODO" "STARTED" "|" "DONE")))
 
   (setq org-directory "~/org")
-  (setq org-mobile-directory "~/Dropbox/MobileOrg")
-  (setq org-default-notes-file (concat org-directory "/notes.org"))
+  (setq org-default-notes-file (concat org-directory "/things.org"))
   (defun copy-from-osx ()
     (shell-command-to-string "pbpaste"))
 
@@ -242,7 +233,20 @@ layers configuration. You are free to put any user code."
         (process-send-eof proc))))
 
   (setq interprogram-cut-function 'paste-to-osx)
-  (setq interprogram-paste-function 'copy-from-osx))
+  (setq interprogram-paste-function 'copy-from-osx)
+  (set-face-background 'col-highlight "color-19")
+
+  ((lambda (n)
+     (setq coffee-tab-width n) ; coffeescript
+     (setq javascript-indent-level n) ; javascript-mode
+     (setq js-indent-level n) ; js-mode
+     (setq js2-basic-offset n) ; js2-mode
+     (setq web-mode-markup-indent-offset n) ; web-mode, html tag in html file
+     (setq web-mode-css-indent-offset n) ; web-mode, css in html file
+     (setq web-mode-code-indent-offset n) ; web-mode, js code in html file
+     (setq css-indent-offset n) ; css-mode
+     ) 2)
+  (setq system-uses-terminfo nil))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -251,7 +255,8 @@ layers configuration. You are free to put any user code."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("~/org/notes.org" "~/org/things.org"))))
+ '(org-agenda-files (quote ("~/org/notes.org" "~/org/things.org")))
+ '(ruby-deep-indent-paren nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -22,7 +22,7 @@ alias hamster="g co master && g reset --hard origin/master"
 alias "delete-merged-git-branches"='git branch --merged master | grep -v "master" | xargs -n 1 git branch -d'
 
 alias clear-sidekiq="redis-cli KEYS 'resque:*' | xargs redis-cli DEL"
-alias sk="z r script/sidekiq.rb -q default,1 -q mailer,1 -c 1"
+alias sk="sidekiq -q default,1 -q mailer,1 -c 1"
 
 alias fixtures="rake spec:fixture_builder:clean"
 alias prepare-tests="RAILS_ENV=test rake db:schema:load && fixtures"
@@ -35,3 +35,6 @@ alias rs3="rs -p 3000"
 alias fuck='$(thefuck $(fc -ln -1))'
 
 alias json='jsonpp | pygmentize -l json'
+alias ec=$EDITOR
+alias ed="emacs --daemon"
+alias redodb="spring stop && rake db:drop && rake db:create db:migrate"
