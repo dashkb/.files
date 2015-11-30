@@ -89,7 +89,6 @@
   Plugin 'nelstrom/vim-qargs'
   Plugin 'LucHermitte/lh-vim-lib'
   Plugin 'LucHermitte/local_vimrc'
-  Plugin 'Valloric/YouCompleteMe'
   call vundle#end()
 
   filetype plugin indent on " load filetype plugins/indent settings

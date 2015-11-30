@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+export DISPLAY=":0"
+redshift -o
+notify-send "Adjusted redshift"

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+s3_bucket=dashkb-screens
+s3_http_img=http://screens.dashkb.net
+s3_http_vid=http://screens.dashkb.net
+s3_http_paste=http://screens.dashkb.net

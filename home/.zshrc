@@ -8,7 +8,7 @@
 if [[ $TMUX != "" ]]; then
   # Snag current tmux window title if any
   WINDOW_TITLE=$(tmux list-window -F "#{window_name}#{window_active}" | sed '/0$/d' | sed 's/.$//')
-  if [[ $WINDOW_TITLE == 'reattach-to-user-namespace' ]]; then
+  if [[ $WINDOW_TITLE == 'reattach-to-user-namespace' || $WINDOW_TITLE == 'tmux-default-command' ]]; then
     WINDOW_TITLE=$(pwd)
   fi
 fi
@@ -17,11 +17,11 @@ fi
 . ~/.base16-shell/base16-default.dark.sh
 
 # environment
-export EDITOR="emacsclient -c"
+export EDITOR="emacsclient -cnw"
 export VISUAL=${EDITOR}
 export GIT_EDITOR=${EDITOR}
 
-export PATH="./bin:${HOME}/.rvm/bin:./node_modules/.bin:${HOME}/bin:/Applications/Racket v6.2.1/bin:${PATH}"
+export PATH="${HOME}/.rvm/bin:../bin:/node_modules/.bin:${HOME}/bin:/Applications/Racket v6.2.1/bin:${PATH}"
 eval "$(shy init)"
 
 for plugin in ~/.zplugin/*; do
@@ -60,5 +60,9 @@ if [[ -n ${EMACS} ]]; then
   zstyle ':prezto:module:terminal' auto-title 'no'
 fi
 
-export NVM_DIR="/Users/kyle/.nvm"
+export NVM_DIR="/home/kyle/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+export TERM="xterm-256color"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

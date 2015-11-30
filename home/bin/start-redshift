@@ -1,0 +1,2 @@
+redshift &
+notify-send "Started redshift"
