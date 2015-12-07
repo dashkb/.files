@@ -23,7 +23,7 @@ values."
                                        markdown
                                        org
                                        javascript
-                                       (ruby :variables :variables ruby-enable-enh-ruby-mode t)
+                                       (ruby :variables ruby-enable-enh-ruby-mode t)
                                        yaml
                                        dockerfile
                                        git

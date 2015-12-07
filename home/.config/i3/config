@@ -3,7 +3,7 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 set $mod Mod1
 
-font pango:Sauce Code Pro 14
+font pango:Sauce Code Pro 16
 
 floating_modifier $mod
 
@@ -48,9 +48,9 @@ bindsym $mod+a focus parent
 bindsym $mod+d focus child
 
 # switch to workspace
-bindsym $mod+1 workspace 1
-bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
+bindsym $mod+1 workspace 1: comm
+bindsym $mod+2 workspace 2: www
+bindsym $mod+3 workspace 3: term
 bindsym $mod+4 workspace 4
 bindsym $mod+5 workspace 5
 bindsym $mod+6 workspace 6
@@ -99,7 +99,7 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-  status_command i3status
+  status_command i3blocks
   tray_output primary
   colors {
     separator #969896
@@ -113,6 +113,7 @@ bar {
 }
 
 
+exec --no-startup-id xset r rate 150 35
 bindsym $mod+space exec --no-startup-id ~/bin/app-launcher
 bindsym $mod+Return exec lxterminal -e "/bin/zsh -l"
 bindsym $mod+Escape exec --no-startup-id i3lock
@@ -120,14 +121,15 @@ bindsym $mod+Tab exec --no-startup-id ~/bin/window-switcher
 bindsym $mod+q kill
 bindcode 232 exec xbacklight -dec 1
 bindcode 233 exec xbacklight -inc 10
-bindcode 121 exec amixer set Master toggle
-bindcode 122 exec amixer set Master 10%-
-bindcode 123 exec amixer set Master 10%+
+bindcode 121 exec --no-startup-id ~/bin/volume mute
+bindcode 122 exec --no-startup-id ~/bin/volume down
+bindcode 123 exec --no-startup-id ~/bin/volume up
 
 exec --no-startup-id setxkbmap -option caps:ctrl_modifier -option altwin:swap_alt_win
 exec --no-startup-id ~/bin/start-wifi
 exec --no-startup-id ~/bin/start-emacs
 exec --no-startup-id ~/bin/start-redshift
+exec --no-startup-id ~/bin/start-comm-apps
 
 client.focused #81a2be #81a2be #1d1f21 #282a2e
 client.focused_inactive #373b41 #373b41 #969896 #282a2e
