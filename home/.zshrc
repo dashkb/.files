@@ -52,9 +52,8 @@ setopt SHARE_HISTORY
 
 setopt autocd
 
-bindkey '^v' down-line-or-history
-bindkey '^b' up-line-or-history
-bindkey -M 'viins' 'jk' vi-cmd-mode
+bindkey '^p' up-line-or-history
+bindkey '^n' down-line-or-history
 
 if [[ -n ${EMACS} ]]; then
   zstyle ':prezto:module:terminal' auto-title 'no'

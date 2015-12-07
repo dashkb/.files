@@ -60,9 +60,9 @@ bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1
-bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+1 move container to workspace 1: comm
+bindsym $mod+Shift+2 move container to workspace 2: www
+bindsym $mod+Shift+3 move container to workspace 3: term
 bindsym $mod+Shift+4 move container to workspace 4
 bindsym $mod+Shift+5 move container to workspace 5
 bindsym $mod+Shift+6 move container to workspace 6
@@ -113,7 +113,7 @@ bar {
 }
 
 
-exec --no-startup-id xset r rate 150 35
+exec --no-startup-id xset r rate 250 30
 bindsym $mod+space exec --no-startup-id ~/bin/app-launcher
 bindsym $mod+Return exec lxterminal -e "/bin/zsh -l"
 bindsym $mod+Escape exec --no-startup-id i3lock
