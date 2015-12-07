@@ -1,0 +1,3 @@
+#!/bin/zsh -l
+
+DISPLAY=:0 feh --randomize --bg-scale ~/Pictures/wallpapers/*

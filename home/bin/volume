@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+case ARGV[0]
+when 'mute'
+  `amixer set Master toggle`
+when 'up'
+  `amixer set Master 10%+`
+when 'down'
+  `amixer set Master 10%-`
+end
+
+`notify-send -t 1000 "Volume #{ARGV[0]}"`
+`pkill -RTMIN+1 i3blocks`

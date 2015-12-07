@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby2.2
+
+require 'securerandom'
+
+cmds = {
+  image: "slop -b 5 -c 0.3,0.1,0.6 --nodecorations",
+  video: "slop -b 5 -c 0.6,0.1,0.3 --nodecorations"
+}
+
+slop = `#{cmds[:image]}`.split("\n").reduce({}) do |vars, line|
+  k, v = line.split '='
+  vars[k] = v
+  vars
+end
+
+
+if slop['Cancel'] == 'false'
+  stamp    = Time.now.strftime '%Y%m%d%H%M%S'
+  filename = "#{stamp}.png"
+  url      = "http://screens.dashkb.net/#{filename}"
+
+  Dir.chdir '/home/kyle/screenshots'
+
+  `maim -g #{slop['G']} #{filename}`
+  `pinta #{filename}`
+  `s3cmd put #{filename} s3://dashkb-screens`
+  `printf "#{url}" | xclip -selection clipboard > /dev/null`
+  `notify-send -t 2500 "Screenshot Uploaded" "#{url}"`
+end

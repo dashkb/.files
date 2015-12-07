@@ -1,0 +1,2 @@
+touch /tmp/lock-script-ran
+DISPLAY=:0 i3lock

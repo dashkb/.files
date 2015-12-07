@@ -1,0 +1,69 @@
+// vim:ts=4:sw=4:et
+{
+    // tabbed split container with 3 children
+    "border": "normal",
+    "floating": "auto_off",
+    "layout": "tabbed",
+    "percent": 1,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "normal",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 1737,
+               "width": 2878,
+               "x": 1,
+               "y": 30
+            },
+            "name": "Inbox - kyle@kylebrett.com - Kylebrett.com Mail",
+            "percent": 0.333333333333333,
+            "swallows": [
+               {
+               "title": "^Inbox\\ \\-\\ kyle\\@kylebrett\\.com\\ \\-\\ Kylebrett\\.com\\ Mail$",
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "normal",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 1736,
+               "width": 2876,
+               "x": 0,
+               "y": 30
+            },
+            "name": "ScudCloud",
+            "percent": 0.333333333333333,
+            "swallows": [
+               {
+               "title": "^ScudCloud$",
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "normal",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 1737,
+               "width": 2878,
+               "x": 1,
+               "y": 30
+            },
+            "name": "Kylebrett.com - Calendar - Week of Nov 29, 2015",
+            "percent": 0.333333333333333,
+            "swallows": [
+               {
+               "title": "^Kylebrett\\.com\\ \\-\\ Calendar"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}
+

@@ -1,0 +1,4 @@
+#!/bin/zsh -l
+
+zsh -lc ". ~/.nvm/nvm.sh && TEXT_AID_TOO_SECRET=zoomzoom TEXT_AID_TOO_EDITOR='emacsclient -c' text-aid-too" &
+notify-send "Started edit server"
