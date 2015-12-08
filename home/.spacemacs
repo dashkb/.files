@@ -23,7 +23,6 @@ values."
                                        markdown
                                        org
                                        javascript
-                                       (ruby :variables ruby-enable-enh-ruby-mode t)
                                        yaml
                                        dockerfile
                                        git
@@ -32,6 +31,7 @@ values."
                                        tmux
                                        html
                                        mux
+                                       (ruby :variables ruby-enable-enh-ruby-mode t)
                                        )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -197,6 +197,7 @@ user code."
   (setq-default js-indent-level 2)
   (setq-default tab-width 2)
   (add-hook 'haml-mode-hook (lambda () (set 'electric-indent-mode '())))
+  (add-hook 'enh-ruby-mode-hook (lambda () (set 'electric-indent-mode '())))
   (setq-default evil-shift-width 2)
   )
 
