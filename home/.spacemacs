@@ -203,6 +203,7 @@ user code."
   (add-hook 'haml-mode-hook (lambda () (set 'electric-indent-mode '())))
   (add-hook 'enh-ruby-mode-hook (lambda () (set 'electric-indent-mode '())))
   (setq-default evil-shift-width 2)
+  (setq enh-ruby-preserve-indent-in-heredocs t)
   )
 
 (defun dotspacemacs/user-config ()
