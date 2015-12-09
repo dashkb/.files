@@ -130,6 +130,7 @@ exec --no-startup-id ~/bin/start-wifi
 exec --no-startup-id ~/bin/start-emacs
 exec --no-startup-id ~/bin/start-redshift
 exec --no-startup-id ~/bin/start-comm-apps
+exec --no-startup-id ~/.dropbox-dist/dropboxd
 
 client.focused #81a2be #81a2be #1d1f21 #282a2e
 client.focused_inactive #373b41 #373b41 #969896 #282a2e
