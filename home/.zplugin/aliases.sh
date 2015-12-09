@@ -38,3 +38,8 @@ alias json='jsonpp | pygmentize -l json'
 alias ec=$EDITOR
 alias ed="emacs --daemon"
 alias redodb="spring stop && rake db:drop && rake db:create db:migrate"
+
+alias pn="apt-cache pkgnames"
+alias pi="sudo apt-get install -y"
+
+alias ls="ls --color"
