@@ -31,7 +31,6 @@ values."
                                        tmux
                                        html
                                        mux
-                                       (ruby :variables ruby-enable-enh-ruby-mode t)
                                        )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -44,6 +43,11 @@ values."
                                       helm-pt
                                       exec-path-from-shell
                                       crosshairs
+                                      (enh-ruby-mode
+                                        :location (recipe
+                                                   :fetcher github
+                                                   :repo "dashkb/enhanced-ruby-mode"
+                                                   :files ("*el" ("ruby" "ruby/erm.rb" "ruby/erm_buffer.rb"))))
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -116,7 +120,7 @@ values."
    ;; auto-save the file in-place, `cache' to auto-save the file to another
    ;; file stored in the cache directory and `nil' to disable auto-saving.
    ;; (default 'cache)
-   dotspacemacs-auto-save-file-location 'cache
+   dotspacemacs-auto-save-file-location nil
    ;; If non nil then `ido' replaces `helm' for some commands. For now only
    ;; `find-files' (SPC f f), `find-spacemacs-file' (SPC f e s), and
    ;; `find-contrib-file' (SPC f e c) are replaced. (default nil)
@@ -181,7 +185,7 @@ values."
    ;; List of search tool executable names. Spacemacs uses the first installed
    ;; tool of the list. Supported tools are `ag', `pt', `ack' and `grep'.
    ;; (default '("ag" "pt" "ack" "grep"))
-   dotspacemacs-search-tools '("ag" "pt" "ack" "grep")
+   dotspacemacs-search-tools '("pt" "ag" "ack" "grep")
    ;; The default package repository used if no explicit repository has been
    ;; specified with an installed package.
    ;; Not used for now. (default nil)
@@ -216,6 +220,11 @@ layers configuration. You are free to put any user code."
   (evil-leader/set-key "wo" 'delete-other-windows)
   (evil-leader/set-key "oag" 'helm-projectile-pt)
   (evil-leader/set-key "ocro" 'crosshairs-mode)
+
+  (load "~/.emacs.d/xclip.el")
+  (turn-on-xclip)
+  (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
+  (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
 
   (require 'org-install)
   (require 'org-mobile)
