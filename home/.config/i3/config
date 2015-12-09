@@ -119,8 +119,8 @@ bindsym $mod+Return exec lxterminal -e "/bin/zsh -l"
 bindsym $mod+Escape exec --no-startup-id i3lock
 bindsym $mod+Tab exec --no-startup-id ~/bin/window-switcher
 bindsym $mod+q kill
-bindcode 232 exec xbacklight -dec 1
-bindcode 233 exec xbacklight -inc 10
+bindcode 232 exec --no-startup-id light -U 2
+bindcode 233 exec --no-startup-id light -A 2
 bindcode 121 exec --no-startup-id ~/bin/volume mute
 bindcode 122 exec --no-startup-id ~/bin/volume down
 bindcode 123 exec --no-startup-id ~/bin/volume up
