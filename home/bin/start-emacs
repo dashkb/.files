@@ -1,2 +1,0 @@
-zsh -lc "emacs --daemon"
-notify-send "Started emacs daemon"

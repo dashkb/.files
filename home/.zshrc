@@ -17,6 +17,7 @@ fi
 . ~/.base16-shell/base16-default.dark.sh
 
 # environment
+export ALTERNATE_EDITOR=""
 export EDITOR="emacsclient -cnw"
 export VISUAL=${EDITOR}
 export GIT_EDITOR=${EDITOR}
