@@ -25,12 +25,13 @@ values."
                                        javascript
                                        yaml
                                        dockerfile
-                                       git
                                        syntax-checking
                                        racket
                                        tmux
                                        html
                                        mux
+                                       markdown
+                                       github
                                        )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -200,8 +201,21 @@ user code."
   (setq-default js2-basic-offset 2)
   (setq-default js-indent-level 2)
   (setq-default tab-width 2)
+  (setq-default truncate-lines t)
   (add-hook 'haml-mode-hook (lambda () (set 'electric-indent-mode '())))
-  (add-hook 'enh-ruby-mode-hook (lambda () (set 'electric-indent-mode '())))
+
+  (add-hook 'enh-ruby-mode-hook
+            (lambda ()
+              (set 'electric-indent-mode '())
+              (set 'enh-ruby-bounce-deep-indent t)
+              (set 'enh-ruby-deep-indent-paren t)
+              (set 'enh-ruby-hanging-brace-deep-indent-level 1)
+              (set 'enh-ruby-hanging-brace-indent-level 2)
+              (set 'enh-ruby-hanging-indent-level 2)
+              (set 'enh-ruby-hanging-paren-deep-indent-level 0)
+              (set 'enh-ruby-hanging-paren-indent-level 2)
+              (set 'enh-ruby-indent-level 2)))
+
   (setq-default evil-shift-width 2)
   (setq enh-ruby-preserve-indent-in-heredocs t)
   )
@@ -221,6 +235,12 @@ layers configuration. You are free to put any user code."
   (evil-leader/set-key "wo" 'delete-other-windows)
   (evil-leader/set-key "oag" 'helm-projectile-pt)
   (evil-leader/set-key "ocro" 'crosshairs-mode)
+  (evil-leader/set-key "oal" 'align-regexp)
+
+  (setq org-refile-use-outline-path 'file)
+  (setq org-refile-targets
+        '((nil :maxlevel . 3)
+          (org-agenda-files :maxlevel . 3)))
 
   (load "~/.emacs.d/xclip.el")
   (turn-on-xclip)
@@ -255,7 +275,9 @@ layers configuration. You are free to put any user code."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("~/org/notes.org" "~/org/things.org")))
+ '(org-agenda-files
+   (quote
+    ("~/org/cerplus.org" "~/org/notes.org" "~/org/things.org")))
  '(ruby-deep-indent-paren nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

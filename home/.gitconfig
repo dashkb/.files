@@ -31,3 +31,5 @@
     path = ~/.gitconfig.local
 [rerere]
     enabled = true
+[github]
+	user = dashkb
