@@ -25,7 +25,6 @@ values."
                                        javascript
                                        yaml
                                        dockerfile
-                                       syntax-checking
                                        racket
                                        tmux
                                        html
