@@ -98,3 +98,4 @@ if [[ -d "$TMPDIR" ]]; then
   fi
 fi
 
+skip_global_compinit=1

@@ -44,8 +44,6 @@ export HISTSIZE=10000
 setopt NO_HIST_VERIFY
 setopt SHARE_HISTORY
 
-setopt autocd
-
 bindkey '^p' up-line-or-history
 bindkey '^n' down-line-or-history
 
@@ -58,7 +56,3 @@ export NVM_DIR="/home/kyle/.nvm"
 
 export TERM="xterm-256color"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-fpath=(~/.zsh/completions $fpath)
-autoload -U compinit && compinit

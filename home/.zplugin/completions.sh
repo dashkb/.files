@@ -1,7 +1,6 @@
-fpath=(/usr/local/share/zsh/site-functions /usr/local/share/zsh-completions $fpath)
+fpath=(/usr/local/share/zsh/site-functions /usr/local/share/zsh-completions ~/.zsh/completions $fpath)
 
-autoload -U compinit
-compinit
+autoload -zU compinit && compinit
 
 # Git fastness
 __git_index_files () {
