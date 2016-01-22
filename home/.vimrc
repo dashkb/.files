@@ -33,15 +33,11 @@
   let mapleader = " "
 " }
 
-" Vundle {
-  filetype off
-  set rtp+=~/.vim/bundle/Vundle.vim
+" Plugins {
   set rtp+=~/.fzf
-  call vundle#begin()
+  call plug#begin('~/.vim/bundle')
 
   let g:slime_default_config = {"socket_name": "default", "target_pane": "1"}
-  Plugin 'gmarik/Vundle.vim'
-
   Plugin 'bling/vim-airline'
   Plugin 'tpope/vim-commentary'
   Plugin 'myusuf3/numbers.vim'
@@ -66,7 +62,6 @@
   Plugin 'vim-scripts/SyntaxRange'
   Plugin 'ekalinin/Dockerfile.vim'
   Plugin 'Matt-Deacalion/vim-systemd-syntax'
-  Plugin 'SirVer/ultisnips'
   Plugin 'honza/vim-snippets'
   Plugin 'wlangstroth/vim-racket'
   Plugin 'jpalardy/vim-slime'
@@ -89,9 +84,7 @@
   Plugin 'nelstrom/vim-qargs'
   Plugin 'LucHermitte/lh-vim-lib'
   Plugin 'LucHermitte/local_vimrc'
-  call vundle#end()
-
-  filetype plugin indent on " load filetype plugins/indent settings
+  call plug()
 
   let g:airline_powerline_fonts = 1
   let g:airline_section_b = ''

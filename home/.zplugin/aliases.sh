@@ -43,3 +43,7 @@ alias pn="apt-cache pkgnames"
 alias pi="sudo apt-get install -y"
 
 alias ls="ls --color"
+
+alias slideshow="feh --cycle-once -D 3 -Z"
+
+alias vim=nvim
