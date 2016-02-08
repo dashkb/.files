@@ -34,57 +34,56 @@
 " }
 
 " Plugins {
-  set rtp+=~/.fzf
-  call plug#begin('~/.vim/bundle')
+
+  if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall
+  endif
+  call plug#begin()
 
   let g:slime_default_config = {"socket_name": "default", "target_pane": "1"}
-  Plugin 'bling/vim-airline'
-  Plugin 'tpope/vim-commentary'
-  Plugin 'myusuf3/numbers.vim'
-  Plugin 'chriskempson/base16-vim'
-  Plugin 'rking/ag.vim'
-  Plugin 'jeetsukumaran/vim-buffergator'
-  Plugin 'kchmck/vim-coffee-script'
-  Plugin 'mattn/webapi-vim'
-  Plugin 'mattn/gist-vim'
-  Plugin 'tpope/vim-fugitive'
-  Plugin 'vim-scripts/Align'
-  Plugin 'tpope/vim-haml'
-  Plugin 'itspriddle/vim-marked'
-  Plugin 'tpope/vim-markdown'
-  Plugin 'jtratner/vim-flavored-markdown'
-  Plugin 'vim-ruby/vim-ruby'
-  Plugin 'tpope/gem-browse'
-  Plugin 'tpope/vim-bundler'
-  Plugin 'tpope/vim-rake'
-  Plugin 'tpope/vim-rails'
-  Plugin 'majutsushi/tagbar'
-  Plugin 'vim-scripts/SyntaxRange'
-  Plugin 'ekalinin/Dockerfile.vim'
-  Plugin 'Matt-Deacalion/vim-systemd-syntax'
-  Plugin 'honza/vim-snippets'
-  Plugin 'wlangstroth/vim-racket'
-  Plugin 'jpalardy/vim-slime'
-  Plugin 'edkolev/tmuxline.vim'
-  Plugin 'christoomey/vim-tmux-navigator'
-  Plugin 'tpope/vim-dispatch'
-  Plugin 'tpope/vim-vinegar'
-  Plugin 'groenewege/vim-less'
-  Plugin 'lmeijvogel/vim-yaml-helper'
-  Plugin 'vimwiki/vimwiki'
-  Plugin 'schickling/vim-bufonly'
-  Plugin 'vim-scripts/paredit.vim'
-  Plugin 'vim-scripts/vim-misc'
-  Plugin 'xolox/vim-lua-ftplugin'
-  Plugin 'vim-scripts/lua.vim'
-  Plugin 'vim-scripts/terra.vim'
-  Plugin 'luochen1990/rainbow'
-  Plugin 'kien/ctrlp.vim'
-  Plugin 'slim-template/vim-slim'
-  Plugin 'nelstrom/vim-qargs'
-  Plugin 'LucHermitte/lh-vim-lib'
-  Plugin 'LucHermitte/local_vimrc'
-  call plug()
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
+  Plug 'tpope/vim-commentary'
+  Plug 'myusuf3/numbers.vim'
+  Plug 'chriskempson/base16-vim'
+  Plug 'rking/ag.vim'
+  Plug 'jeetsukumaran/vim-buffergator'
+  Plug 'mattn/webapi-vim'
+  Plug 'mattn/gist-vim'
+  Plug 'tpope/vim-fugitive'
+  Plug 'vim-scripts/Align'
+  Plug 'tpope/vim-markdown'
+  Plug 'jtratner/vim-flavored-markdown'
+  Plug 'vim-ruby/vim-ruby'
+  Plug 'tpope/gem-browse'
+  Plug 'tpope/vim-bundler'
+  Plug 'tpope/vim-rake'
+  Plug 'tpope/vim-rails'
+  Plug 'majutsushi/tagbar'
+  Plug 'vim-scripts/SyntaxRange'
+  Plug 'wlangstroth/vim-racket'
+  Plug 'jpalardy/vim-slime'
+  Plug 'edkolev/tmuxline.vim'
+  Plug 'christoomey/vim-tmux-navigator'
+  Plug 'tpope/vim-dispatch'
+  Plug 'tpope/vim-vinegar'
+  Plug 'tpope/vim-surround'
+  Plug 'groenewege/vim-less'
+  Plug 'lmeijvogel/vim-yaml-helper'
+  Plug 'vimwiki/vimwiki'
+  Plug 'schickling/vim-bufonly'
+  Plug 'vim-scripts/paredit.vim'
+  Plug 'vim-scripts/vim-misc'
+  Plug 'luochen1990/rainbow'
+  Plug 'slim-template/vim-slim'
+  Plug 'nelstrom/vim-qargs'
+  Plug 'LucHermitte/lh-vim-lib'
+  Plug 'LucHermitte/local_vimrc'
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'Shougo/deoplete.nvim'
+  call plug#end()
 
   let g:airline_powerline_fonts = 1
   let g:airline_section_b = ''
@@ -122,6 +121,10 @@
   nmap <C-p> :FZF!<CR>
 
   let g:UltiSnipsExpandTrigger = '<c-s>'
+  nmap <Leader>f :Unite file_rec/async buffer<CR>
+
+  nmap <Leader>/ :nohl<CR>
+
 " }
 
 " General {
@@ -217,7 +220,7 @@
   set foldlevelstart=2
 " }
 
-" Plugin Settings {
+" Plug Settings {
   let b:match_ignorecase = 1 " case is stupid
 
   " Tagbar Settings
@@ -246,6 +249,8 @@
 
   let g:rainbow_active = 1
 
+  let g:deoplete#enable_at_startup = 1
+" }
 
 " Coffeescript tags {
   let g:tagbar_type_coffee = {

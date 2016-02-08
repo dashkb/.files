@@ -37,7 +37,7 @@ alias fuck='$(thefuck $(fc -ln -1))'
 alias json='jsonpp | pygmentize -l json'
 alias ec=$EDITOR
 alias ed="emacs --daemon"
-alias redodb="spring stop && rake db:drop && rake db:create db:migrate db:seed"
+alias redodb="spring stop && rake db:drop && rake db:create db:schema:load db:seed"
 
 alias pn="apt-cache pkgnames"
 alias pi="sudo apt-get install -y"
@@ -47,3 +47,6 @@ alias ls="ls --color"
 alias slideshow="feh --cycle-once -D 3 -Z"
 
 alias vim=nvim
+
+alias fs="foreman start"
+alias pr="pry-remote"

@@ -10,10 +10,9 @@ fi
 . ~/.base16-shell/base16-default.dark.sh
 
 # environment
-export ALTERNATE_EDITOR=""
-export EDITOR="emacsclient -cnw"
+export EDITOR="nvim"
 export VISUAL=${EDITOR}
-export GIT_EDITOR=vim
+export GIT_EDITOR=${EDITOR}
 
 export PATH="${HOME}/.rvm/bin:./bin:node_modules/.bin:${HOME}/bin:/Applications/Racket v6.2.1/bin:${PATH}"
 eval "$(shy init)"
@@ -56,3 +55,5 @@ export NVM_DIR="/home/kyle/.nvm"
 
 export TERM="xterm-256color"
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
