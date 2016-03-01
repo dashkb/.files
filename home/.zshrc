@@ -4,6 +4,9 @@ if [[ $TMUX != "" ]]; then
   if [[ $WINDOW_TITLE == 'reattach-to-user-namespace' || $WINDOW_TITLE == 'tmux-default-command' ]]; then
     WINDOW_TITLE=$(pwd)
   fi
+  export TERM='xterm-256color'
+else
+  export TERM='screen-256color'
 fi
 
 # Set shell colors
@@ -53,7 +56,6 @@ fi
 export NVM_DIR="/home/kyle/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
-export TERM="xterm-256color"
-
+export FZF_DEFAULT_COMMAND='pt -g ""'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

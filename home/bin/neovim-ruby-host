@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+require "neovim"
+
+if STDIN.tty?
+  abort("Can't run neovim-ruby-host interactively.")
+else
+  Neovim.start_host(ARGV)
+end

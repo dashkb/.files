@@ -4,9 +4,6 @@
 "   This is my personal .vimrc, I don't recommend you copy it, just
 "   use the "   pieces you want(and understand!).  When you copy a
 "   .vimrc in its entirety, weird and unexpected things can happen.
-"
-"   If you find an obvious mistake hit me up at:
-"   http://robertmelton.com/contact (many forms of communication)
 " }
 
 " Basics {
@@ -34,7 +31,6 @@
 " }
 
 " Plugins {
-
   if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
       \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -42,20 +38,14 @@
   endif
   call plug#begin()
 
-  let g:slime_default_config = {"socket_name": "default", "target_pane": "1"}
   Plug 'vim-airline/vim-airline'
-  Plug 'vim-airline/vim-airline-themes'
+  Plug 'dashkb/vim-airline-themes'
   Plug 'tpope/vim-commentary'
   Plug 'myusuf3/numbers.vim'
-  Plug 'chriskempson/base16-vim'
-  Plug 'rking/ag.vim'
-  Plug 'jeetsukumaran/vim-buffergator'
   Plug 'mattn/webapi-vim'
   Plug 'mattn/gist-vim'
   Plug 'tpope/vim-fugitive'
   Plug 'vim-scripts/Align'
-  Plug 'tpope/vim-markdown'
-  Plug 'jtratner/vim-flavored-markdown'
   Plug 'vim-ruby/vim-ruby'
   Plug 'tpope/gem-browse'
   Plug 'tpope/vim-bundler'
@@ -64,7 +54,6 @@
   Plug 'majutsushi/tagbar'
   Plug 'vim-scripts/SyntaxRange'
   Plug 'wlangstroth/vim-racket'
-  Plug 'jpalardy/vim-slime'
   Plug 'edkolev/tmuxline.vim'
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'tpope/vim-dispatch'
@@ -82,14 +71,24 @@
   Plug 'LucHermitte/lh-vim-lib'
   Plug 'LucHermitte/local_vimrc'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/fzf.vim'
   Plug 'Shougo/deoplete.nvim'
+  Plug 'Shougo/neosnippet.vim'
+  Plug 'Shougo/neosnippet-snippets'
+  Plug 'honza/vim-snippets'
+  Plug 'benmills/vimux'
+  Plug 'skalnik/vim-vroom'
+  Plug 'cazador481/fakeclip.neovim'
+  Plug '/home/kyle/code/vim-tags'
+  Plug 'airblade/vim-rooter'
+  Plug 'digitaltoad/vim-jade'
+  Plug 'elzr/vim-json'
+  Plug 'jeetsukumaran/vim-buffergator'
+  Plug 'chriskempson/base16-vim'
   call plug#end()
 
   let g:airline_powerline_fonts = 1
   let g:airline_section_b = ''
-
-  nmap <leader>sm <Plug>SlimeMotionSend
-  nmap <leader>sl <Plug>SlimeLineSend
 
   au BufNewFile,BufRead *.hamlc set ft=haml
   au BufRead,BufNewFile *.service set filetype=systemd
@@ -104,27 +103,10 @@
   set lispwords+=define-for-syntax,define-syntax-rule
   set lispwords+=for/syntax,thunk,place,define-syntax-parameter,syntax-parse
 
-  if executable('ag')
-    " Use Ag over Grep
-    set grepprg=ag\ --nogroup\ --nocolor
-
-    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  endif
-
-  nmap <Leader>cp :CtrlPClearAllCaches<CR>
-  nmap <Leader>ct :CtrlPTag<CR>
-  nmap <Leader>ut :Dispatch ctags -R . >/dev/null 2>&1<CR>
-
-  let g:ctrlp_map = ''
-  nmap <Leader>ut :Dispatch ctags --exclude=.git --exclude=node_modules -R . >/dev/null 2>&1<CR>
-  nmap <C-p> :FZF!<CR>
-
-  let g:UltiSnipsExpandTrigger = '<c-s>'
-  nmap <Leader>f :Unite file_rec/async buffer<CR>
+  nmap <Leader>f :FZF!<CR>
+  nmap <Leader>t :Tags!<CR>
 
   nmap <Leader>/ :nohl<CR>
-
 " }
 
 " General {
@@ -233,10 +215,6 @@
   let g:gist_clip_command = 'pbcopy'
   let g:gist_post_private = 1
 
-  let g:slime_target = 'tmux'
-  nmap <Leader>zspec :execute ':SlimeSend1 z spec ' . @% . ':' . line(".")<CR>
-  nmap <Leader>rspec :execute ':SlimeSend1 rspec ' . @% . ':' . line(".")<CR>
-  nmap <Leader>!! :execute ':SlimeSend1 !!'<CR>
   nmap <Leader>par :call PareditToggle()<CR>
 
   let g:paredit_leader = "<space>"
@@ -250,6 +228,29 @@
   let g:rainbow_active = 1
 
   let g:deoplete#enable_at_startup = 1
+  let g:deoplete#delimiters = ['/', '.', '::', ':', '#' ]
+  let g:neosnippet#enable_snipmate_compatibility = 1
+
+  imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+  smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+  " SuperTab like snippets behavior.
+  "imap <expr><TAB>
+  " \ pumvisible() ? "\<C-n>" :
+  " \ neosnippet#expandable_or_jumpable() ?
+  " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+  smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+  \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+  " For conceal markers.
+  if has('conceal')
+    set conceallevel=2 concealcursor=niv
+  endif
+
+  let g:vroom_use_vimux = 1
+  let g:vroom_use_bundle_exec = 0
 " }
 
 " Coffeescript tags {
@@ -279,4 +280,4 @@
     \ --regex-coffee=/^[[:space:]]*it[[:space:][:punct:]]+([^[:punct:]]+).+$/\1/s,spec/'
 
   let $CTAGS = substitute(s:ctags_opts, '\v\([nst]\)', '\\', 'g')
-" }
+" 

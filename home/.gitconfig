@@ -25,6 +25,9 @@
     log-timeline = log --format='%h %an %ar - %s'
     log-local = log --oneline origin..HEAD
     log-fetched = log --oneline HEAD..origin/master
+[pager]
+    diff = diff-so-fancy | less --tabs=2 -RFX
+    show = diff-so-fancy | less --tabs=2 -RFX
 [push]
     default = simple
 [include]

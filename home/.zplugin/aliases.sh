@@ -21,9 +21,6 @@ alias hamster="g co master && g reset --hard origin/master"
 
 alias "delete-merged-git-branches"='git branch --merged master | grep -v "master" | xargs -n 1 git branch -d'
 
-alias clear-sidekiq="redis-cli KEYS 'resque:*' | xargs redis-cli DEL"
-alias sk="sidekiq -q default,1 -q mailer,1 -c 1"
-
 alias fixtures="rake spec:fixture_builder:clean"
 alias prepare-tests="RAILS_ENV=test rake db:schema:load && fixtures"
 
@@ -48,5 +45,6 @@ alias slideshow="feh --cycle-once -D 3 -Z"
 
 alias vim=nvim
 
-alias fs="foreman start"
+alias fs="foreman start -f Procfile.dev"
 alias pr="pry-remote"
+alias dc="sudo mount -t ecryptfs ~/safe ~/safe -o key=passphrase,ecryptfs_cipher=aes,ecryptfs_key_bytes=16,ecryptfs_passthrough=no,ecryptfs_enable_filename_crypto=yes"

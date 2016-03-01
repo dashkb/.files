@@ -10,11 +10,6 @@ fkill() {
   fi
 }
 
-# fh - history
-fh() {
-  print -z $(([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s | sed 's/ *[0-9]* *//')
-}
-
 fzf-history-widget() {
  LBUFFER=$(fc -l 1 | fzf +s +m -n2..,.. | sed "s/ *[0-9*]* *//")
  zle redisplay
