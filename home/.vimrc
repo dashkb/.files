@@ -146,7 +146,8 @@
 
 " Vim UI {
   let base16colorspace=256
-  colorscheme base16-railscasts
+  colorscheme base16-default
+  let g:airline_theme = 'base16'
   set background=dark
   set cursorcolumn " highlight the current column
   set cursorline " highlight current line
