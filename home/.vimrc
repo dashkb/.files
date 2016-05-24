@@ -39,7 +39,7 @@
   call plug#begin()
 
   Plug 'vim-airline/vim-airline'
-  Plug 'dashkb/vim-airline-themes'
+  Plug 'vim-airline/vim-airline-themes'
   Plug 'tpope/vim-commentary'
   Plug 'myusuf3/numbers.vim'
   Plug 'mattn/webapi-vim'
@@ -85,6 +85,7 @@
   Plug 'elzr/vim-json'
   Plug 'jeetsukumaran/vim-buffergator'
   Plug 'chriskempson/base16-vim'
+  Plug 'nazo/pt.vim'
   call plug#end()
 
   let g:airline_powerline_fonts = 1
@@ -105,6 +106,7 @@
 
   nmap <Leader>f :FZF!<CR>
   nmap <Leader>t :Tags!<CR>
+  nmap <Leader>h :History<CR>
 
   nmap <Leader>/ :nohl<CR>
 " }
@@ -145,6 +147,7 @@
 " }
 
 " Vim UI {
+  let g:base16_shell_path='~/.base16-shell'
   let base16colorspace=256
   colorscheme base16-default
   let g:airline_theme = 'base16'
@@ -155,7 +158,7 @@
                   " search phrase
   set laststatus=2 " always show the status line
   set lazyredraw " do not redraw while running macros
-  set linespace=0 " don't insert any extra pixel lines
+  set linespace=2 " don't insert any extra pixel lines
                     " betweens rows
   set list " we do what to show tabs, to ensure we get them
             " out of my files
@@ -252,6 +255,16 @@
 
   let g:vroom_use_vimux = 1
   let g:vroom_use_bundle_exec = 0
+
+  function! VimuxSlime()
+    call VimuxOpenRunner()
+    call VimuxSendText(@v)
+    call VimuxSendKeys("Enter")
+  endfunction
+
+  " If text is selected, save it in the v buffer and send that buffer it to tmux
+  vmap <Leader>s "vy :call VimuxSlime()<CR>
+  vmap <Leader>repl :call VimuxOpenRunner<CR>
 " }
 
 " Coffeescript tags {

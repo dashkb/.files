@@ -2,4 +2,4 @@
 
 export DISPLAY=":0"
 redshift -o
-notify-send "Adjusted redshift"
+# notify-send "Adjusted redshift"

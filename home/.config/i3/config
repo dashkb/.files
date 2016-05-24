@@ -3,7 +3,7 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 set $mod Mod1
 
-font pango:Sauce Code Pro 16
+font pango:Sauce Code Pro 8
 
 floating_modifier $mod
 
@@ -130,6 +130,7 @@ exec --no-startup-id setxkbmap -option caps:ctrl_modifier -option altwin:swap_al
 exec --no-startup-id ~/bin/start-wifi
 exec --no-startup-id ~/bin/start-redshift
 exec --no-startup-id ~/bin/start-comm-apps
+exec --no-startup-id slack
 exec --no-startup-id ~/bin/start-dispad
 exec --no-startup-id ~/.dropbox-dist/dropboxd
 

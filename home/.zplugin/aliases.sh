@@ -7,7 +7,6 @@ alias bspec="be rspec"
 alias dotfiles="cd ~/.homesick/repos/.files/home"
 alias rc="source ~/.zshrc"
 alias tr="tmux rename-window"
-alias t=todo.sh
 
 alias z="zeus"
 alias ccat="pygmentize -g"
@@ -46,5 +45,7 @@ alias slideshow="feh --cycle-once -D 3 -Z"
 alias vim=nvim
 
 alias fs="foreman start -f Procfile.dev"
+alias ft="foreman start -f Procfile.test"
 alias pr="pry-remote"
 alias dc="sudo mount -t ecryptfs ~/safe ~/safe -o key=passphrase,ecryptfs_cipher=aes,ecryptfs_key_bytes=16,ecryptfs_passthrough=no,ecryptfs_enable_filename_crypto=yes"
+
