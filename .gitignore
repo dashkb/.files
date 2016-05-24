@@ -1,2 +1,9 @@
 home/.vim/bundle
 home/.vim/swap/*.swp
+home/bin/ngrok
+home/bin/btsyn
+home/bin/lein
+home/bin/pt
+home/bin/redshift
+
+home/.vim/*
