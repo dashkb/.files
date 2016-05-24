@@ -43,11 +43,11 @@ values."
                                       helm-pt
                                       exec-path-from-shell
                                       crosshairs
-                                      (enh-ruby-mode
-                                        :location (recipe
-                                                   :fetcher github
-                                                   :repo "dashkb/enhanced-ruby-mode"
-                                                   :files ("*el" ("ruby" "ruby/erm.rb" "ruby/erm_buffer.rb"))))
+                                      ruby-hash-syntax
+                                      (evil-tmux-navigator
+                                       :location
+                                       (recipe :fetcher github
+                                               :repo "lleaff/evil-tmux-navigator"))
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -72,8 +72,7 @@ values."
    dotspacemacs-editing-style 'vim
    ;; If non nil output loading progress in `*Messages*' buffer. (default nil)
    dotspacemacs-verbose-loading nil
-   ;; Specify the startup banner. Default value is `official', it displays
-   ;; the official spacemacs logo. An integer value is the index of text
+   ;; Specify the startup banner. Default value is `official', it displays ;; the official spacemacs logo. An integer value is the index of text
    ;; banner, `random' chooses a random text banner in `core/banners'
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
@@ -265,7 +264,11 @@ layers configuration. You are free to put any user code."
      (setq web-mode-code-indent-offset n) ; web-mode, js code in html file
      (setq css-indent-offset n) ; css-mode
      ) 2)
-  (setq system-uses-terminfo nil))
+  (setq system-uses-terminfo nil)
+
+  (require 'evil-tmux-navigator)
+  (evil-tmux-navigator-bind-keys)
+  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
