@@ -17,21 +17,28 @@ values."
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers '(
-                                       auto-completion
+                                       (auto-completion :variables
+                                                          auto-completion-enable-snippets-in-popup t
+                                                          auto-completion-enable-sort-by-usage t)
                                        better-defaults
                                        emacs-lisp
                                        markdown
                                        org
                                        javascript
+                                       clojure
                                        yaml
                                        dockerfile
                                        racket
                                        tmux
                                        html
-                                       mux
                                        markdown
+                                       git
                                        github
-                                       )
+                                       syntax-checking
+                                       stuff ;; my layer
+                                       (ruby :variables
+                                             ruby-enable-enh-ruby-mode t
+                                             ruby-version-manager 'rvm))
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
@@ -41,13 +48,17 @@ values."
                                       evil-surround
                                       ac-etags
                                       helm-pt
+                                      jade-mode
                                       exec-path-from-shell
                                       crosshairs
                                       ruby-hash-syntax
+                                      pt
                                       (evil-tmux-navigator
                                        :location
                                        (recipe :fetcher github
                                                :repo "lleaff/evil-tmux-navigator"))
+                                      multi-term
+                                      xclip
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -204,7 +215,7 @@ user code."
 
   (add-hook 'enh-ruby-mode-hook
             (lambda ()
-              (set 'electric-indent-mode '())
+              ;; (set 'electric-indent-mode '())
               (set 'enh-ruby-bounce-deep-indent t)
               (set 'enh-ruby-deep-indent-paren t)
               (set 'enh-ruby-hanging-brace-deep-indent-level 1)
@@ -222,53 +233,8 @@ user code."
   "Configuration function for user code.
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
-  (evil-leader/set-key "oo[" 'org-agenda-file-to-front)
-  (evil-leader/set-key "oo]" 'org-remove-file)
-  (evil-leader/set-key "ooa" 'org-agenda)
-  (evil-leader/set-key "ooca" 'org-capture)
-  (evil-leader/set-key "oocf" 'org-capture-finalize)
-  (evil-leader/set-key "oocr" 'org-capture-refile)
-  (evil-leader/set-key "oock" 'org-capture-kill)
-  (evil-leader/set-key "oor" 'org-refile)
-  (evil-leader/set-key "wo" 'delete-other-windows)
-  (evil-leader/set-key "oag" 'helm-projectile-pt)
-  (evil-leader/set-key "ocro" 'crosshairs-mode)
-  (evil-leader/set-key "oal" 'align-regexp)
+)
 
-  (setq org-refile-use-outline-path 'file)
-  (setq org-refile-targets
-        '((nil :maxlevel . 3)
-          (org-agenda-files :maxlevel . 3)))
-
-  (load "~/.emacs.d/xclip.el")
-  (turn-on-xclip)
-  (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
-  (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
-
-  (require 'org-install)
-  (require 'org-mobile)
-  (setq org-todo-keywords
-        '((sequence "TODO" "STARTED" "|" "DONE")))
-
-  (setq org-directory "~/org")
-  (setq org-default-notes-file (concat org-directory "/things.org"))
-  (set-face-background 'col-highlight "color-19")
-
-  ((lambda (n)
-     (setq coffee-tab-width n) ; coffeescript
-     (setq javascript-indent-level n) ; javascript-mode
-     (setq js-indent-level n) ; js-mode
-     (setq js2-basic-offset n) ; js2-mode
-     (setq web-mode-markup-indent-offset n) ; web-mode, html tag in html file
-     (setq web-mode-css-indent-offset n) ; web-mode, css in html file
-     (setq web-mode-code-indent-offset n) ; web-mode, js code in html file
-     (setq css-indent-offset n) ; css-mode
-     ) 2)
-  (setq system-uses-terminfo nil)
-
-  (require 'evil-tmux-navigator)
-  (evil-tmux-navigator-bind-keys)
-  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -277,10 +243,14 @@ layers configuration. You are free to put any user code."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(cider-boot-parameters "cider repl -s wait")
  '(org-agenda-files
    (quote
     ("~/org/cerplus.org" "~/org/notes.org" "~/org/things.org")))
- '(ruby-deep-indent-paren nil))
+ '(ruby-deep-indent-paren nil)
+ '(safe-local-variable-values
+   (quote
+    ((cider-boot-parameters . "cider environ repl -s wait")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
