@@ -31,7 +31,7 @@ done
 export CLICOLOR=1
 export ANDROID_HOME=/usr/local/opt/android-sdk
 
-if [[ $TMUX != "" && $WINDOW_TITLE != "" ]]; then
+if [[ $TMUX != "" && $WINDOW_TITLE != "" && -z ${INSIDE_EMACS} ]]; then
   tr $WINDOW_TITLE
 fi
 
@@ -52,10 +52,6 @@ setopt SHARE_HISTORY
 
 bindkey '^p' up-line-or-history
 bindkey '^n' down-line-or-history
-
-if [[ -n ${EMACS} ]]; then
-  zstyle ':prezto:module:terminal' auto-title 'no'
-fi
 
 export NVM_DIR="/home/kyle/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

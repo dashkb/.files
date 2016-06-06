@@ -43,6 +43,7 @@ alias ls="ls --color"
 alias slideshow="feh --cycle-once -D 3 -Z"
 
 alias vim=nvim
+alias emacs="emacs -nw"
 
 alias fs="foreman start -f Procfile.dev"
 alias ft="foreman start -f Procfile.test"

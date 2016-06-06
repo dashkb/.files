@@ -1,5 +1,4 @@
 require 'rubygems'
-require 'pry-coolline'
 require 'awesome_print'
 
 AwesomePrint.pry!
@@ -11,3 +10,5 @@ AwesomePrint.defaults = {
     :class => :white
   }
 }
+
+Pry.config.correct_indent = !ENV['INSIDE_EMACS']

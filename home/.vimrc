@@ -83,7 +83,6 @@
   Plug 'airblade/vim-rooter'
   Plug 'digitaltoad/vim-jade'
   Plug 'elzr/vim-json'
-  Plug 'jeetsukumaran/vim-buffergator'
   Plug 'chriskempson/base16-vim'
   Plug 'nazo/pt.vim'
   call plug#end()
@@ -104,11 +103,11 @@
   set lispwords+=define-for-syntax,define-syntax-rule
   set lispwords+=for/syntax,thunk,place,define-syntax-parameter,syntax-parse
 
-  nmap <Leader>f :FZF!<CR>
+  nmap <Leader>pf :FZF!<CR>
   nmap <Leader>t :Tags!<CR>
-  nmap <Leader>h :History<CR>
+  nmap <Leader>b :History<CR>
 
-  nmap <Leader>/ :nohl<CR>
+  nmap <Leader>sc :nohl<CR>
 " }
 
 " General {
@@ -137,13 +136,16 @@
   set wildmode=list:longest " turn on wild mode huge list
   set autoindent
 
-  " Split pane movement and management
-  nmap <Leader>o :only<CR>
+  nmap <Leader>wo :only<CR>
 
   inoremap jk <C-C>:stopi<CR>
+  inoremap Jk <C-C>:stopi<CR>
+  inoremap JK <C-C>:stopi<CR>
 
   " Kill trailing whitespace
   nmap <Leader>ktw :%s/\s\+$<CR>
+  " Vim reload
+  nmap <Leader>vr :silent so ~/.vimrc<CR>
 " }
 
 " Vim UI {
@@ -260,11 +262,25 @@
     call VimuxOpenRunner()
     call VimuxSendText(@v)
     call VimuxSendKeys("Enter")
-  endfunction
+  endfun
+
+  function! OpenPry()
+    let @v = "pry"
+    call VimuxSlime()
+  endfun
+
+  function! OpenRailsConsole()
+    let @v = "rails c"
+    call VimuxSlime()
+  endfun
 
   " If text is selected, save it in the v buffer and send that buffer it to tmux
-  vmap <Leader>s "vy :call VimuxSlime()<CR>
-  vmap <Leader>repl :call VimuxOpenRunner<CR>
+  vmap <Leader>e "vy :call VimuxSlime()<CR>
+  nmap <Leader>eb gg"vyG'' :call VimuxSlime()<CR>
+  nmap <Leader>el ^"vy$ :call VimuxSlime()<CR>
+  nmap <Leader>fed :e ~/.vimrc<CR>
+  nmap <Leader>pry :call OpenPry()<CR>
+  nmap <Leader>railsc :call OpenRailsConsole()<CR>
 " }
 
 " Coffeescript tags {

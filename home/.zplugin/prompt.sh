@@ -66,7 +66,10 @@ prompt_pure_string_length() {
 
 prompt_pure_precmd() {
 	# shows the full path in the title
-	print -Pn '\e]0;%~\a'
+  if [[ -z ${INSIDE_EMACS} ]]; then
+    print -Pn '\e]0;%~\a'
+  fi
+
 
 	# git info
 	vcs_info
@@ -130,8 +133,9 @@ prompt_pure_setup() {
 	autoload -Uz add-zsh-hook
 	autoload -Uz vcs_info
 
-	add-zsh-hook precmd prompt_pure_precmd
-	add-zsh-hook preexec prompt_pure_preexec
+
+  add-zsh-hook preexec prompt_pure_preexec
+  add-zsh-hook precmd prompt_pure_precmd
 
 	zstyle ':vcs_info:*' enable git
 	zstyle ':vcs_info:git*' formats ' %b'
