@@ -76,10 +76,10 @@ unset path_file
 
 # Set the list of directories that Zsh searches for programs.
 path=(
+  $path
   /usr/local/{bin,sbin}
   /usr/{bin,sbin}
   /{bin,sbin}
-  $path
 )
 
 for path_file in /etc/paths.d/*(.N); do

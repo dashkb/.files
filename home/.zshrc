@@ -17,12 +17,12 @@ export EDITOR="nvim"
 export VISUAL=${EDITOR}
 export GIT_EDITOR=${EDITOR}
 
-export PATH="${HOME}/.rvm/bin:./bin:node_modules/.bin:${HOME}/bin:/Applications/Racket v6.2.1/bin:${PATH}"
-eval "$(shy init)"
-
 export PATH="$HOME/.linuxbrew/bin:$PATH"
 export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
 export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
+
+export PATH="./bin:node_modules/.bin:${HOME}/bin:${PATH}"
+eval "$(shy init)"
 
 for plugin in ~/.zplugin/*; do
   shy load $plugin

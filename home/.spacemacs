@@ -38,7 +38,8 @@ values."
                                        stuff ;; my layer
                                        (ruby :variables
                                              ruby-enable-enh-ruby-mode t
-                                             ruby-version-manager 'rvm))
+                                             ruby-version-manager 'rvm)
+                                       ruby-on-rails)
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
@@ -59,6 +60,7 @@ values."
                                                :repo "lleaff/evil-tmux-navigator"))
                                       multi-term
                                       xclip
+                                      polymode
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -103,8 +105,8 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+   dotspacemacs-default-font '("Source Code Pro for Powerline"
+                               :size 28
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -217,7 +219,7 @@ user code."
             (lambda ()
               ;; (set 'electric-indent-mode '())
               (set 'enh-ruby-bounce-deep-indent t)
-              (set 'enh-ruby-deep-indent-paren t)
+              (set 'enh-ruby-deep-indent-paren nil)
               (set 'enh-ruby-hanging-brace-deep-indent-level 1)
               (set 'enh-ruby-hanging-brace-indent-level 2)
               (set 'enh-ruby-hanging-indent-level 2)
@@ -233,6 +235,8 @@ user code."
   "Configuration function for user code.
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
+
+  (stuff/init-my-stuff)
 )
 
 
