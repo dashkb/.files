@@ -1,1 +1,1 @@
-rofi -show run -fuzzy $(i3-color-rofi)
+rofi -font "Sauce Code Powerline 30" -show run -fuzzy $(i3-color-rofi)

@@ -12,3 +12,4 @@ AwesomePrint.defaults = {
 }
 
 Pry.config.correct_indent = !ENV['INSIDE_EMACS']
+Pry.config.pager = !ENV["INSIDE_EMACS"]

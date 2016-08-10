@@ -1,2 +1,3 @@
 nm-applet &
+nmcli c up Glow5G
 notify-send "Started wifi"

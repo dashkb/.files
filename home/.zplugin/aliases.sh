@@ -40,13 +40,15 @@ alias pi="sudo apt-get install -y"
 
 alias ls="ls --color"
 
-alias slideshow="feh --cycle-once -D 3 -Z"
+alias slideshow="feh --cycle-once -D 3 -Z -."
 
 alias vim=nvim
 alias emacs="emacs -nw"
+# alias emacs=edit-with-emacs
 
 alias fs="foreman start -f Procfile.dev"
 alias ft="foreman start -f Procfile.test"
 alias pr="pry-remote"
 alias dc="sudo mount -t ecryptfs ~/safe ~/safe -o key=passphrase,ecryptfs_cipher=aes,ecryptfs_key_bytes=16,ecryptfs_passthrough=no,ecryptfs_enable_filename_crypto=yes"
+alias bcd="boot cider dev"
 

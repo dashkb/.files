@@ -1,0 +1,1 @@
+xinput set-prop `trackpad-xinput-id` "Device Enabled" 0

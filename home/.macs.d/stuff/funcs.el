@@ -1,4 +1,32 @@
-(defun stuff/init-my-stuff ()
+(defun clj-system-refresh ()
+  (interactive)
+  (cider-interactive-eval "(require 'system.repl) (system.repl/reset)"))
+
+(defun rails-refresh ()
+  (interactive)
+  (robe-rails-refresh))
+
+(defun stuff/set-indent ()
+  ((lambda (n)
+     (setq coffee-tab-width n) ; coffeescript
+     (setq javascript-indent-level n) ; javascript-mode
+     (setq js-indent-level n) ; js-mode
+     (setq js2-basic-offset n) ; js2-mode
+     (setq web-mode-markup-indent-offset n) ; web-mode, html tag in html file
+     (setq web-mode-css-indent-offset n) ; web-mode, css in html file
+     (setq web-mode-code-indent-offset n) ; web-mode, js code in html file
+     (setq css-indent-offset n) ; css-mode
+     ) 2))
+
+(defun stuff/remote-pry (&rest args)
+  (interactive)
+  (let ((buffer (apply 'make-comint "pry-remote" "pry-remote" nil args)))
+    (switch-to-buffer buffer)
+    (setq-local comint-process-echoes t)))
+
+
+(defun stuff/set-some-keys ()
+  (interactive)
   (evil-leader/set-key "oo[" 'org-agenda-file-to-front)
   (evil-leader/set-key "oo]" 'org-remove-file)
   (evil-leader/set-key "ooa" 'org-agenda)
@@ -14,14 +42,22 @@
 
   (spacemacs/set-leader-keys
     "gr" 'magit-rebase-popup
-    "gR" 'magit-reset-popup)
+    "gR" 'magit-reset-popup
+    "orr" 'rails-refresh
+    "orc" 'clj-system-refresh
+    "opr" 'stuff/remote-pry))
 
-  (defun kb/indent-after-exit-insert-mode ()
-    (add-hook 'evil-insert-state-exit-hook 'indent-according-to-mode nil t))
+(defun stuff/lisp-stuff ()
+  (interactive)
+  (add-hook 'clojure-mode #'evil-cleverparens-mode)
 
+  (load (expand-file-name "~/quicklisp/slime-helper.el"))
+  ;; Replace "sbcl" with the path to your implementation
+  (setq inferior-lisp-program "sbcl")
 
-  ;; (add-hook 'enh-ruby-mode-hook 'kb/indent-after-exit-insert-mode)
+  )
 
+(defun stuff/org-stuff ()
   (setq org-refile-use-outline-path 'file)
   (setq org-refile-targets
         '((nil :maxlevel . 3)
@@ -36,66 +72,28 @@
         '((sequence "TODO" "STARTED" "|" "DONE")))
 
   (setq org-directory "~/org")
-  (setq org-default-notes-file (concat org-directory "/things.org"))
-  ; (set-face-background 'col-highlight "color-19")
+  (setq org-default-notes-file (concat org-directory "/things.org")))
 
-  ;; (set-face-attribute 'helm-selection nil
-  ;;                     ;; :background "purple"
-  ;;                     :foreground "green")
-
-  ((lambda (n)
-     (setq coffee-tab-width n) ; coffeescript
-     (setq javascript-indent-level n) ; javascript-mode
-     (setq js-indent-level n) ; js-mode
-     (setq js2-basic-offset n) ; js2-mode
-     (setq web-mode-markup-indent-offset n) ; web-mode, html tag in html file
-     (setq web-mode-css-indent-offset n) ; web-mode, css in html file
-     (setq web-mode-code-indent-offset n) ; web-mode, js code in html file
-     (setq css-indent-offset n) ; css-mode
-     ) 2)
+(defun stuff/init-my-stuff ()
+  (interactive)
   (setq system-uses-terminfo nil)
 
   (require 'evil-tmux-navigator)
   (evil-tmux-navigator-bind-keys)
 
   (when (not (display-graphic-p))
-    (xclip-mode 1))
+    (load-file "~/.emacs.d/xclip.el")
+    (require 'xclip)
+    (turn-on-xclip))
+
   (setq helm-mode-fuzzy-match t)
 
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
   (setq clojure-align-forms-automatically t)
 
-  (require 'polymode)
-
-  (defcustom pm-host/enh-ruby
-    (pm-bchunkmode "enh-ruby" :mode 'enh-ruby-mode)
-    "Ruby host chunkmode"
-    :group 'hostmodes
-    :type 'object)
-
-  (defcustom  pm-inner/ruby-sql
-    (pm-hbtchunkmode "sql"
-                     :head-reg  "<<-SQL"
-                     :tail-reg    "SQL"
-                     :head-mode 'host
-                     :tail-mode 'host
-                     :protect-indent-line nil
-                     :mode 'fundamental-mode)
-    "SQL typical chunk."
-    :group 'innermodes
-    :type 'object)
-
-  (defcustom pm-poly/ruby-sql
-    (pm-polymode-one "ruby-sql"
-                     :hostmode 'pm-host/enh-ruby
-                     :innermode 'pm-inner/ruby-sql)
-    "SQL typical polymode."
-    :group 'polymodes
-    :type 'object)
-
-  (define-polymode poly-ruby-mode pm-poly/ruby-sql)
-
-  ;; (add-hook 'enh-ruby-mode-hook 'poly-ruby-mode)
-
+  (stuff/org-stuff)
+  (stuff/set-some-keys)
+  (stuff/set-indent)
+  (stuff/lisp-stuff)
   )

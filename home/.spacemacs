@@ -59,8 +59,9 @@ values."
                                        (recipe :fetcher github
                                                :repo "lleaff/evil-tmux-navigator"))
                                       multi-term
-                                      xclip
                                       polymode
+                                      evil-cleverparens
+                                      geiser
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -229,6 +230,7 @@ user code."
 
   (setq-default evil-shift-width 2)
   (setq enh-ruby-preserve-indent-in-heredocs t)
+
   )
 
 (defun dotspacemacs/user-config ()

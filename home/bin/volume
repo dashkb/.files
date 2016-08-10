@@ -2,7 +2,7 @@
 
 case ARGV[0]
 when 'mute'
-  `amixer set Master toggle`
+  `amixer set Master 0%`
 when 'up'
   `amixer set Master 10%+`
 when 'down'

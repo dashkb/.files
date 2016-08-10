@@ -116,7 +116,7 @@ bar {
 
 exec --no-startup-id xset r rate 250 30
 bindsym $mod+space exec --no-startup-id ~/bin/app-launcher
-bindsym $mod+Return exec lxterminal -e "/bin/zsh -l"
+bindsym $mod+Return exec xfce4-terminal
 bindsym $mod+Escape exec --no-startup-id i3lock
 bindsym $mod+Tab exec --no-startup-id ~/bin/window-switcher
 bindsym $mod+q kill
