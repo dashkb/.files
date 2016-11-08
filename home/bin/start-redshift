@@ -1,2 +1,3 @@
+kill $(pgrep -f redshift | grep -v ^$$\$)
 redshift &
 notify-send "Started redshift"

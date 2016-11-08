@@ -4,5 +4,9 @@ require "neovim"
 if STDIN.tty?
   abort("Can't run neovim-ruby-host interactively.")
 else
-  Neovim.start_host(ARGV)
+  begin
+    Neovim.start_host(ARGV)
+  rescue
+    Neovim::Host.run(ARGV)
+  end
 end

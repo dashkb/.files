@@ -11,7 +11,6 @@ alias tr="tmux rename-window"
 alias z="zeus"
 alias ccat="pygmentize -g"
 
-# alias git=hub
 alias g=hub
 alias gxx="git add . && git commit --amend --no-edit && git push -f"
 alias gyy="git add . && git commit -m 'fixup' && g rbm && git push -f"

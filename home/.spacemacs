@@ -20,37 +20,33 @@ values."
                                        (auto-completion :variables
                                                           auto-completion-enable-snippets-in-popup t
                                                           auto-completion-enable-sort-by-usage t)
+                                       syntax-checking
                                        better-defaults
                                        emacs-lisp
-                                       markdown
                                        org
                                        javascript
-                                       clojure
                                        yaml
-                                       dockerfile
                                        racket
                                        tmux
                                        html
                                        markdown
                                        git
                                        github
-                                       syntax-checking
-                                       stuff ;; my layer
                                        (ruby :variables
-                                             ruby-enable-enh-ruby-mode t
                                              ruby-version-manager 'rvm)
-                                       ruby-on-rails)
+                                       ruby-on-rails
+                                       sql
+                                       stuff ;; my layer
+                                       )
+
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
    ;; configuration in `dotspacemacs/config'.
    dotspacemacs-additional-packages '(base16-theme
-                                      ctags-update
                                       evil-surround
-                                      ac-etags
                                       helm-pt
                                       jade-mode
-                                      exec-path-from-shell
                                       crosshairs
                                       ruby-hash-syntax
                                       pt
@@ -58,10 +54,7 @@ values."
                                        :location
                                        (recipe :fetcher github
                                                :repo "lleaff/evil-tmux-navigator"))
-                                      multi-term
-                                      polymode
-                                      evil-cleverparens
-                                      geiser
+                                      evil-smartparens
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -216,22 +209,7 @@ user code."
   (setq-default truncate-lines t)
   (add-hook 'haml-mode-hook (lambda () (set 'electric-indent-mode '())))
 
-  (add-hook 'enh-ruby-mode-hook
-            (lambda ()
-              ;; (set 'electric-indent-mode '())
-              (set 'enh-ruby-bounce-deep-indent t)
-              (set 'enh-ruby-deep-indent-paren nil)
-              (set 'enh-ruby-hanging-brace-deep-indent-level 1)
-              (set 'enh-ruby-hanging-brace-indent-level 2)
-              (set 'enh-ruby-hanging-indent-level 2)
-              (set 'enh-ruby-hanging-paren-deep-indent-level 0)
-              (set 'enh-ruby-hanging-paren-indent-level 2)
-              (set 'enh-ruby-indent-level 2)))
-
-  (setq-default evil-shift-width 2)
-  (setq enh-ruby-preserve-indent-in-heredocs t)
-
-  )
+  (setq-default evil-shift-width 2))
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -253,7 +231,6 @@ layers configuration. You are free to put any user code."
  '(org-agenda-files
    (quote
     ("~/org/cerplus.org" "~/org/notes.org" "~/org/things.org")))
- '(ruby-deep-indent-paren nil)
  '(safe-local-variable-values
    (quote
     ((cider-boot-parameters . "cider environ repl -s wait")))))

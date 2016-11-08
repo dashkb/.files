@@ -1,11 +1,3 @@
-" Modeline and Notes {
-"   vim: set foldmarker={,} foldlevel=0 spell:
-"
-"   This is my personal .vimrc, I don't recommend you copy it, just
-"   use the "   pieces you want(and understand!).  When you copy a
-"   .vimrc in its entirety, weird and unexpected things can happen.
-" }
-
 " Basics {
   set enc=utf-8
   set nocompatible " explicitly get out of vi-compatible mode
@@ -41,17 +33,11 @@
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
   Plug 'tpope/vim-commentary'
-  Plug 'myusuf3/numbers.vim'
   Plug 'mattn/webapi-vim'
   Plug 'mattn/gist-vim'
   Plug 'tpope/vim-fugitive'
   Plug 'vim-scripts/Align'
   Plug 'vim-ruby/vim-ruby'
-  Plug 'tpope/gem-browse'
-  Plug 'tpope/vim-bundler'
-  Plug 'tpope/vim-rake'
-  Plug 'tpope/vim-rails'
-  Plug 'majutsushi/tagbar'
   Plug 'vim-scripts/SyntaxRange'
   Plug 'wlangstroth/vim-racket'
   Plug 'edkolev/tmuxline.vim'
@@ -59,17 +45,10 @@
   Plug 'tpope/vim-dispatch'
   Plug 'tpope/vim-vinegar'
   Plug 'tpope/vim-surround'
-  Plug 'groenewege/vim-less'
-  Plug 'lmeijvogel/vim-yaml-helper'
   Plug 'vimwiki/vimwiki'
   Plug 'schickling/vim-bufonly'
-  Plug 'vim-scripts/paredit.vim'
-  Plug 'vim-scripts/vim-misc'
   Plug 'luochen1990/rainbow'
-  Plug 'slim-template/vim-slim'
   Plug 'nelstrom/vim-qargs'
-  Plug 'LucHermitte/lh-vim-lib'
-  Plug 'LucHermitte/local_vimrc'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
   Plug 'Shougo/deoplete.nvim'
@@ -81,10 +60,16 @@
   Plug 'cazador481/fakeclip.neovim'
   Plug '/home/kyle/code/vim-tags'
   Plug 'airblade/vim-rooter'
-  Plug 'digitaltoad/vim-jade'
   Plug 'elzr/vim-json'
   Plug 'chriskempson/base16-vim'
   Plug 'nazo/pt.vim'
+  Plug 'isRuslan/vim-es6'
+  Plug 'neovim/node-host'
+  Plug 'snoe/nvim-parinfer.js'
+  Plug 'kchmck/vim-coffee-script'
+  Plug 'powerman/vim-plugin-AnsiEsc'
+  Plug 'vim-syntastic/syntastic'
+  Plug 'Raimondi/delimitMate'
   call plug#end()
 
   let g:airline_powerline_fonts = 1
@@ -102,12 +87,10 @@
   set lispwords+=get,put,post,patch,delete,class,class*
   set lispwords+=define-for-syntax,define-syntax-rule
   set lispwords+=for/syntax,thunk,place,define-syntax-parameter,syntax-parse
+  set lispwords+=for/list
 
-  nmap <Leader>pf :FZF!<CR>
-  nmap <Leader>t :Tags!<CR>
-  nmap <Leader>b :History<CR>
-
-  nmap <Leader>sc :nohl<CR>
+  let g:syntastic_javascript_checkers = ['eslint']
+  let g:syntastic_ruby_checkers = ['rubocop']
 " }
 
 " General {
@@ -146,12 +129,66 @@
   nmap <Leader>ktw :%s/\s\+$<CR>
   " Vim reload
   nmap <Leader>vr :silent so ~/.vimrc<CR>
+
+
+  nmap <Leader>ff :FZF!<CR>
+  nmap <Leader>t :Tags!<CR>
+  nmap <Leader>fb :History<CR>
+  nmap <Leader>bb :bprevious<CR>
+  nmap <Leader>bn :bnext<CR>
+
+  nmap <Leader>sc :nohl<CR>
+
+  nmap <Leader>tb :TagbarOpenAutoClose<CR>
+
+  " If text is selected, save it in the v buffer and send that buffer it to tmux
+  vmap <Leader>e "vy :call VimuxSlime()<CR>
+  nmap <Leader>eb gg"vyG'' :call VimuxSlime()<CR>
+  nmap <Leader>el ^"vy$ :call VimuxSlime()<CR>
+  nmap <Leader>rc :e ~/.vimrc<CR>
+  nmap <Leader>pry :call OpenPry()<CR>
+  nmap <Leader>railsc :call OpenRailsConsole()<CR>
+
+
+  " Window stuff
+  nmap <Leader>x :bd<CR>
+  nmap <Leader>w- :split<CR>
+  nmap <Leader>w/ :vsplit<CR>
+
+  " TOggles
+  nmap <Leader>tn :set number!<CR>
+  nmap <Leader>tcc :set cursorcolumn!<CR>
+
+
+  function! SwapParinferMode()
+    if g:parinfer_mode ==? 'indent'
+      let g:parinfer_mode = 'paren'
+    elseif g:parinfer_mode ==? 'paren'
+      let g:parinfer_mode = 'indent'
+    endif
+  endfunction
+
+  nmap <Leader>pm :call SwapParinferMode()<CR>
+
+  imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+  smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+  " SuperTab like snippets behavior.
+  "imap <expr><TAB>
+  " \ pumvisible() ? "\<C-n>" :
+  " \ neosnippet#expandable_or_jumpable() ?
+  " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+  smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+  \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
 " }
 
 " Vim UI {
   let g:base16_shell_path='~/.base16-shell'
   let base16colorspace=256
-  colorscheme base16-default
+  colorscheme base16-default-dark
   let g:airline_theme = 'base16'
   set background=dark
   set cursorcolumn " highlight the current column
@@ -169,7 +206,6 @@
                     " matching brackets for
   set nostartofline " leave my cursor where it was
   set novisualbell " don't blink
-  set number " turn on line numbers
   set numberwidth=1 " We are good up to 99999 lines
   set report=0 " tell us when anything is changed via :...
   set ruler " Always show current positions along the bottom
@@ -204,15 +240,15 @@
   " endfun
 
   " set foldexpr=OmgFold(v:lnum)
-  set fdm=indent
-  set foldlevelstart=2
+  set fdm=syntax
+  :autocmd BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
+  :autocmd BufWinEnter *.rb,Gemfile,Berksfile setlocal fdm=indent
 " }
 
 " Plug Settings {
   let b:match_ignorecase = 1 " case is stupid
 
   " Tagbar Settings
-  nmap <Leader>tb :TagbarOpenAutoClose<CR>
 
   " PowerLine Settings {
     let g:Powerline_symbols = 'unicode'
@@ -220,10 +256,6 @@
 
   let g:gist_clip_command = 'pbcopy'
   let g:gist_post_private = 1
-
-  nmap <Leader>par :call PareditToggle()<CR>
-
-  let g:paredit_leader = "<space>"
 
   function! ColorOf(thing)
     let color = synIDattr(synIDtrans(hlID(a:thing)), 'fg')
@@ -236,19 +268,6 @@
   let g:deoplete#enable_at_startup = 1
   let g:deoplete#delimiters = ['/', '.', '::', ':', '#' ]
   let g:neosnippet#enable_snipmate_compatibility = 1
-
-  imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-  smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-  xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-  " SuperTab like snippets behavior.
-  "imap <expr><TAB>
-  " \ pumvisible() ? "\<C-n>" :
-  " \ neosnippet#expandable_or_jumpable() ?
-  " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-  smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-  \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
   " For conceal markers.
   if has('conceal')
@@ -274,13 +293,7 @@
     call VimuxSlime()
   endfun
 
-  " If text is selected, save it in the v buffer and send that buffer it to tmux
-  vmap <Leader>e "vy :call VimuxSlime()<CR>
-  nmap <Leader>eb gg"vyG'' :call VimuxSlime()<CR>
-  nmap <Leader>el ^"vy$ :call VimuxSlime()<CR>
-  nmap <Leader>fed :e ~/.vimrc<CR>
-  nmap <Leader>pry :call OpenPry()<CR>
-  nmap <Leader>railsc :call OpenRailsConsole()<CR>
+
 " }
 
 " Coffeescript tags {
@@ -310,4 +323,4 @@
     \ --regex-coffee=/^[[:space:]]*it[[:space:][:punct:]]+([^[:punct:]]+).+$/\1/s,spec/'
 
   let $CTAGS = substitute(s:ctags_opts, '\v\([nst]\)', '\\', 'g')
-" 
+"
