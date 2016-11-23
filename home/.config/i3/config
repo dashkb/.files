@@ -1,7 +1,7 @@
 # i3 config file (v4)
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
-set $mod Mod1
+set $mod Mod4
 
 font pango:Sauce Code Pro 20
 
@@ -127,7 +127,8 @@ bindcode 122 exec --no-startup-id ~/bin/volume down
 bindcode 123 exec --no-startup-id ~/bin/volume up
 
 exec --no-startup-id gnome-settings-daemon
-exec --no-startup-id setxkbmap -option caps:ctrl_modifier -option altwin:swap_alt_win
+# exec --no-startup-id setxkbmap -option caps:ctrl_modifier -option altwin:swap_alt_win
+exec --no-startup-id setxkbmap -option caps:ctrl_modifier
 exec --no-startup-id ~/bin/start-wifi
 exec --no-startup-id ~/bin/start-redshift
 exec --no-startup-id ~/bin/start-comm-apps

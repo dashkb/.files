@@ -70,6 +70,7 @@
   Plug 'powerman/vim-plugin-AnsiEsc'
   Plug 'vim-syntastic/syntastic'
   Plug 'Raimondi/delimitMate'
+  Plug 'leafgarland/typescript-vim'
   call plug#end()
 
   let g:airline_powerline_fonts = 1
@@ -91,6 +92,11 @@
 
   let g:syntastic_javascript_checkers = ['eslint']
   let g:syntastic_ruby_checkers = ['rubocop']
+
+  let g:syntastic_mode_map = {
+        \ "mode": "passive",
+        \ "active_filetypes": [],
+        \ "passive_filetypes": [] }
 " }
 
 " General {
@@ -130,7 +136,6 @@
   " Vim reload
   nmap <Leader>vr :silent so ~/.vimrc<CR>
 
-
   nmap <Leader>ff :FZF!<CR>
   nmap <Leader>t :Tags!<CR>
   nmap <Leader>fb :History<CR>
@@ -138,8 +143,6 @@
   nmap <Leader>bn :bnext<CR>
 
   nmap <Leader>sc :nohl<CR>
-
-  nmap <Leader>tb :TagbarOpenAutoClose<CR>
 
   " If text is selected, save it in the v buffer and send that buffer it to tmux
   vmap <Leader>e "vy :call VimuxSlime()<CR>
@@ -149,13 +152,14 @@
   nmap <Leader>pry :call OpenPry()<CR>
   nmap <Leader>railsc :call OpenRailsConsole()<CR>
 
+  nmap <Leader>lint :SyntasticCheck<CR>
 
   " Window stuff
   nmap <Leader>x :bd<CR>
   nmap <Leader>w- :split<CR>
   nmap <Leader>w/ :vsplit<CR>
 
-  " TOggles
+  " Toggles
   nmap <Leader>tn :set number!<CR>
   nmap <Leader>tcc :set cursorcolumn!<CR>
 
@@ -174,11 +178,7 @@
   smap <C-k>     <Plug>(neosnippet_expand_or_jump)
   xmap <C-k>     <Plug>(neosnippet_expand_target)
 
-  " SuperTab like snippets behavior.
-  "imap <expr><TAB>
-  " \ pumvisible() ? "\<C-n>" :
-  " \ neosnippet#expandable_or_jumpable() ?
-  " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+  imap <M-m> <C-v>u03A9
 
   smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
   \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
@@ -242,7 +242,7 @@
   " set foldexpr=OmgFold(v:lnum)
   set fdm=syntax
   :autocmd BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
-  :autocmd BufWinEnter *.rb,Gemfile,Berksfile setlocal fdm=indent
+  :autocmd BufWinEnter *.rb,Gemfile,Berksfile,*.coffee setlocal fdm=indent
 " }
 
 " Plug Settings {
@@ -323,4 +323,3 @@
     \ --regex-coffee=/^[[:space:]]*it[[:space:][:punct:]]+([^[:punct:]]+).+$/\1/s,spec/'
 
   let $CTAGS = substitute(s:ctags_opts, '\v\([nst]\)', '\\', 'g')
-"
