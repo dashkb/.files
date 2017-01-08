@@ -1,0 +1,11 @@
+#!/bin/sh
+
+i3-msg "workspace number 2;"
+chrome &
+
+sleep 1
+
+i3-msg "workspace number 1;"
+Franz &
+
+

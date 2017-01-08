@@ -10,7 +10,9 @@
     co = checkout
     p  = push
     rb = rebase
+    rblm = rebase -i master
     rbm =  rebase -i origin/master
+    rsm = reset --hard origin/master
     rbc = rebase --continue
     dst = diff --stat
     pf = push -f

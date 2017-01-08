@@ -33,6 +33,8 @@
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
   Plug 'tpope/vim-commentary'
+  Plug 'tpope/vim-abolish'
+  Plug 'tpope/vim-repeat'
   Plug 'mattn/webapi-vim'
   Plug 'mattn/gist-vim'
   Plug 'tpope/vim-fugitive'
@@ -68,18 +70,18 @@
   Plug 'snoe/nvim-parinfer.js'
   Plug 'kchmck/vim-coffee-script'
   Plug 'powerman/vim-plugin-AnsiEsc'
-  Plug 'vim-syntastic/syntastic'
   Plug 'Raimondi/delimitMate'
   Plug 'leafgarland/typescript-vim'
+  Plug 'neomake/neomake'
+  Plug 'fntlnz/atags.vim'
+  Plug 'hashivim/vim-terraform'
+
   call plug#end()
 
   let g:airline_powerline_fonts = 1
   let g:airline_section_b = ''
 
-  au BufNewFile,BufRead *.hamlc set ft=haml
-  au BufRead,BufNewFile *.service set filetype=systemd
-  au BufRead,BufNewFile *.slum set ft=lisp
-  au Bufread,BufNewFile *.t set ft=terra
+  au BufRead,BufNewFile *.service set ft=systemd
 
   au FileType racket setl isk-=^
   au FileType racket setl isk+=/
@@ -90,13 +92,8 @@
   set lispwords+=for/syntax,thunk,place,define-syntax-parameter,syntax-parse
   set lispwords+=for/list
 
-  let g:syntastic_javascript_checkers = ['eslint']
-  let g:syntastic_ruby_checkers = ['rubocop']
-
-  let g:syntastic_mode_map = {
-        \ "mode": "passive",
-        \ "active_filetypes": [],
-        \ "passive_filetypes": [] }
+  au BufWritePost * Neomake
+  let g:neomake_javascript_enabled_makers = ['eslint']
 " }
 
 " General {
@@ -152,8 +149,6 @@
   nmap <Leader>pry :call OpenPry()<CR>
   nmap <Leader>railsc :call OpenRailsConsole()<CR>
 
-  nmap <Leader>lint :SyntasticCheck<CR>
-
   " Window stuff
   nmap <Leader>x :bd<CR>
   nmap <Leader>w- :split<CR>
@@ -183,6 +178,11 @@
   smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
   \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
+  au BufWritePost *.rb,*.js call atags#generate()
+
+  let g:atags_build_commands_list = [
+    \ 'pt -g "" | ctags -L - --fields=+l'
+    \ ]
 " }
 
 " Vim UI {
@@ -241,8 +241,8 @@
 
   " set foldexpr=OmgFold(v:lnum)
   set fdm=syntax
-  :autocmd BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
-  :autocmd BufWinEnter *.rb,Gemfile,Berksfile,*.coffee setlocal fdm=indent
+  au BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
+  au BufWinEnter *.rb,Gemfile,Berksfile,*.coffee setlocal fdm=indent
 " }
 
 " Plug Settings {
@@ -268,6 +268,7 @@
   let g:deoplete#enable_at_startup = 1
   let g:deoplete#delimiters = ['/', '.', '::', ':', '#' ]
   let g:neosnippet#enable_snipmate_compatibility = 1
+  let g:neosnippet#snippets_director = '~/.vim/snippets'
 
   " For conceal markers.
   if has('conceal')

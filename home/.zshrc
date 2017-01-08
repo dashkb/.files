@@ -38,7 +38,8 @@ fi
 [[ -s ~/.awsrc ]] && source ~/.awsrc
 
 set -o vi
-
+bindkey -M viins 'jk' vi-cmd-mode
+#
 # I can type, bro
 unsetopt CORRECT
 setopt NOCORRECT
@@ -59,3 +60,19 @@ export NVM_DIR="/home/kyle/.nvm"
 export FZF_DEFAULT_COMMAND='pt -g ""'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export CHEF_USER=dashkb
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+function nvm_use() {
+  if [ -r $PWD/.nvmrc ]; then
+    nvm use
+  fi
+}
+
+nvm_use
+
+chpwd_functions=(${chpwd_functions[@]} "nvm_use")
+
+

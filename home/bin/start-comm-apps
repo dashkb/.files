@@ -1,9 +1,0 @@
-#!/bin/sh
-
-i3-msg "workspace 1: comm; append_layout ~/.config/i3/workspace-1.json"
-
-google-chrome --app="https://mail.google.com/mail/u/?authuser=kyle@kylebrett.com" &
-google-chrome --app="http://calendar.google.com/calendar?authuser=kyle@kylebrett.com" &
-
-google-chrome --app="https://mail.google.com/mail/u/?authuser=kyle@cerplusfoods.com" &
-google-chrome --app="http://calendar.google.com/calendar?authuser=kyle@cerplusfoods.com" &

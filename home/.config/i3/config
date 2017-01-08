@@ -9,6 +9,8 @@ floating_modifier $mod
 
 focus_follows_mouse no
 
+hide_edge_borders both
+
 # change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -127,14 +129,11 @@ bindcode 122 exec --no-startup-id ~/bin/volume down
 bindcode 123 exec --no-startup-id ~/bin/volume up
 
 exec --no-startup-id gnome-settings-daemon
-# exec --no-startup-id setxkbmap -option caps:ctrl_modifier -option altwin:swap_alt_win
 exec --no-startup-id setxkbmap -option caps:ctrl_modifier
 exec --no-startup-id ~/bin/start-wifi
 exec --no-startup-id ~/bin/start-redshift
-exec --no-startup-id ~/bin/start-comm-apps
-exec --no-startup-id slack
 exec --no-startup-id ~/bin/start-dispad
-exec --no-startup-id ~/.dropbox-dist/dropboxd
+exec --no-startup-id ~/bin/start-default-apps
 
 client.focused #81a2be #81a2be #1d1f21 #282a2e
 client.focused_inactive #373b41 #373b41 #969896 #282a2e

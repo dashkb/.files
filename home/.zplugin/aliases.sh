@@ -42,6 +42,7 @@ alias ls="ls --color"
 alias slideshow="feh --cycle-once -D 3 -Z -."
 
 alias vim=nvim
+alias snip="vim ~/.vim/snippets"
 alias emacs="emacs -nw"
 # alias emacs=edit-with-emacs
 
