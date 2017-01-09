@@ -2,11 +2,11 @@
 
 case ARGV[0]
 when 'mute'
-  `amixer set Master 0%`
+  `amixer -q -D pulse set Master toggle`
 when 'up'
-  `amixer set Master 10%+`
+  `amixer -q -D pulse set Master 10%+ unmute`
 when 'down'
-  `amixer set Master 10%-`
+  `amixer -q -D pulse set Master 10%- unmute`
 end
 
 `notify-send -t 1000 "Volume #{ARGV[0]}"`

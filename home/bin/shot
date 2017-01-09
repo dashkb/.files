@@ -23,7 +23,7 @@ if slop['Cancel'] == 'false'
 
   `maim -g #{slop['G']} #{filename}`
   `pinta #{filename}`
-  `s3cmd put #{filename} s3://dashkb-screens`
+  `aws s3 cp #{filename} s3://dashkb-screens`
   `printf "#{url}" | xclip -selection clipboard > /dev/null`
   `notify-send -t 2500 "Screenshot Uploaded" "#{url}"`
 end

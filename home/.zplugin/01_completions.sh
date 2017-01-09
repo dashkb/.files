@@ -1,4 +1,4 @@
-fpath=(/usr/local/share/zsh/site-functions /usr/local/share/zsh-completions ~/.zsh/completions $fpath)
+fpath=(/home/kyle/.linuxbrew/share/zsh-completions /home/kyle/.zsh/completions $fpath)
 
 autoload -zU compinit && compinit
 
