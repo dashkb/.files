@@ -12,10 +12,11 @@
     rb = rebase
     rblm = rebase -i master
     rbm =  rebase -i origin/master
-    rsm = reset --hard origin/master
+    rbu =  rebase -i upstream/master
     rbc = rebase --continue
     dst = diff --stat
     pf = push -f
+    pfu = push -fu
     staged = "diff --cached"
     oneline = "log --pretty=oneline"
     llog = log --date=local
@@ -38,3 +39,4 @@
     enabled = true
 [github]
 	user = dashkb
+	oauth-token = 

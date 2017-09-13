@@ -3,7 +3,7 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 set $mod Mod4
 
-font pango:Sauce Code Pro 20
+font pango:Sauce Code Pro 18
 
 floating_modifier $mod
 
@@ -102,6 +102,7 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 exec --no-startup-id xrandr --output eDP-1 --primary
 bar {
+  output eDP-1
   status_command i3blocks
   tray_output primary
   position top
@@ -116,6 +117,20 @@ bar {
   }
 }
 
+bar {
+  output HDMI-3
+  status_command i3blocks
+  position top
+  colors {
+    separator #969896
+    background #1d1f21
+    statusline #c5c8c6
+    focused_workspace #81a2be #81a2be #1d1f21
+    active_workspace #373b41 #373b41 #ffffff
+    inactive_workspace #282a2e #282a2e #969896
+    urgent_workspace #cc6666 #cc6666 #ffffff
+  }
+}
 
 exec --no-startup-id xset r rate 250 30
 bindsym $mod+space exec --no-startup-id ~/bin/app-launcher
@@ -129,12 +144,7 @@ bindcode 121 exec --no-startup-id ~/bin/volume mute
 bindcode 122 exec --no-startup-id ~/bin/volume down
 bindcode 123 exec --no-startup-id ~/bin/volume up
 
-exec --no-startup-id gnome-settings-daemon
-exec --no-startup-id setxkbmap -option caps:ctrl_modifier
-exec --no-startup-id ~/bin/start-wifi
-exec --no-startup-id ~/bin/start-redshift
-exec --no-startup-id ~/bin/start-dispad
-# exec --no-startup-id ~/bin/start-default-apps
+exec --no-startup-id ~/bin/on-i3-start
 
 client.focused #81a2be #81a2be #1d1f21 #282a2e
 client.focused_inactive #373b41 #373b41 #969896 #282a2e

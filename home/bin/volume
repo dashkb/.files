@@ -2,10 +2,13 @@
 
 case ARGV[0]
 when 'mute'
+  # `amixer -q -D hw:1 set Master toggle`
   `amixer -q -D pulse set Master toggle`
 when 'up'
+  # `amixer -q -D hw:1 set Master 10%+ unmute`
   `amixer -q -D pulse set Master 10%+ unmute`
 when 'down'
+  # `amixer -q -D hw:1 set Master 10%- unmute`
   `amixer -q -D pulse set Master 10%- unmute`
 end
 

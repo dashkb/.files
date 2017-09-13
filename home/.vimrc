@@ -60,27 +60,27 @@
   Plug 'benmills/vimux'
   Plug 'skalnik/vim-vroom'
   Plug 'cazador481/fakeclip.neovim'
-  Plug '/home/kyle/code/vim-tags'
   Plug 'airblade/vim-rooter'
   Plug 'elzr/vim-json'
   Plug 'chriskempson/base16-vim'
   Plug 'nazo/pt.vim'
-  Plug 'isRuslan/vim-es6'
   Plug 'neovim/node-host'
   Plug 'snoe/nvim-parinfer.js'
   Plug 'kchmck/vim-coffee-script'
   Plug 'powerman/vim-plugin-AnsiEsc'
   Plug 'Raimondi/delimitMate'
-  Plug 'leafgarland/typescript-vim'
-  Plug 'neomake/neomake'
-  Plug 'fntlnz/atags.vim'
-  Plug 'hashivim/vim-terraform'
-
+  Plug 'tpope/vim-markdown'
+  Plug 'pangloss/vim-javascript'
+  Plug 'isRuslan/vim-es6'
+  Plug 'w0rp/ale'
+  Plug 'godlygeek/tabular'
+  Plug 'gabrielelana/vim-markdown'
   call plug#end()
 
   let g:airline_powerline_fonts = 1
   let g:airline_section_b = ''
 
+  au BufEnter * set mouse=
   au BufRead,BufNewFile *.service set ft=systemd
 
   au FileType racket setl isk-=^
@@ -91,9 +91,6 @@
   set lispwords+=define-for-syntax,define-syntax-rule
   set lispwords+=for/syntax,thunk,place,define-syntax-parameter,syntax-parse
   set lispwords+=for/list
-
-  au BufWritePost * Neomake
-  let g:neomake_javascript_enabled_makers = ['eslint']
 " }
 
 " General {
@@ -134,7 +131,6 @@
   nmap <Leader>vr :silent so ~/.vimrc<CR>
 
   nmap <Leader>ff :FZF!<CR>
-  nmap <Leader>t :Tags!<CR>
   nmap <Leader>fb :History<CR>
   nmap <Leader>bb :bprevious<CR>
   nmap <Leader>bn :bnext<CR>
@@ -144,7 +140,8 @@
   " If text is selected, save it in the v buffer and send that buffer it to tmux
   vmap <Leader>e "vy :call VimuxSlime()<CR>
   nmap <Leader>eb gg"vyG'' :call VimuxSlime()<CR>
-  nmap <Leader>el ^"vy$ :call VimuxSlime()<CR>
+  nmap <Leader>el "vyy :call VimuxSlime()<CR>
+
   nmap <Leader>rc :e ~/.vimrc<CR>
   nmap <Leader>pry :call OpenPry()<CR>
   nmap <Leader>railsc :call OpenRailsConsole()<CR>
@@ -158,6 +155,12 @@
   nmap <Leader>tn :set number!<CR>
   nmap <Leader>tcc :set cursorcolumn!<CR>
 
+  " Quickfix
+  nmap <Leader>cn :cnext<CR>
+  nmap <Leader>cx :cclose<CR>
+  nmap <Leader>co :copen<CR>
+
+  nmap <Leader>sf :w<CR>
 
   function! SwapParinferMode()
     if g:parinfer_mode ==? 'indent'
@@ -177,12 +180,6 @@
 
   smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
   \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-  au BufWritePost *.rb,*.js call atags#generate()
-
-  let g:atags_build_commands_list = [
-    \ 'pt -g "" | ctags -L - --fields=+l'
-    \ ]
 " }
 
 " Vim UI {
@@ -240,9 +237,9 @@
   " endfun
 
   " set foldexpr=OmgFold(v:lnum)
-  set fdm=syntax
-  au BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
-  au BufWinEnter *.rb,Gemfile,Berksfile,*.coffee setlocal fdm=indent
+  " set fdm=syntax
+  " au BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
+  " au BufWinEnter *.rb,Gemfile,Berksfile,*.coffee setlocal fdm=indent
 " }
 
 " Plug Settings {
@@ -294,33 +291,10 @@
     call VimuxSlime()
   endfun
 
+  let vim_markdown_preview_github=1
 
-" }
-
-" Coffeescript tags {
-  let g:tagbar_type_coffee = {
-      \ 'ctagstype' : 'coffee',
-      \ 'kinds'     : [
-          \ 'c:classes',
-          \ 'm:methods',
-          \ 'f:functions',
-          \ 'v:variables',
-          \ 'u:suite',
-          \ 's:specs'
-      \ ]
-  \ }
-
-  " Posix regular expressions for matching interesting items. Since this will
-  " be passed as an environment variable, no whitespace can exist in the options
-  " so [:space:] is used instead of normal whitespaces.
-  " Adapted from: https://gist.github.com/2901844
-  let s:ctags_opts = '
-    \ --langdef=coffee
-    \ --langmap=coffee:.coffee
-    \ --regex-coffee=/(^|=[[:space:]])*class[[:space:]]([A-Za-z]+\.)*([A-Za-z]+)([[:space:]]extends[[:space:]][A-Za-z.]+)?$/\3/c,class/
-    \ --regex-coffee=/^[[:space:]]*(module\.)?(exports\.)?@?([A-Za-z.]+):.*[-=]>.*$/\3/m,method/
-    \ --regex-coffee=/^[[:space:]]*(module\.)?(exports\.)?([A-Za-z.]+)[[:space:]]+=.*[-=]>.*$/\3/f,function/
-    \ --regex-coffee=/^[[:space:]]*([A-Za-z.]+)[[:space:]]+=[^->\n]*$/\1/v,variable/,
-    \ --regex-coffee=/^[[:space:]]*it[[:space:][:punct:]]+([^[:punct:]]+).+$/\1/s,spec/'
-
-  let $CTAGS = substitute(s:ctags_opts, '\v\([nst]\)', '\\', 'g')
+  Plug 'prettier/vim-prettier', {
+    \ 'do': 'yarn install',
+      \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql']
+      \ }
+  " }

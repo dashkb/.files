@@ -1,5 +1,3 @@
-#!/bin/sh
-
 pkill -f /usr/bin/slack
 pkill -f /usr/bin/slack
 

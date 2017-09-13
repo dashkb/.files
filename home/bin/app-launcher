@@ -1,1 +1,4 @@
-rofi -font "Sauce Code Powerline 30" -show run -fuzzy
+rofi -font "Sauce Code Powerline 30" \
+  -run-command "zsh -c '{cmd}'" \
+  -fuzzy \
+  -show run

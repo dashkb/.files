@@ -31,8 +31,9 @@ done
 export CLICOLOR=1
 export ANDROID_HOME=/usr/local/opt/android-sdk
 
-if [[ $TMUX != "" && $WINDOW_TITLE != "" && -z ${INSIDE_EMACS} ]]; then
-  tr $WINDOW_TITLE
+if [[ -z $INSIDE_EMACS ]]; then
+  set -o vi
+  bindkey -M viins 'jk' vi-cmd-mode
 fi
 
 [[ -s ~/.awsrc ]] && source ~/.awsrc
@@ -63,15 +64,17 @@ export FZF_DEFAULT_COMMAND='pt -g ""'
 
 export CHEF_USER=dashkb
 
+ssh-add ~/.ssh/hired-mbp
+
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
-function nvm_use() {
-  if [ -r $PWD/.nvmrc ]; then
-    nvm use
-  fi
-}
+# function nvm_use() {
+#   if [ -r $PWD/.nvmrc ]; then
+#     nvm use
+#   fi
+# }
 
-nvm_use
+# nvm_use
 
 chpwd_functions=(${chpwd_functions[@]} "nvm_use")
 
