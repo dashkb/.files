@@ -49,13 +49,13 @@ values."
                                        html
                                        markdown
                                        git
-                                       github
                                        version-control
                                        (ruby :variables ruby-enable-enh-ruby-mode t)
                                        ruby-on-rails
                                        sql
                                        shell
                                        scheme
+                                       stuff ;; my layer
                                        )
 
    ;; List of additional packages that will be installed without being
@@ -320,63 +320,7 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  (setq-default evil-shift-width 2)
-  (setq-default js2-basic-offset 2)
-  (setq js2-mode-show-parse-errors nil)
-  (setq js2-mode-show-strict-warnings nil)
-  (setq-default js-indent-level 2)
-  (setq-default tab-width 2)
-  (setq-default css-indent-offset 2)
-  (setq-default sh-indentation 2)
-  (setq-default truncate-lines t)
-
-  (setq-default vc-follow-symlinks t)
-
-  (setq-default projectile-switch-project-action 'magit-status)
-  (setq-default enh-ruby-preserve-indent-in-heredocs t)
-
-  (setq-default browse-url-browser-function 'browse-url-chrome)
-
-  (setq-default geiser-chez-binary "chez")
-
-  (defun kb/set-mouse-color ()
-    (interactive)
-    (set-mouse-color "light gray")) 
-
-
-  (spacemacs/set-leader-keys
-    "!" 'async-shell-command
-    "wo" 'delete-other-windows
-    "omc" 'kb/set-mouse-color
-    )
-
-  (spacemacs/toggle-smartparens-globally-on)
-  (spacemacs/toggle-centered-point-globally-on)
-
-  (setq-default evil-escape-key-sequence "jk")
-
-  (evil-global-set-key 'insert (kbd "C-k") 'yas-expand)
-
-  (defun kb/send-C-r ()
-    (interactive)
-    (term-send-raw-string "\C-r"))
-
-  (defun kb/send-C-n ()
-    (interactive)
-    (term-send-raw-string "\C-n"))
-
-  (defun kb/setup-term-mode ()
-    (evil-local-set-key 'insert (kbd "C-r") 'kb/send-C-r)
-    (evil-local-set-key 'insert (kbd "C-n") 'kb/send-C-n)
-    (spacemacs/toggle-centered-point-off)
-    )
-
-
-  (add-hook 'term-mode-hook 'kb/setup-term-mode)
-
-  (add-hook 'haml-mode-hook (lambda () (set 'electric-indent-mode '())))
-
-  )
+  (stuff/init-my-stuff))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -392,7 +336,7 @@ you should place your code here."
     ("~/org/cerplus.org" "~/org/notes.org" "~/org/things.org")))
  '(package-selected-packages
    (quote
-    (geiser yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic slack emojify circe oauth2 websocket git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter diff-hl enh-ruby-mode xterm-color shell-pop multi-term eshell-z eshell-prompt-extras esh-help yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org tagedit sql-indent spaceline powerline smeargle slim-mode scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-hash-syntax rubocop rspec-mode robe restart-emacs rbenv rainbow-delimiters racket-mode faceup pug-mode pt projectile-rails rake inflections popwin persp-mode pcre2el paradox spinner orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file neotree mwim move-text mmm-mode minitest markdown-toc markdown-mode magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode skewer-mode simple-httpd linum-relative link-hint less-css-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc jade-mode info+ indent-guide hydra hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pt helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh marshal logito pcache ht gh-md fuzzy flycheck-pos-tip pos-tip flycheck pkg-info epl flx-ido flx fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-tmux-navigator evil-surround evil-smartparens evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight emmet-mode elisp-slime-nav dumb-jump f diminish define-word crosshairs col-highlight hl-line+ vline company-web web-completion-data company-tern s dash-functional tern dash company-statistics company column-enforce-mode coffee-mode clean-aindent-mode chruby bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup base16-theme)))
+    (magithub ghub+ apiwrap ghub geiser yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic slack emojify circe oauth2 websocket git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter diff-hl enh-ruby-mode xterm-color shell-pop multi-term eshell-z eshell-prompt-extras esh-help yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org tagedit sql-indent spaceline powerline smeargle slim-mode scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-hash-syntax rubocop rspec-mode robe restart-emacs rbenv rainbow-delimiters racket-mode faceup pug-mode pt projectile-rails rake inflections popwin persp-mode pcre2el paradox spinner orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file neotree mwim move-text mmm-mode minitest markdown-toc markdown-mode magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode skewer-mode simple-httpd linum-relative link-hint less-css-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc jade-mode info+ indent-guide hydra hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pt helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh marshal logito pcache ht gh-md fuzzy flycheck-pos-tip pos-tip flycheck pkg-info epl flx-ido flx fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-tmux-navigator evil-surround evil-smartparens evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight emmet-mode elisp-slime-nav dumb-jump f diminish define-word crosshairs col-highlight hl-line+ vline company-web web-completion-data company-tern s dash-functional tern dash company-statistics company column-enforce-mode coffee-mode clean-aindent-mode chruby bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup base16-theme)))
  '(safe-local-variable-values
    (quote
     ((cider-boot-parameters . "cider environ repl -s wait")))))

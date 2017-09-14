@@ -64,8 +64,8 @@
   Plug 'elzr/vim-json'
   Plug 'chriskempson/base16-vim'
   Plug 'nazo/pt.vim'
-  Plug 'neovim/node-host'
-  Plug 'snoe/nvim-parinfer.js'
+  Plug 'neovim/node-host', { 'do': 'npm install -g neovim' }
+  " Plug 'snoe/nvim-parinfer.js'
   Plug 'kchmck/vim-coffee-script'
   Plug 'powerman/vim-plugin-AnsiEsc'
   Plug 'Raimondi/delimitMate'
@@ -162,21 +162,21 @@
 
   nmap <Leader>sf :w<CR>
 
-  function! SwapParinferMode()
-    if g:parinfer_mode ==? 'indent'
-      let g:parinfer_mode = 'paren'
-    elseif g:parinfer_mode ==? 'paren'
-      let g:parinfer_mode = 'indent'
-    endif
-  endfunction
+  " function! SwapParinferMode()
+  "   if g:parinfer_mode ==? 'indent'
+  "     let g:parinfer_mode = 'paren'
+  "   elseif g:parinfer_mode ==? 'paren'
+  "     let g:parinfer_mode = 'indent'
+  "   endif
+  " endfunction
 
-  nmap <Leader>pm :call SwapParinferMode()<CR>
+  " nmap <Leader>pm :call SwapParinferMode()<CR>
 
-  imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-  smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-  xmap <C-k>     <Plug>(neosnippet_expand_target)
+  " imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+  " smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+  " xmap <C-k>     <Plug>(neosnippet_expand_target)
 
-  imap <M-m> <C-v>u03A9
+  " imap <M-m> <C-v>u03A9
 
   smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
   \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"

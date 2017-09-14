@@ -12,13 +12,6 @@
   if [[ "$zcompdump" -nt "${zcompdump}.zwc" || ! -s "${zcompdump}.zwc" ]]; then
     zcompile "$zcompdump"
   fi
-
-  # Set environment variables for launchd processes.
-  if [[ "$OSTYPE" == darwin* ]]; then
-    for env_var in PATH MANPATH; do
-      launchctl setenv "$env_var" "${(P)env_var}"
-    done
-  fi
 } &!
 
 # Print a random, hopefully interesting, adage.
@@ -27,7 +20,15 @@ if (( $+commands[fortune] )); then
   print
 fi
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
+if [[ -z "$STUFF_IS_LOADED" ]]; then
+  echo "Loading slow stuff"
+  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+  export STUFF_IS_LOADED=1
+
+  export PATH="/usr/local/heroku/bin:$PATH:$HOME/.rvm/bin"
+fi
+
+ssh-add ~/.ssh/hired-mbp > /dev/null 2>&1
+
+# zprof
