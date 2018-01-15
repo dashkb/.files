@@ -1,2 +1,2 @@
-alias cal="gcalcli --calendar kyle@hired.com"
-alias agenda="gcalcli --calendar kyle@hired.com agenda"
+alias cal="gcalcli --calendar kyle@trustedcareers.com"
+alias agenda="cal agenda"

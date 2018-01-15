@@ -11,12 +11,6 @@ export EDITOR="nvim"
 export VISUAL=${EDITOR}
 export GIT_EDITOR=${EDITOR}
 
-export PATH="$HOME/.linuxbrew/bin:$PATH"
-export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
-export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
-
-export PATH="./bin:node_modules/.bin:${HOME}/bin:${PATH}"
-
 # eval "$(shy init)"
 
 for plugin in ~/.zplugin/*; do
@@ -60,3 +54,6 @@ export FZF_DEFAULT_COMMAND='pt -g ""'
 
 export CHEF_USER=dashkb
 
+if [ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
+  exec startx
+fi

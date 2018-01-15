@@ -21,14 +21,7 @@ if (( $+commands[fortune] )); then
 fi
 
 
-if [[ -z "$STUFF_IS_LOADED" ]]; then
-  echo "Loading slow stuff"
-  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-  export STUFF_IS_LOADED=1
-
-  export PATH="/usr/local/heroku/bin:$PATH:$HOME/.rvm/bin"
-fi
-
+export PATH="/usr/local/heroku/bin:$PATH:$HOME/.rvm/bin"
 ssh-add ~/.ssh/hired-mbp > /dev/null 2>&1
 
 # zprof

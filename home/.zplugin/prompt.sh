@@ -51,12 +51,14 @@ prompt_pure_cmd_exec_time() {
 }
 
 prompt_pure_preexec() {
-	cmd_timestamp=$EPOCHSECONDS
+  if [[ -z "$INSIDE_EMACS" ]]; then
+    cmd_timestamp=$EPOCHSECONDS
 
-	# shows the current dir and executed command in the title when a process is active
-	print -Pn "\e]0;"
-	echo -nE "$PWD:t: $2"
-	print -Pn "\a"
+    # shows the current dir and executed command in the title when a process is active
+    print -Pn "\e]0;"
+    echo -nE "$PWD:t: $2"
+    print -Pn "\a"
+  fi
 }
 
 # string length ignoring ansi escapes

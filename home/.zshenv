@@ -99,3 +99,16 @@ if [[ -d "$TMPDIR" ]]; then
 fi
 
 skip_global_compinit=1
+
+
+source /home/kyle/.linuxbrew/opt/chruby/share/chruby/chruby.sh
+source /home/kyle/.linuxbrew/opt/chruby/share/chruby/auto.sh
+chruby 2.4.2
+
+export PATH="$HOME/.linuxbrew/bin:$PATH"
+export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
+export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
+
+export PATH="./bin:node_modules/.bin:${HOME}/bin:${HOME}/.local/bin:${PATH}"
+
+export N_PREFIX=$HOME/n

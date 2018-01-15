@@ -1,4 +1,8 @@
-rofi -font "Sauce Code Powerline 30" \
-  -run-command "zsh -c '{cmd}'" \
+#!/usr/bin/zsh -l
+
+PATH=~/bin:$PATH
+
+rofi \
+  -run-command "{cmd}" \
   -fuzzy \
-  -show run
+  -show run >> ~/log/launcher.log 2>&1
