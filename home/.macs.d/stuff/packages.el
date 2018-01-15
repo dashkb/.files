@@ -12,16 +12,4 @@
 
 
 (defconst stuff-packages
-  '(gist
-    github-browse-file
-    git-link
-    ))
-
-;; (defun stuff/init-exec-path-from-shell ()
-
-;;   (use-package exec-path-from-shell
-;;     :defer t
-;;     :init
-;;     (when window-system
-;;       (message "doing the thing")
-;;       (exec-path-from-shell-initialize))))
+  '())
