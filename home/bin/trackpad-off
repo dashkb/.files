@@ -1,1 +1,1 @@
-xinput set-prop `trackpad-xinput-id` "Device Enabled" 0
+xinput set-prop `trackpad-xinput-id` "Synaptics Off" 1

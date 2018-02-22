@@ -100,14 +100,15 @@ fi
 
 skip_global_compinit=1
 
+BREW_ROOT=/home/linuxbrew
 
-source /home/kyle/.linuxbrew/opt/chruby/share/chruby/chruby.sh
-source /home/kyle/.linuxbrew/opt/chruby/share/chruby/auto.sh
-chruby 2.4.2
+source $BREW_ROOT/.linuxbrew/opt/chruby/share/chruby/chruby.sh
+source $BREW_ROOT/.linuxbrew/opt/chruby/share/chruby/auto.sh
+chruby 2.5.0
 
-export PATH="$HOME/.linuxbrew/bin:$PATH"
-export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
-export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
+export PATH="$BREW_ROOT/.linuxbrew/bin:$PATH"
+export MANPATH="$BREW_ROOT/.linuxbrew/share/man:$MANPATH"
+export INFOPATH="$BREW_ROOT/.linuxbrew/share/info:$INFOPATH"
 
 export PATH="./bin:node_modules/.bin:${HOME}/bin:${HOME}/.local/bin:${PATH}"
 

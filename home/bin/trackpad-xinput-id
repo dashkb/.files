@@ -1,1 +1,1 @@
-xinput | ag bcm | sed -r "s/^.+id=([0-9]+).+$/\1/"
+xinput | pt TouchPad | sed -r "s/^.+id=([0-9]+).+$/\1/"

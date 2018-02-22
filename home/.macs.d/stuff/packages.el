@@ -9,7 +9,7 @@
 ;;
 ;;; License: GPLv3
 
-
+(load "~/.macs.d/stuff/mermaid.el")
 
 (defconst stuff-packages
   '())

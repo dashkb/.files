@@ -14,14 +14,4 @@
   fi
 } &!
 
-# Print a random, hopefully interesting, adage.
-if (( $+commands[fortune] )); then
-  fortune -a
-  print
-fi
-
-
-export PATH="/usr/local/heroku/bin:$PATH:$HOME/.rvm/bin"
-ssh-add ~/.ssh/hired-mbp > /dev/null 2>&1
-
 # zprof

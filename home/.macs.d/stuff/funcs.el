@@ -67,11 +67,20 @@
     (defalias #'forward-evil-word #'forward-evil-symbol))
   )
 
+(defun stuff/find-project-root ()
+  (locate-dominating-file
+   (or (buffer-file-name) default-directory)
+   ".git"))
+
+(defun stuff/exec-at-root (cmd)
+  "Run a shell command at the project root"
+  (interactive)
+  (let ((default-directory (stuff/find-project-root)))
+    (async-shell-command cmd)))
+
 (defun stuff/use-eslint-from-node-modules ()
   (interactive)
-  (let* ((root (locate-dominating-file
-                (or (buffer-file-name) default-directory)
-                "node_modules"))
+  (let* ((root (stuff/find-project-root))
          (eslint (and root
                       (expand-file-name "node_modules/.bin/eslint"
                                         root))))
@@ -144,6 +153,24 @@
 
   )
 
+(defun stuff/db-redo ()
+  (interactive)
+  (stuff/exec-at-root "rake db:redo")
+  (evil-window-prev 1))
+
+(defun stuff/db-redo-for-demo ()
+  (interactive)
+  (stuff/exec-at-root "SEED_FOR_DEMO=true rake db:redo")
+  (evil-window-prev 1))
+
+(defun stuff/kill-buffers-i-dont-like ()
+  (interactive)
+
+  (flet ((yes-or-no-p (&rest args) t)
+         (y-or-n-p (&rest args) t))
+
+    (kill-matching-buffers "shell")))
+
 (defun stuff/bind-keys ()
   (interactive)
 
@@ -171,8 +198,9 @@
     "ogg" 'stuff/switch-to-gemfile-buffer
     "ogf" 'stuff/switch-to-foreman-buffer
     "obr" 'stuff/kill-and-reopen-file
-    ;; "pf" 'helm-projectile-find-file-dwim
-    ;; "pF" 'helm-projectile-find-file
+    "odb" 'stuff/db-redo
+    "oddb" 'stuff/db-redo-for-demo
+    "okb" 'stuff/kill-buffers-i-dont-like
     ))
 
 (defun stuff/send-C-r ()
@@ -289,13 +317,8 @@
   (stuff/ruby-stuff)
   (stuff/set-default-browser)
   (stuff/buffer-stuff)
-  ;; (stuff/js-stuff)
+  (stuff/js-stuff)
 
   (stuff/set-mouse-color)
-
-  (mouse-avoidance-mode 'banish)
-
-  (defun mouse-avoidance-banish-destination ()
-    (cons -100 -100))
 
   (message "Initialized stuff"))

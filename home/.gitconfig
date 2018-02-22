@@ -40,3 +40,5 @@
 [github]
 	user = dashkb
 	oauth-token = 
+[user]
+	email = kyle@kylebrett.com

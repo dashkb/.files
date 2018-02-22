@@ -1,4 +1,4 @@
-Xft.dpi:        150
+Xft.dpi:        160
 Xft.antialias:  true
 Xft.rgba:       rgb
 Xft.hinting:    true
@@ -8,7 +8,7 @@ URxvt.scrollBar: false
 
 URxvt*background: #2B2B2B
 URxvt*foreground: #DEDEDE
-URxvt.font: xft:Source Code Pro for Powerline:size=10
+URxvt.font: xft:Source Code Pro for Powerline:size=12
 
 #define base00 #181818
 #define base01 #282828
@@ -59,4 +59,4 @@ rofi.color-normal: #282a2e, #969896, #282a2e, #81a2be, #1d1f21
 rofi.color-active: #282a2e, #969896, #282a2e, #81a2be, #1d1f21
 rofi.color-urgent: #282a2e, #969896, #282a2e, #81a2be, #1d1f21
 
-rofi.font: Sauce Code Powerline 30
+rofi.font: Sauce Code Powerline 24

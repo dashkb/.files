@@ -1,3 +1,5 @@
 #!/bin/zsh -l
 
-DISPLAY=:0 feh --randomize --bg-scale ~/Pictures/wallpapers/*
+/home/kyle/bin/next-wallpaper
+
+DISPLAY=:0 feh --bg-scale $(cat /home/kyle/current-wallpaper)

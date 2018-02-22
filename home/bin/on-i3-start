@@ -1,13 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 
 
 # xscreensaver &
 gnome-settings-daemon &
-setxkbmap -option caps:ctrl_modifier &
+setxkbmap -option caps:ctrl_modifier
+setxkbmap -option altwin:swap_alt_win
+
 ~/bin/start-wifi &
 ~/bin/start-redshift &
 ~/bin/start-dispad &
 ~/bin/greenclip daemon &
+
+dunst &
 
 xset r rate 200 60 &
 
