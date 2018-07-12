@@ -2,24 +2,11 @@
   set enc=utf-8
   set nocompatible " explicitly get out of vi-compatible mode
   set exrc " don't use local version of .(g)vimrc, .exrc
-  set cpoptions=aABceFsmq
-  "             |||||||||
-  "             ||||||||+-- When joining lines, leave the cursor
-  "             |||||||      between joined lines
-  "             |||||||+-- When a new match is created (showmatch)
-  "             ||||||      pause for .5
-  "             ||||||+-- Set buffer options when entering the
-  "             |||||      buffer
-  "             |||||+-- :write command updates current file name
-  "             ||||+-- Automatically add <CR> to the last line
-  "             |||      when using :@r
-  "             |||+-- Searching continues at the end of the match
-  "             ||      at the cursor position
-  "             ||+-- A backslash has no special meaning in mappings
-  "             |+-- :write updates alternative file name
-  "             +-- :read updates alternative file name
   syntax on " syntax highlighting on
   let mapleader = " "
+
+  " https://neovim.io/doc/user/options.html#'cpoptions'
+  set cpoptions=aABceFmq_
 " }
 
 " Plugins {
@@ -30,29 +17,27 @@
   endif
   call plug#begin()
 
+
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/fzf.vim'
+  Plug 'neovim/node-host', { 'do': 'npm install -g neovim' }
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
-  Plug 'tpope/vim-commentary'
-  Plug 'tpope/vim-abolish'
-  Plug 'tpope/vim-repeat'
-  Plug 'mattn/webapi-vim'
-  Plug 'mattn/gist-vim'
-  Plug 'tpope/vim-fugitive'
-  Plug 'vim-scripts/Align'
-  Plug 'vim-ruby/vim-ruby'
-  Plug 'vim-scripts/SyntaxRange'
-  Plug 'wlangstroth/vim-racket'
   Plug 'edkolev/tmuxline.vim'
+  Plug 'vim-scripts/SyntaxRange'
+  Plug 'Raimondi/delimitMate'
+  Plug 'junegunn/vim-easy-align'
   Plug 'christoomey/vim-tmux-navigator'
+  Plug 'tpope/vim-endwise'
+  Plug 'tpope/vim-commentary'
+  Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-dispatch'
   Plug 'tpope/vim-vinegar'
   Plug 'tpope/vim-surround'
-  Plug 'vimwiki/vimwiki'
+  Plug 'tpope/vim-fugitive'
   Plug 'schickling/vim-bufonly'
   Plug 'luochen1990/rainbow'
-  Plug 'nelstrom/vim-qargs'
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-  Plug 'junegunn/fzf.vim'
+  Plug 'Shougo/denite.nvim'
   Plug 'Shougo/deoplete.nvim'
   Plug 'Shougo/neosnippet.vim'
   Plug 'Shougo/neosnippet-snippets'
@@ -61,20 +46,16 @@
   Plug 'skalnik/vim-vroom'
   Plug 'cazador481/fakeclip.neovim'
   Plug 'airblade/vim-rooter'
-  Plug 'elzr/vim-json'
   Plug 'chriskempson/base16-vim'
-  Plug 'nazo/pt.vim'
-  Plug 'neovim/node-host', { 'do': 'npm install -g neovim' }
-  " Plug 'snoe/nvim-parinfer.js'
-  Plug 'kchmck/vim-coffee-script'
-  Plug 'powerman/vim-plugin-AnsiEsc'
-  Plug 'Raimondi/delimitMate'
-  Plug 'tpope/vim-markdown'
-  Plug 'pangloss/vim-javascript'
-  Plug 'isRuslan/vim-es6'
   Plug 'w0rp/ale'
-  Plug 'godlygeek/tabular'
-  Plug 'gabrielelana/vim-markdown'
+  Plug 'sheerun/vim-polyglot'
+  Plug 'tmux-plugins/vim-tmux'
+  Plug 'shime/vim-livedown'
+  Plug 'mattn/gist-vim'
+  Plug 'mattn/webapi-vim'
+  Plug 'vimwiki/vimwiki'
+  Plug 'jparise/vim-graphql'
+
   call plug#end()
 
   let g:airline_powerline_fonts = 1
@@ -121,18 +102,21 @@
 
   nmap <Leader>wo :only<CR>
 
+  nmap <Leader>pf :Files<CR>
+  nmap <Leader>pb :Buffers<CR>
+  nmap <Leader>pt :Ag<CR>
+
   inoremap jk <C-C>:stopi<CR>
   inoremap Jk <C-C>:stopi<CR>
   inoremap JK <C-C>:stopi<CR>
+  inoremap fd <C-C>:stopi<CR>
+  inoremap Fd <C-C>:stopi<CR>
 
   " Kill trailing whitespace
   nmap <Leader>ktw :%s/\s\+$<CR>
   " Vim reload
   nmap <Leader>vr :silent so ~/.vimrc<CR>
-
-  nmap <Leader>ff :FZF!<CR>
-  nmap <Leader>fb :History<CR>
-  nmap <Leader>bb :bprevious<CR>
+  nmap <Leader>bp :bprevious<CR>
   nmap <Leader>bn :bnext<CR>
 
   nmap <Leader>sc :nohl<CR>
@@ -145,6 +129,8 @@
   nmap <Leader>rc :e ~/.vimrc<CR>
   nmap <Leader>pry :call OpenPry()<CR>
   nmap <Leader>railsc :call OpenRailsConsole()<CR>
+  nmap <Leader>cc :call ClearRailsCache()<CR>
+  nmap <Leader>db :call RakeDbRedo()<CR>
 
   " Window stuff
   nmap <Leader>x :bd<CR>
@@ -162,6 +148,11 @@
 
   nmap <Leader>sf :w<CR>
 
+  " Vroom
+  map <Leader>vc :unlet g:VimuxRunnerIndex<CR>
+  map <Leader>vx :call VimuxCloseRunner()<CR>
+  map <Leader>tt :VroomRunNearestTest<CR>
+
   " function! SwapParinferMode()
   "   if g:parinfer_mode ==? 'indent'
   "     let g:parinfer_mode = 'paren'
@@ -172,14 +163,15 @@
 
   " nmap <Leader>pm :call SwapParinferMode()<CR>
 
-  " imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-  " smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-  " xmap <C-k>     <Plug>(neosnippet_expand_target)
+  imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+  smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k>     <Plug>(neosnippet_expand_target)
 
-  " imap <M-m> <C-v>u03A9
+  " Start interactive EasyAlign in visual mode (e.g. vipga)
+  xmap ga <Plug>(EasyAlign)
 
-  smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-  \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+  " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+  nmap ga <Plug>(EasyAlign)
 " }
 
 " Vim UI {
@@ -232,24 +224,16 @@
   set tabstop=8 " real tabs should be 8, and they will show with
                   " set list on
 
-  " fun! OmgFold(lnum)
-  "   return empty(getline(a:lnum))?'-1':indent(a:lnum)/2
-  " endfun
+  set fdm=syntax
+  set foldlevel=4
 
-  " set foldexpr=OmgFold(v:lnum)
-  " set fdm=syntax
-  " au BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
-  " au BufWinEnter *.rb,Gemfile,Berksfile,*.coffee setlocal fdm=indent
+  au BufWinEnter .babelrc set filetype=json
+  au BufWinEnter *.cssm set filetype=scss
 " }
 
 " Plug Settings {
   let b:match_ignorecase = 1 " case is stupid
-
-  " Tagbar Settings
-
-  " PowerLine Settings {
-    let g:Powerline_symbols = 'unicode'
-  " }
+  let g:Powerline_symbols = 'unicode'
 
   let g:gist_clip_command = 'pbcopy'
   let g:gist_post_private = 1
@@ -265,7 +249,7 @@
   let g:deoplete#enable_at_startup = 1
   let g:deoplete#delimiters = ['/', '.', '::', ':', '#' ]
   let g:neosnippet#enable_snipmate_compatibility = 1
-  let g:neosnippet#snippets_director = '~/.vim/snippets'
+  let g:neosnippet#snippets_directory = '~/.vim/snippets'
 
   " For conceal markers.
   if has('conceal')
@@ -274,6 +258,7 @@
 
   let g:vroom_use_vimux = 1
   let g:vroom_use_bundle_exec = 0
+  let g:VimuxUseNearest = 0
 
   function! VimuxSlime()
     call VimuxOpenRunner()
@@ -291,10 +276,24 @@
     call VimuxSlime()
   endfun
 
+  function! RakeDbRedo()
+    let @v = "rake db:redo"
+    call VimuxSlime()
+  endfunction
+
+  function! ClearRailsCache()
+    let @v = "rake cache:clear"
+    call VimuxSlime()
+  endfunction
+
   let vim_markdown_preview_github=1
 
-  Plug 'prettier/vim-prettier', {
-    \ 'do': 'yarn install',
-      \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql']
-      \ }
-  " }
+  let g:vroom_map_keys = 0
+
+  let g:ale_lint_on_text_changed = 0
+  let g:ale_lint_on_insert_leave = 1
+
+  let g:javascript_plugin_flow = 1
+
+  let g:ruby_indent_assignment_style = 'variable'
+" }

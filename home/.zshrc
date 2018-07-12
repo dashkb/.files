@@ -33,6 +33,7 @@ fi
 
 set -o vi
 bindkey -M viins 'jk' vi-cmd-mode
+bindkey -M viins 'fd' vi-cmd-mode
 #
 # I can type, bro
 unsetopt CORRECT
@@ -57,3 +58,12 @@ export CHEF_USER=dashkb
 if [ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
   exec startx
 fi
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[[ -f /home/kyle/code/voting/backend/node_modules/tabtab/.completions/serverless.zsh ]] && . /home/kyle/code/voting/backend/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[[ -f /home/kyle/code/voting/backend/node_modules/tabtab/.completions/sls.zsh ]] && . /home/kyle/code/voting/backend/node_modules/tabtab/.completions/sls.zsh

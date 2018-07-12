@@ -163,6 +163,11 @@
   (stuff/exec-at-root "SEED_FOR_DEMO=true rake db:redo")
   (evil-window-prev 1))
 
+(defun stuff/rails-cache-clear ()
+  (interactive)
+  (stuff/exec-at-root "rake cache:clear")
+  (evil-window-prev 1))
+
 (defun stuff/kill-buffers-i-dont-like ()
   (interactive)
 
@@ -170,6 +175,15 @@
          (y-or-n-p (&rest args) t))
 
     (kill-matching-buffers "shell")))
+
+(defun stuff/replace-smart-quotes (beg end)
+  "Replace 'smart quotes' in buffer or region with ascii quotes."
+  (interactive "r")
+  (format-replace-strings '(("\x201C" . "\"")
+                            ("\x201D" . "\"")
+                            ("\x2018" . "'")
+                            ("\x2019" . "'"))
+                          nil beg end))
 
 (defun stuff/bind-keys ()
   (interactive)
@@ -200,6 +214,7 @@
     "obr" 'stuff/kill-and-reopen-file
     "odb" 'stuff/db-redo
     "oddb" 'stuff/db-redo-for-demo
+    "occ" 'stuff/rails-cache-clear
     "okb" 'stuff/kill-buffers-i-dont-like
     ))
 

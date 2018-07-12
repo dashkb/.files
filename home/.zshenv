@@ -104,12 +104,22 @@ BREW_ROOT=/home/linuxbrew
 
 source $BREW_ROOT/.linuxbrew/opt/chruby/share/chruby/chruby.sh
 source $BREW_ROOT/.linuxbrew/opt/chruby/share/chruby/auto.sh
-chruby 2.5.0
+chruby 2.5.1
 
 export PATH="$BREW_ROOT/.linuxbrew/bin:$PATH"
 export MANPATH="$BREW_ROOT/.linuxbrew/share/man:$MANPATH"
 export INFOPATH="$BREW_ROOT/.linuxbrew/share/info:$INFOPATH"
 
-export PATH="./bin:node_modules/.bin:${HOME}/bin:${HOME}/.local/bin:${PATH}"
+export GOBIN="$(go env GOPATH)/bin"
+export PATH="./bin:node_modules/.bin:${GOBIN}:${HOME}/bin:${HOME}/.local/bin:${PATH}"
 
-export N_PREFIX=$HOME/n
+export N_PREFIX=$HOME
+
+
+dbus-update-activation-environment --systemd DISPLAY
+
+if ! ps aux | grep "[g]nome-keyring-daemon" > /dev/null; then
+  eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+fi
+
+export SSH_AUTH_SOCK
